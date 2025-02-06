@@ -37,6 +37,7 @@ import AclGuard from 'src/components/auth/AclGuard'
 import ReactHotToast from 'src/components/react-hot-toast'
 import { useSettings } from 'src/hooks/useSettings'
 import ThemeComponent from 'src/theme/ThemeComponent'
+import Layout from 'src/components/main-layout'
 
 type ExtendedAppProps = AppProps & {
   Component: NextPage
@@ -78,7 +79,7 @@ export default function App(props: ExtendedAppProps) {
   const { settings } = useSettings()
 
   // Variables
-  const getLayout = Component.getLayout ?? (page => <>{page}</>)
+  const getLayout = Component.getLayout ?? (page => <Layout>{page}</Layout>)
 
   const setConfig = Component.setConfig ?? undefined
 
