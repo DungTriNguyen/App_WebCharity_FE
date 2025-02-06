@@ -1,15 +1,10 @@
-// ** React Imports
-
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
+import React from 'react'
 
 const Error404 = () => {
   return (
-    <Box className='content-center'>
-      <Typography variant='h2' sx={{ mb: 1.5 }}>
-        Page Not Found
-      </Typography>
-    </Box>
+    <div>
+      <span>Page Not Found</span>
+    </div>
   )
 }
 

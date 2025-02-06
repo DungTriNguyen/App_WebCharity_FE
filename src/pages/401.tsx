@@ -1,10 +1,10 @@
-import Typography from '@mui/material/Typography'
+import React from 'react';
 
 const Error401 = () => {
   return (
-    <Typography variant='h2' sx={{ mb: 1.5 }}>
+    <div>
       You are not authorized!
-    </Typography>
+    </div>
   )
 }
 
