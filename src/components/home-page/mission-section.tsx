@@ -60,7 +60,7 @@ const LIST_ICONS = [
 const MissionSection = () => {
   return (
     <div className='py-4'>
-      <div className='flex justify-between items-center'>
+      <div className='flex justify-around items-center'>
         {LIST_ICONS.map((item) => (
           <div key={item.key} className='flex flex-col items-center'>
             {item.icon}
