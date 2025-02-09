@@ -11,6 +11,8 @@ export default {
     extend: {
       backgroundImage: {
         'main-banner': "url('/main-banner.png')",
+        'about-us-banner': "url('/about-us-banner.png')",
+        'policy-banner': "url('/policy-banner.png')",
       },
       colors: {
         background: 'hsl(var(--background))',
