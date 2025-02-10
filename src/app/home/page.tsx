@@ -10,7 +10,9 @@ import React from 'react';
 const HomePage = () => {
   return (
     <>
-      <div className='bg-main-banner h-screen w-full'></div>
+      <div className='bg-main-banner h-screen w-full relative'>
+        <div className='absolute top-0 left-0 bottom-0 right-0 bg-black opacity-35'></div>
+      </div>
       <div className='container mx-auto flex flex-col gap-8'>
         <MissionSection />
         <Separator />

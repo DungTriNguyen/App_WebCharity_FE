@@ -13,6 +13,7 @@ export default {
         'main-banner': "url('/main-banner.png')",
         'about-us-banner': "url('/about-us-banner.png')",
         'policy-banner': "url('/policy-banner.png')",
+        'nature-banner': "url('/nature-img.png')",
       },
       colors: {
         background: 'hsl(var(--background))',

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
 const FounderSection = () => {
   const founderInfo = [
@@ -29,14 +30,11 @@ const FounderSection = () => {
             key={founder.id}
             className='flex flex-col items-center max-w-[500px] bg-white p-16'
           >
-            {/* <Image
-              width={150}
-              height={150}
-              className='rounded-full'
-              src={founder.avatar}
-              alt={founder.name}
-            /> */}
-            <div className='w-[350px] h-[200px] rounded-3xl bg-black'></div>
+            <Avatar className='h-[250px] rounded-2xl mx-auto w-full'>
+              <AvatarImage src={'https://i.pravatar.cc/300'} alt='@shadcn' />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+            {/* <div className='w-[350px] h-[200px] rounded-3xl bg-black'></div> */}
             <h4 className=''>{founder.name}</h4>
             <h3 className='text-2xl font-bold'>{founder.title}</h3>
             <p className='text-center'>{founder.description}</p>
