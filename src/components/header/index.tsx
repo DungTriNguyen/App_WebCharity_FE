@@ -28,7 +28,9 @@ const Header = () => {
           <Button variant={'ghost'} onClick={() => router.push('/about-us')}>
             Về chúng tôi
           </Button>
-          <Button variant={'ghost'}>Liên hệ</Button>
+          <Button variant={'ghost'} onClick={() => router.push('/contact')}>
+            Liên hệ
+          </Button>
           <Button variant={'ghost'}>Cơ hội trở thành CTV</Button>
         </div>
         <Button variant={'ghost'}>
