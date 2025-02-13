@@ -15,6 +15,7 @@ export default {
         'policy-banner': "url('/policy-banner.png')",
         'nature-banner': "url('/nature-img.png')",
         'contact-banner': "url('/contact-banner.png')",
+        'login-background': "url('/login-background.jpg')",
       },
       colors: {
         background: 'hsl(var(--background))',
