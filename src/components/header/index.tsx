@@ -13,8 +13,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
+import { signOut, useSession } from 'next-auth/react';
 
 const Header = () => {
+  const { data } = useSession();
   const router = useRouter();
   const ACTIVITIES_ITEMS = [
     {
@@ -90,6 +92,10 @@ const Header = () => {
     );
   };
 
+  const logout = async () => {
+    await signOut({ callbackUrl: '/login', redirect: true });
+  };
+
   return (
     <div className='w-full h-[76px] border-b'>
       <div className='container flex m-auto justify-around items-center h-full'>
@@ -105,9 +111,13 @@ const Header = () => {
           {renderMenu(ACTIVITIES_ITEMS, 'Chiến dịch')}
           {renderMenu(ABOUT_US_ITEMS, 'Về chúng tôi')}
         </div>
-        <Button variant={'ghost'} onClick={() => router.push('/login')}>
-          <LogInIcon /> Đăng nhập
-        </Button>
+        {data?.user ? (
+          <Button onClick={logout}>Logout</Button>
+        ) : (
+          <Button variant={'ghost'} onClick={() => router.push('/login')}>
+            <LogInIcon /> Đăng nhập
+          </Button>
+        )}
       </div>
     </div>
   );

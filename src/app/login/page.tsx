@@ -21,6 +21,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { useLoginMutation } from '@/hooks/use-login';
 
 const LoginPage = () => {
   const router = useRouter();
@@ -33,6 +34,8 @@ const LoginPage = () => {
       message: 'Password must be at least 1 character.',
     }),
   });
+
+  const { mutate: loginAction, isPending } = useLoginMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -47,6 +50,8 @@ const LoginPage = () => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
+    const { email, password } = values;
+    loginAction({ email, password });
   };
 
   return (

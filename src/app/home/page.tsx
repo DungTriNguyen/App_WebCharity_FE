@@ -1,3 +1,5 @@
+'use client';
+
 import ArchivementSection from '@/components/home-page/archivement-section';
 import EndedProjectSection from '@/components/home-page/ended-project-section';
 import HighlighProjectSection from '@/components/home-page/highligh-project-section';
@@ -5,9 +7,13 @@ import MissionSection from '@/components/home-page/mission-section';
 import PartnerSection from '@/components/home-page/partner-section';
 import SocialInfoSection from '@/components/home-page/social-info-section';
 import { Separator } from '@/components/ui/separator';
+import { useSession } from 'next-auth/react';
 import React from 'react';
 
 const HomePage = () => {
+  const { data } = useSession();
+  console.log(data);
+
   return (
     <>
       <div className='bg-main-banner h-screen w-full relative'>
