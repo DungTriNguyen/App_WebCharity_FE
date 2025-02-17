@@ -7,8 +7,9 @@ import { Progress } from '../ui/progress';
 const ProjectItem = () => {
   return (
     <div className='min-w-[400px]'>
-      <div className='rounded-xl overflow-hidden h-[300px] bg-[url(https://picsum.photos/400/300)] bg-opacity-40 bg-contain mb-2 flex flex-col p-2'>
-        <div className='bg-black text-accent bg-opacity-50 mt-auto rounded-full py-4 px-6 flex gap-2 items-center'>
+      <div className='rounded-xl overflow-hidden h-[300px] bg-[url(https://picsum.photos/400/300)] bg-opacity-10 bg-cover mb-2 flex flex-col p-2 relative'>
+        <div className='absolute top-0 left-0 right-0 bottom-0 bg-white bg-opacity-20'></div>
+        <div className='bg-black text-accent bg-opacity-50 mt-auto rounded-full py-4 px-6 flex gap-2 items-center z-10'>
           <div className='flex flex-col gap-2 w-full'>
             <div className='flex justify-between'>
               <span>11111/22222</span>
@@ -28,7 +29,7 @@ const ProjectItem = () => {
       <Label className='font-bold text-lg mt-2'>
         “Những mùa xuân nguyên vẹn” - Tết vì nạn nhân chất độc da cam
       </Label>
-      <div className='flex justify-between text-accent-foreground'>
+      <div className='flex justify-between text-gray-400'>
         <span className='flex gap-1 items-center'>
           <HandHeartIcon strokeWidth={1} />
           500 lượt ủng hộ
