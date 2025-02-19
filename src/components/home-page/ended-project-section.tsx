@@ -13,6 +13,15 @@ const EndedProjectSection = () => {
       raised: 1000000,
       goal: 2000000,
       timeLeft: 10,
+      details: [
+        {
+          unit: 'tình nguyện viên',
+          current: 15,
+          total: 20,
+          label: 'đăng ký tình nguyện',
+          count: 10,
+        },
+      ],
     },
     {
       id: 2,
@@ -22,6 +31,15 @@ const EndedProjectSection = () => {
       raised: 1000000,
       goal: 2000000,
       timeLeft: 10,
+      details: [
+        {
+          unit: 'tình nguyện viên',
+          current: 15,
+          total: 20,
+          label: 'đăng ký tình nguyện',
+          count: 10,
+        },
+      ],
     },
     {
       id: 3,
@@ -31,6 +49,15 @@ const EndedProjectSection = () => {
       raised: 1000000,
       goal: 2000000,
       timeLeft: 10,
+      details: [
+        {
+          unit: 'tình nguyện viên',
+          current: 15,
+          total: 20,
+          label: 'đăng ký tình nguyện',
+          count: 10,
+        },
+      ],
     },
     {
       id: 4,
@@ -40,6 +67,15 @@ const EndedProjectSection = () => {
       raised: 1000000,
       goal: 2000000,
       timeLeft: 10,
+      details: [
+        {
+          unit: 'tình nguyện viên',
+          current: 15,
+          total: 20,
+          label: 'đăng ký tình nguyện',
+          count: 10,
+        },
+      ],
     },
     {
       id: 5,
@@ -49,6 +85,15 @@ const EndedProjectSection = () => {
       raised: 1000000,
       goal: 2000000,
       timeLeft: 10,
+      details: [
+        {
+          unit: 'tình nguyện viên',
+          current: 15,
+          total: 20,
+          label: 'đăng ký tình nguyện',
+          count: 10,
+        },
+      ],
     },
     {
       id: 6,
@@ -58,6 +103,15 @@ const EndedProjectSection = () => {
       raised: 1000000,
       goal: 2000000,
       timeLeft: 10,
+      details: [
+        {
+          unit: 'tình nguyện viên',
+          current: 15,
+          total: 20,
+          label: 'đăng ký tình nguyện',
+          count: 10,
+        },
+      ],
     },
   ];
   return (
@@ -72,7 +126,7 @@ const EndedProjectSection = () => {
       <div className='w-full max-w-[1440px] overflow-hidden mx-auto'>
         <ul className='flex gap-8 overflow-auto pb-8'>
           {projects.map((item) => {
-            return <ProjectItem key={item.id} />;
+            return <ProjectItem key={item.id} details={item.details} />;
           })}
         </ul>
       </div>

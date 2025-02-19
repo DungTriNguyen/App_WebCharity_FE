@@ -7,7 +7,7 @@ const PrivacyPolicyPage = () => {
         <div className='absolute top-0 left-0 bottom-0 right-0 bg-black opacity-50'></div>
         <div className='absolute'>Chính sách bảo mật</div>
       </div>
-      <div className='container mx-auto mt-8'>
+      <div className='container 2xl:max-w-[1200px] mx-auto mt-8'>
         Chào mừng bạn đến với ứng dụng Thiện nguyện minh bạch. Trên hành trình
         thực hiện sứ mệnh thiện nguyện, lan tỏa yêu thương của mình, MBBank hi
         vọng bạn vui lòng dành thời gian đọc, tìm hiểu những điều khoản sau đây

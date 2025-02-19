@@ -98,7 +98,7 @@ const Header = () => {
 
   return (
     <div className='w-full h-[76px] border-b'>
-      <div className='container flex m-auto justify-around items-center h-full'>
+      <div className='container 2xl:max-w-[1200px] flex m-auto justify-around items-center h-full'>
         <Image
           className='w-auto h-8 lg:h-10'
           src={logo.src}

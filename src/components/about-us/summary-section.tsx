@@ -72,7 +72,7 @@ const SummarySection = () => {
     <div className='bg-[#EDEDED] py-8'>
       <h3 className='text-3xl font-bold text-center'>Giới thiệu chung </h3>
       <Separator className='w-[125px] h-[2px] bg-[#0064C1] m-auto' />
-      <p className='text-center mt-4 container mx-auto'>
+      <p className='text-center mt-4 container 2xl:max-w-[1200px] mx-auto'>
         Giải pháp công nghệ tích hợp bao gồm App Thiện Nguyện và tài khoản thiện
         nguyện minh bạch 4 số, dành tặng các tổ chức, cá nhân vận động gây quỹ
         vì cộng đồng. Giải pháp là cấu phần thuộc Đề án Hệ tri thức Việt số hoá

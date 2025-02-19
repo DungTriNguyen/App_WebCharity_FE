@@ -9,7 +9,7 @@ const ContactPage = () => {
         <div className='absolute top-0 left-0 bottom-0 right-0 bg-black bg-opacity-35'></div>
         <div className='absolute'>LIÊN HỆ GÓP Ý - PHẢN HỒI</div>
       </div>
-      <div className='grid grid-cols-2 gap-8 container mx-auto my-8'>
+      <div className='grid grid-cols-2 gap-8 container 2xl:max-w-[1200px] mx-auto my-8'>
         <OfficeInfo />
         <ContactForm />
       </div>

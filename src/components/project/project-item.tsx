@@ -4,18 +4,36 @@ import { CalendarFoldIcon, HandCoinsIcon, HandHeartIcon } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Progress } from '../ui/progress';
 
-const ProjectItem = () => {
+type TStatistic = {
+  total: number;
+  current: number;
+  unit: string;
+  label: string;
+  count: number;
+};
+
+const ProjectItem = ({ details = [] }: { details: TStatistic[] }) => {
   return (
     <div className='min-w-[400px]'>
       <div className='rounded-xl overflow-hidden h-[300px] bg-[url(https://picsum.photos/400/300)] bg-opacity-10 bg-cover mb-2 flex flex-col p-2 relative'>
         <div className='absolute top-0 left-0 right-0 bottom-0 bg-white bg-opacity-20'></div>
         <div className='bg-black text-accent bg-opacity-50 mt-auto rounded-full py-4 px-6 flex gap-2 items-center z-10'>
-          <div className='flex flex-col gap-2 w-full'>
-            <div className='flex justify-between'>
-              <span>11111/22222</span>
-              <span>60%</span>
-            </div>
-            <Progress value={60} />
+          <div className='w-full'>
+            {details.map((item, index) => {
+              return (
+                <div key={index} className='flex flex-col gap-2 w-full'>
+                  <div className='flex justify-between'>
+                    <span>
+                      {item.current}/{item.total} {item.unit}
+                    </span>
+                    <span>
+                      {Math.floor((item.current * 100) / item.total)}%
+                    </span>
+                  </div>
+                  <Progress value={(item.current * 100) / item.total} />
+                </div>
+              );
+            })}
           </div>
           <Button
             size={'icon'}
@@ -32,7 +50,15 @@ const ProjectItem = () => {
       <div className='flex justify-between text-gray-400'>
         <span className='flex gap-1 items-center'>
           <HandHeartIcon strokeWidth={1} />
-          500 lượt ủng hộ
+          <p>
+            {details.map((item, index) => {
+              return (
+                <p key={index}>
+                  {item.count} lượt {item.label}
+                </p>
+              );
+            })}
+          </p>
         </span>
         <span className='flex gap-1 items-center'>
           <CalendarFoldIcon strokeWidth={1} />

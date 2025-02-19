@@ -11,6 +11,22 @@ const ProjectList = () => {
       raised: 1000000,
       goal: 2000000,
       timeLeft: 10,
+      details: [
+        {
+          unit: 'tình nguyện viên',
+          current: 15,
+          total: 20,
+          label: 'đăng ký tình nguyện',
+          count: 10,
+        },
+        {
+          unit: 'vnd',
+          current: 1500000,
+          total: 30000000,
+          label: 'ủng hộ tiền',
+          count: 10,
+        },
+      ],
     },
     {
       id: 2,
@@ -20,6 +36,22 @@ const ProjectList = () => {
       raised: 1000000,
       goal: 2000000,
       timeLeft: 10,
+      details: [
+        {
+          unit: 'tình nguyện viên',
+          current: 15,
+          total: 20,
+          label: 'đăng ký tình nguyện',
+          count: 10,
+        },
+        {
+          unit: 'vnd',
+          current: 1500000,
+          total: 30000000,
+          label: 'ủng hộ tiền',
+          count: 10,
+        },
+      ],
     },
     {
       id: 3,
@@ -29,6 +61,22 @@ const ProjectList = () => {
       raised: 1000000,
       goal: 2000000,
       timeLeft: 10,
+      details: [
+        {
+          unit: 'tình nguyện viên',
+          current: 15,
+          total: 20,
+          label: 'đăng ký tình nguyện',
+          count: 10,
+        },
+        {
+          unit: 'vnd',
+          current: 1500000,
+          total: 30000000,
+          label: 'ủng hộ tiền',
+          count: 10,
+        },
+      ],
     },
     {
       id: 4,
@@ -38,6 +86,15 @@ const ProjectList = () => {
       raised: 1000000,
       goal: 2000000,
       timeLeft: 10,
+      details: [
+        {
+          unit: 'vnd',
+          current: 1500000,
+          total: 30000000,
+          label: 'ủng hộ tiền',
+          count: 10,
+        },
+      ],
     },
     {
       id: 5,
@@ -47,6 +104,15 @@ const ProjectList = () => {
       raised: 1000000,
       goal: 2000000,
       timeLeft: 10,
+      details: [
+        {
+          unit: 'vnd',
+          current: 1500000,
+          total: 30000000,
+          label: 'ủng hộ tiền',
+          count: 10,
+        },
+      ],
     },
     {
       id: 6,
@@ -56,13 +122,22 @@ const ProjectList = () => {
       raised: 1000000,
       goal: 2000000,
       timeLeft: 10,
+      details: [
+        {
+          unit: 'tình nguyện viên',
+          current: 15,
+          total: 20,
+          label: 'đăng ký tình nguyện',
+          count: 10,
+        },
+      ],
     },
   ];
   return (
     <div className='mt-8'>
       <ul className='grid grid-cols-3 gap-8'>
         {projects.map((item) => {
-          return <ProjectItem key={item.id} />;
+          return <ProjectItem key={item.id} details={item.details} />;
         })}
       </ul>
     </div>

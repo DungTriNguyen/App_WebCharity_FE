@@ -23,7 +23,7 @@ const MoreDetailSection = () => {
     },
   ];
   return (
-    <div className='container mx-auto flex justify-center gap-32 py-16'>
+    <div className='container 2xl:max-w-[1200px] mx-auto flex justify-center gap-32 py-16'>
       {detailList.map((item) => (
         <div key={item.id} className='flex flex-col p-4 bg-[#EEEEEE] w-[500px]'>
           <Avatar className='h-[200px] rounded-2xl mx-auto w-full'>

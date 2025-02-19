@@ -8,7 +8,7 @@ import { Button } from '../ui/button';
 const FollowSection = () => {
   return (
     <div className='bg-nature-banner bg-cover min-h-[600px] py-16'>
-      <div className='container mx-auto grid grid-cols-2 gap-16 items-center'>
+      <div className='container 2xl:max-w-[1200px] mx-auto grid grid-cols-2 gap-16 items-center'>
         <div className='py-8 px-16'>
           <p className='font-bold text-4xl'>
             Theo giỏi bản tin của chúng tôi để nhận những thông báo mới nhất

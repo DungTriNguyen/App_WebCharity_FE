@@ -24,7 +24,7 @@ const FounderSection = () => {
   return (
     <div className='bg-[#1B7CC1] bg-opacity-50 py-16'>
       <h3 className='font-bold text-3xl text-center'>Nhà sáng lập</h3>
-      <div className='container mx-auto flex justify-center gap-8 mt-8'>
+      <div className='container 2xl:max-w-[1200px] mx-auto flex justify-center gap-8 mt-8'>
         {founderInfo.map((founder) => (
           <div
             key={founder.id}

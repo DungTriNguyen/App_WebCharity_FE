@@ -13,7 +13,7 @@ import React from 'react';
 
 const ProjectPage = () => {
   return (
-    <div className='container mx-auto py-16'>
+    <div className='container 2xl:max-w-[1200px] mx-auto py-16'>
       <h3 className='text-center font-bold text-3xl'>
         Danh sách chiến dịch gây quỹ
       </h3>

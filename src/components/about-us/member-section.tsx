@@ -4,7 +4,7 @@ import memberImg from '../../../public/member.png';
 
 const MemberSection = () => {
   return (
-    <div className='container mx-auto my-8 grid grid-cols-2 gap-2'>
+    <div className='container 2xl:max-w-[1200px] mx-auto my-8 grid grid-cols-2 gap-2'>
       <div className='col-span-1'>
         <Image
           width={500}
