@@ -2,6 +2,12 @@ import { MoveRightIcon } from 'lucide-react';
 import React from 'react';
 import { Button } from '../ui/button';
 import ProjectItem from '../project/project-item';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+
+// import required modules
+import { Pagination } from 'swiper/modules';
 
 const HighlighProjectSection = () => {
   const projects = [
@@ -126,11 +132,33 @@ const HighlighProjectSection = () => {
         </Button>
       </div>
       <div className='w-full max-w-[1440px] overflow-hidden mx-auto'>
-        <ul className='flex gap-8 overflow-auto pb-8'>
-          {projects.map((item) => {
-            return <ProjectItem key={item.id} details={item.details} />;
-          })}
-        </ul>
+        <Swiper
+          style={
+            {
+              '--swiper-navigation-color': '#fff',
+              '--swiper-pagination-color': '#00A7EF',
+              '--swiper-pagination-bottom': '0',
+            } as React.CSSProperties
+          }
+          loop={true}
+          spaceBetween={24}
+          navigation={true}
+          slidesPerView={3}
+          modules={[Pagination]}
+          className='mySwiper2 h-[400px]'
+          pagination={{
+            clickable: true,
+          }}
+        >
+          {projects.map((item) => (
+            <SwiperSlide
+              key={item.id}
+              className='rounded-lg overflow-hidden h-[400px]'
+            >
+              <ProjectItem key={item.id} data={item} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
     </div>
   );

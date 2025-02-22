@@ -137,7 +137,7 @@ const ProjectList = () => {
     <div className='mt-8'>
       <ul className='grid grid-cols-3 gap-8'>
         {projects.map((item) => {
-          return <ProjectItem key={item.id} details={item.details} />;
+          return <ProjectItem key={item.id} data={item} />;
         })}
       </ul>
     </div>

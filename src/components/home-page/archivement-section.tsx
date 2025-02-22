@@ -55,7 +55,7 @@ const ArchivementSection = () => {
                 />
                 {item.label}
               </div>
-              <div className='font-bold text-4xl'>{item.value}</div>
+              <div className='font-bold text-4xl ml-8'>{item.value}</div>
             </div>
           );
         })}
