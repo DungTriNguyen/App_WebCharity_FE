@@ -9,7 +9,7 @@ const LIST_ICONS = [
     icon: (
       <svg
         width='141'
-        height='125'
+        height='131'
         viewBox='0 0 141 125'
         fill='none'
         xmlns='http://www.w3.org/2000/svg'
@@ -20,13 +20,14 @@ const LIST_ICONS = [
         />
       </svg>
     ),
+    name: 'Ủng hộ tiền',
   },
   {
     key: 2,
     icon: (
       <svg
         width='141'
-        height='99'
+        height='131'
         viewBox='0 0 141 99'
         fill='none'
         xmlns='http://www.w3.org/2000/svg'
@@ -37,13 +38,14 @@ const LIST_ICONS = [
         />
       </svg>
     ),
+    name: 'ĐK tình nguyện viên',
   },
   {
     key: 3,
     icon: (
       <svg
         width='141'
-        height='143'
+        height='131'
         viewBox='0 0 141 143'
         fill='none'
         xmlns='http://www.w3.org/2000/svg'
@@ -54,30 +56,22 @@ const LIST_ICONS = [
         />
       </svg>
     ),
+    name: 'Ủng hộ tiền & ĐK TNV',
   },
 ];
 
-const MissionSection = () => {
+const TypeProjects = () => {
   return (
     <div className='py-4'>
-      <h3 className='text-center text-3xl font-bold p-4'>
-        Sứ mệnh của chúng tôi
-      </h3>
-      {/* <Separator className='mt-4' /> */}
-      <p className='text-center mt-4'>
-        “SGU Charity giúp trẻ em và thanh thiếu niên có hoàn cảnh khó khăn ở
-        Việt Nam phát triển hết tiềm năng của mình thông qua nền tảng giáo dục
-        chất lượng và phù hợp với nhu cầu”
-      </p>
-      <Image
-        width={1440}
-        height={100}
-        src={missionImage.src}
-        alt=''
-        className='w-full mt-4'
-      />
+      <div className='flex justify-around items-center'>
+        {LIST_ICONS.map((item) => (
+          <div key={item.key} className='flex flex-col items-center'>
+            {item.icon} <p className='mt-2 text-bold '>{item.name}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
 
-export default MissionSection;
+export default TypeProjects;
