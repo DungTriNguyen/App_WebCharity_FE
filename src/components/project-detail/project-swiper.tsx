@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-
+import type { Swiper as SwiperType } from 'swiper/types';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/free-mode';
@@ -12,7 +12,7 @@ import 'swiper/css/thumbs';
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 
 const ProjectSwiper = () => {
-  const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
 
   const lstImage = [
     {
@@ -48,13 +48,20 @@ const ProjectSwiper = () => {
       url: 'https://swiperjs.com/demos/images/nature-7.jpg',
     },
   ];
+  const onLoadSwiper = (swiper: SwiperType) => {
+    console.log(typeof swiper);
+
+    setThumbsSwiper(swiper);
+  };
   return (
     <>
       <Swiper
-        style={{
-          '--swiper-navigation-color': '#fff',
-          '--swiper-pagination-color': '#fff',
-        }}
+        style={
+          {
+            '--swiper-navigation-color': '#fff',
+            '--swiper-pagination-color': '#fff',
+          } as React.CSSProperties
+        }
         loop={true}
         spaceBetween={10}
         navigation={true}
@@ -72,7 +79,7 @@ const ProjectSwiper = () => {
         ))}
       </Swiper>
       <Swiper
-        onSwiper={setThumbsSwiper}
+        onSwiper={onLoadSwiper}
         loop={true}
         spaceBetween={10}
         slidesPerView={4}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import SummaryCampaign from './summary-campaign';
-import SupportedList from './supported-list';
+import DonatedList from './donated-list';
 
 const tabList = [
   {
@@ -12,7 +12,7 @@ const tabList = [
   {
     label: 'Danh sách ủng hộ',
     value: 'supported',
-    component: <SupportedList />,
+    component: <DonatedList />,
   },
 ];
 

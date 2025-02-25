@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { Card } from '../ui/card';
 import Image from 'next/image';
@@ -8,8 +9,13 @@ import { Progress } from '../ui/progress';
 import { Button } from '../ui/button';
 import { SquareArrowOutUpRightIcon } from 'lucide-react';
 import redCrossLogo from '../../../public/red-cross-logo.png';
+import { useParams, useRouter } from 'next/navigation';
 
 const ProjectStatus = () => {
+  const params = useParams();
+  const router = useRouter();
+  console.log(params);
+
   return (
     <Card className='p-6 flex flex-col gap-4'>
       <div>
@@ -58,8 +64,15 @@ const ProjectStatus = () => {
         </div>
       </div>
       <div className='flex justify-around'>
-        <Button>Ủng hộ tiền</Button>
-        <Button variant={'outline'}>Tham gia tình nguyện</Button>
+        <Button onClick={() => router.push(`${params.id}/donate`)}>
+          Ủng hộ tiền
+        </Button>
+        <Button
+          variant={'outline'}
+          onClick={() => router.push(`${params.id}/register-volunteer`)}
+        >
+          Tham gia tình nguyện
+        </Button>
       </div>
       <Button variant={'link'} className='ml-auto'>
         Chia sẻ để lan tỏa yêu thương <SquareArrowOutUpRightIcon />

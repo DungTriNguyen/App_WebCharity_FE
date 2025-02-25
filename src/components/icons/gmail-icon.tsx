@@ -15,7 +15,7 @@ const GmailIcon = ({
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
     >
-      <g clip-path='url(#clip0_426_1146)'>
+      <g clipPath='url(#clip0_426_1146)'>
         <path
           d='M22.9688 0H7.03125C3.148 0 0 3.148 0 7.03125V22.9688C0 26.852 3.148 30 7.03125 30H22.9688C26.852 30 30 26.852 30 22.9688V7.03125C30 3.148 26.852 0 22.9688 0Z'
           fill='#F4F2ED'

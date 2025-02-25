@@ -43,7 +43,7 @@ const ProjectItem = ({ data }: { data: TCampaign }) => {
       <div className='flex justify-between text-gray-400'>
         <span className='flex gap-1 items-center'>
           <HandHeartIcon strokeWidth={1} />
-          <p>
+          <div>
             {data.details.map((item, index) => {
               return (
                 <p key={index}>
@@ -51,7 +51,7 @@ const ProjectItem = ({ data }: { data: TCampaign }) => {
                 </p>
               );
             })}
-          </p>
+          </div>
         </span>
         <span className='flex gap-1 items-center'>
           <CalendarFoldIcon strokeWidth={1} />
