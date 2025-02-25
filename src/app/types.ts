@@ -16,3 +16,10 @@ type TCampaign = {
   timeLeft: number;
   details: TCampaignDetail[];
 };
+
+type TDonatedData = {
+  id: string;
+  supporter: string;
+  amount: string;
+  updatedAt: string;
+};
