@@ -1,3 +1,4 @@
+'use client';
 import ProjectList from '@/components/project';
 import { Input } from '@/components/ui/input';
 import {
@@ -12,6 +13,9 @@ import { SearchIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import React from 'react';
+import { useGetProjectQuery } from '@/hooks/use-project';
+import { useSession } from 'next-auth/react';
+import { getToken } from 'next-auth/jwt';
 
 const tabList = [
   {
@@ -34,6 +38,13 @@ const ProjectPage = ({
   searchParams: { filter?: string };
 }) => {
   const currentFilter = searchParams.filter || 'all';
+
+  const session = useSession();
+  console.log(session);
+
+  const { data } = useGetProjectQuery();
+
+  console.log(data);
 
   return (
     <div className='container 2xl:max-w-[1200px] mx-auto py-16'>

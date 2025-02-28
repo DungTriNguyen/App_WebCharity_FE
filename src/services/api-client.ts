@@ -5,4 +5,9 @@ const api = axios.create({
   timeout: 30000,
 });
 
-export { api };
+const apiAuth = axios.create({
+  baseURL: process.env.API_URL,
+  timeout: 30000,
+});
+
+export { api, apiAuth };
