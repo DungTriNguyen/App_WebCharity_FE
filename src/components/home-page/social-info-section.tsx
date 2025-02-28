@@ -9,23 +9,23 @@ const SocialInfoSection = () => {
   const socialInfo = [
     {
       key: 'instagram',
-      href: 'https://www.instagram.com/',
+      href: 'https://www.sgu.edu.vn/',
       icon: <InstagramIcon />,
     },
     {
       key: 'facebook',
-      href: 'https://www.facebook.com/',
+      href: 'https://www.facebook.com/TruongDaihocSaiGon.SGU',
       icon: <FacebookIcon />,
     },
 
     {
       key: 'twitter',
-      href: 'https://twitter.com/',
+      href: 'https://www.sgu.edu.vn/',
       icon: <TwitterIcon />,
     },
     {
       key: 'tiktok',
-      href: 'https://www.tiktok.com/',
+      href: 'https://www.sgu.edu.vn/',
       icon: <TiktokIcon />,
     },
   ];

@@ -8,11 +8,17 @@ import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 
+// Import Lightbox
+import Lightbox from 'yet-another-react-lightbox';
+import 'yet-another-react-lightbox/styles.css';
+
 // import required modules
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 
 const ProjectSwiper = () => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [photoIndex, setPhotoIndex] = useState(0);
 
   const lstImage = [
     {
@@ -88,16 +94,30 @@ const ProjectSwiper = () => {
         modules={[FreeMode, Navigation, Thumbs]}
         className='mySwiper max-h-[100px] mt-6'
       >
-        {lstImage.map((item) => (
-          <SwiperSlide key={item.id} className='rounded-lg overflow-hidden'>
+        {lstImage.map((item, index) => (
+          <SwiperSlide
+            key={item.id}
+            className='rounded-lg overflow-hidden cursor-pointer'
+          >
             <img
               alt=''
               src={item.url}
               className='w-full bg-contain max-h-[100px]'
+              onClick={() => {
+                setPhotoIndex(index);
+                setIsOpen(true);
+              }}
             />
           </SwiperSlide>
         ))}
       </Swiper>
+
+      <Lightbox
+        open={isOpen}
+        close={() => setIsOpen(false)}
+        index={photoIndex}
+        slides={lstImage.map((img) => ({ src: img.url }))}
+      />
     </>
   );
 };

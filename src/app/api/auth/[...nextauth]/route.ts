@@ -26,7 +26,6 @@ const handler = NextAuth({
           };
         } catch (e) {
           console.log(e);
-
           throw new Error('Invalid email or password');
         }
       },

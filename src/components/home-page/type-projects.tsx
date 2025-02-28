@@ -27,7 +27,7 @@ const LIST_ICONS = [
     icon: (
       <svg
         width='141'
-        height='131'
+        height='125'
         viewBox='0 0 141 99'
         fill='none'
         xmlns='http://www.w3.org/2000/svg'
@@ -66,7 +66,7 @@ const TypeProjects = () => {
       <div className='flex justify-around items-center'>
         {LIST_ICONS.map((item) => (
           <div key={item.key} className='flex flex-col items-center'>
-            {item.icon} <p className='mt-2 text-bold '>{item.name}</p>
+            {item.icon} <p className='mt-2 font-bold'>{item.name}</p>
           </div>
         ))}
       </div>

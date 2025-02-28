@@ -23,29 +23,42 @@ const ContactForm = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form className='flex flex-col gap-4'>
+        <form className='flex flex-col gap-6'>
           <div>
-            <Label>Họ và tên</Label>
-            <Input placeholder='họ tên' />
+            <Label>
+              Họ và tên <span className='text-red-500'>*</span>
+            </Label>
+            <Input placeholder='Nhập họ tên' />
           </div>
 
           <div>
-            <Label>Email</Label>
-            <Input placeholder='email' />
+            <Label>
+              Email <span className='text-red-500'>*</span>
+            </Label>
+            <Input placeholder='Nhập email' />
           </div>
           <div>
-            <Label>Số điện thoại</Label>
-            <Input placeholder='điện thoại' />
+            <Label>
+              Số điện thoại <span className='text-red-500'>*</span>
+            </Label>
+            <Input placeholder='Nhập số điện thoại' type='number' />
           </div>
 
           <div>
-            <Label>Chủ đề</Label>
-            <Input placeholder='chủ đề' />
+            <Label>
+              Chủ đề <span className='text-red-500'>*</span>
+            </Label>
+            <Input placeholder='Nhập chủ đề' />
           </div>
 
           <div>
-            <Label>Nội dung</Label>
-            <Textarea placeholder='nội dung' />
+            <Label>
+              Nội dung <span className='text-red-500'>*</span>
+            </Label>
+            <Textarea
+              placeholder='Nhập nội dung'
+              className='min-h-[250px] overflow-y-auto'
+            />
           </div>
           <div>
             <Button type='submit'>Gửi</Button>

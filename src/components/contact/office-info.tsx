@@ -2,8 +2,36 @@ import React from 'react';
 import { Separator } from '../ui/separator';
 import { Button } from '../ui/button';
 import { MoveRightIcon } from 'lucide-react';
+import FacebookIcon from '../icons/facebook-icon';
+import InstagramIcon from '../icons/instagram-icon';
+import TiktokIcon from '../icons/tiktok-icon';
+import TwitterIcon from '../icons/twitter-icon';
+import Link from 'next/link';
 
 const OfficeInfo = () => {
+  const socialInfo = [
+    {
+      key: 'instagram',
+      href: 'https://www.sgu.edu.vn/',
+      icon: <InstagramIcon />,
+    },
+    {
+      key: 'facebook',
+      href: 'https://www.facebook.com/TruongDaihocSaiGon.SGU',
+      icon: <FacebookIcon />,
+    },
+
+    {
+      key: 'twitter',
+      href: 'https://www.sgu.edu.vn/',
+      icon: <TwitterIcon />,
+    },
+    {
+      key: 'tiktok',
+      href: 'https://www.sgu.edu.vn/',
+      icon: <TiktokIcon />,
+    },
+  ];
   return (
     <div>
       <div className='flex flex-col gap-4'>
@@ -27,7 +55,18 @@ const OfficeInfo = () => {
           <b>Email: </b>testing@gmail.com
         </p>
         <p>Dõi theo chúng tôi trên mạng xã hội</p>
-        icon list here
+        <div className='flex gap-4 '>
+          {socialInfo.map((item) => (
+            <Link
+              href={item.href}
+              key={item.key}
+              className='flex flex-col items-center h-12 w-12 '
+              target='_blank'
+            >
+              {item.icon}
+            </Link>
+          ))}
+        </div>
       </div>
       <Separator className='my-4' />
       <h4 className='text-primary font-bold text-xl'>

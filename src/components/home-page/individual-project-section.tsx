@@ -103,11 +103,11 @@ const IndividualProjectSection = () => {
   ];
   return (
     <div>
-      <h3 className='text-3xl font-bold text-center'>
+      {/* <h3 className='text-3xl font-bold text-center'>
         Chiến dịch gây quỹ nổi bật
-      </h3>
+      </h3> */}
       <div className='flex justify-between items-center mb-6'>
-        <span className='font-bold'>Chiến dịch của tổ chức</span>
+        <span className='font-bold'>Chiến dịch của cá nhân</span>
         <Button variant={'link'}>
           Xem tất cả <MoveRightIcon size={24} />
         </Button>

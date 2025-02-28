@@ -38,7 +38,7 @@ const ProjectItem = ({ data }: { data: TCampaign }) => {
         </div>
       </div>
       <Label className='font-bold text-lg mt-2'>
-        <Link href={`/project/${data.id}`}>{data.title}</Link>
+        <Link href={`/projects/${data.id}`}>{data.title}</Link>
       </Label>
       <div className='flex justify-between text-gray-400'>
         <span className='flex gap-1 items-center'>

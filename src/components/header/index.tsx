@@ -4,7 +4,13 @@ import React from 'react';
 import { Button } from '../ui/button';
 import Image from 'next/image';
 import logo from '../../../public/sgu-logo.png';
-import { LogInIcon } from 'lucide-react';
+import {
+  BellIcon,
+  LogInIcon,
+  LogOutIcon,
+  SearchIcon,
+  ChevronDownIcon,
+} from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import {
   DropdownMenu,
@@ -14,79 +20,100 @@ import {
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
 import { signOut, useSession } from 'next-auth/react';
+import Link from 'next/link';
+import { Input } from '../ui/input';
 
 const Header = () => {
   const { data } = useSession();
   const router = useRouter();
+
   const ACTIVITIES_ITEMS = [
     {
       label: 'Quyên góp tiền',
       href: '/',
+      icon: '💰',
     },
     {
       label: 'Đăng ký tình nguyện viên',
       href: '/',
+      icon: '🤝',
     },
     {
       label: 'Quyên góp và ĐKTNV',
       href: '/',
+      icon: '❤️',
     },
   ];
 
   const CATEGORY_ITEMS = [
     {
       label: 'Chiến dịch',
-      href: '/',
+      href: '/projects',
+      icon: '📢',
     },
     {
       label: 'Tổ chức gây quỹ',
-      href: '/',
+      href: '/organizations',
+      icon: '🏢',
     },
     {
       label: 'Cá nhân gây quỹ',
-      href: '/',
+      href: '/individuals',
+      icon: '👤',
     },
   ];
 
   const ABOUT_US_ITEMS = [
     {
       label: 'Thông tin chung',
-      href: '/home',
+      href: '/about-us',
+      icon: 'ℹ️',
     },
     {
       label: 'Hướng dẫn quyên góp',
       href: '/',
+      icon: '📖',
     },
     {
       label: 'Chính sách bảo mật',
       href: '/privacy-policy',
+      icon: '🔒',
     },
     {
       label: 'Liên hệ',
       href: '/contact',
+      icon: '📞',
     },
   ];
 
   const renderMenu = (
-    menuItems: { label: string; href: string }[],
+    menuItems: { label: string; href: string; icon: string }[],
     header: string
   ) => {
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant='outline'>{header}</Button>
+          <Button
+            variant='ghost'
+            className='font-medium text-lg hover:bg-primary/10 hover:text-primary transition-colors'
+          >
+            <span>{header}</span>
+            <ChevronDownIcon className='ml-1 h-6 w-6' />
+          </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className='w-52' side='bottom' align='end'>
-          {menuItems.map(
-            ({ href, label }: { href: string; label: string }, index) => (
-              <React.Fragment key={index}>
-                <DropdownMenuItem onClick={() => router.push(href)}>
-                  {label}
-                </DropdownMenuItem>
-                {index < menuItems.length - 1 && <DropdownMenuSeparator />}
-              </React.Fragment>
-            )
-          )}
+        <DropdownMenuContent className='w-64' side='bottom' align='center'>
+          {menuItems.map(({ href, label, icon }, index) => (
+            <React.Fragment key={index}>
+              <DropdownMenuItem
+                onClick={() => router.push(href)}
+                className='py-3 text-base cursor-pointer hover:bg-primary/10'
+              >
+                <span className='mr-2 text-xl'>{icon}</span>
+                {label}
+              </DropdownMenuItem>
+              {index < menuItems.length - 1 && <DropdownMenuSeparator />}
+            </React.Fragment>
+          ))}
         </DropdownMenuContent>
       </DropdownMenu>
     );
@@ -97,29 +124,75 @@ const Header = () => {
   };
 
   return (
-    <div className='w-full h-[76px] border-b'>
-      <div className='container 2xl:max-w-[1200px] flex m-auto justify-around items-center h-full'>
-        <Image
-          className='w-auto h-8 lg:h-10'
-          src={logo.src}
-          width={48}
-          height={48}
-          alt=''
-        />
-        <div className='flex gap-16'>
-          {renderMenu(CATEGORY_ITEMS, 'Ủng hộ')}
-          {renderMenu(ACTIVITIES_ITEMS, 'Chiến dịch')}
-          {renderMenu(ABOUT_US_ITEMS, 'Về chúng tôi')}
+    <header className='w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 sticky top-0 z-50'>
+      <nav className='container 2xl:max-w-[1200px] mx-auto h-16 flex items-center justify-between px-4'>
+        <div className='flex items-center gap-6'>
+          <Link href='/home' className='flex items-center gap-2'>
+            <Image
+              src={logo}
+              alt='Logo'
+              width={48}
+              height={48}
+              className='object-contain'
+            />
+            <span className='font-bold text-xl text-primary'>SGUCharity</span>
+          </Link>
+          <div className='flex items-center gap-4 pl-[255px]'>
+            {renderMenu(CATEGORY_ITEMS, 'Danh mục')}
+            {renderMenu(ACTIVITIES_ITEMS, 'Hoạt động')}
+            {renderMenu(ABOUT_US_ITEMS, 'Về chúng tôi')}
+          </div>
         </div>
-        {data?.user ? (
-          <Button onClick={logout}>Logout</Button>
-        ) : (
-          <Button variant={'ghost'} onClick={() => router.push('/login')}>
-            <LogInIcon /> Đăng nhập
-          </Button>
-        )}
-      </div>
-    </div>
+
+        <div className='flex items-center gap-4'>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant='ghost'
+                size='icon'
+                className='hover:bg-primary/10'
+              >
+                <SearchIcon className='h-6 w-6' />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className='w-80 p-2' align='end'>
+              <div className='relative'>
+                <Input
+                  type='text'
+                  placeholder='Tìm kiếm dự án thiện nguyện...'
+                  className='w-full pl-4 pr-10 py-2'
+                  autoFocus
+                />
+                <SearchIcon className='absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400' />
+              </div>
+            </DropdownMenuContent>
+            <Button variant='ghost' size='icon' className='hover:bg-primary/10'>
+              <BellIcon className='h-6 w-6' />
+            </Button>
+          </DropdownMenu>
+
+          {data ? (
+            <Button
+              variant='ghost'
+              className='gap-2 hover:bg-primary/10'
+              onClick={logout}
+            >
+              <LogOutIcon className='h-6 w-6' />
+              Đăng xuất
+            </Button>
+          ) : (
+            <Button
+              variant='default'
+              className='gap-2'
+              onClick={() => router.push('/login')}
+            >
+              <LogInIcon className='h-6 w-6' />
+              Đăng nhập
+            </Button>
+          )}
+        </div>
+      </nav>
+    </header>
   );
 };
 
