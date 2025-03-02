@@ -5,10 +5,12 @@ import { useEffect } from 'react';
 
 const useAxiosAuth = () => {
   const session = useSession();
+  console.log(session);
+
   useEffect(() => {
     const requestInterceptor = apiAuth.interceptors.request.use((config) => {
       if (!config.headers.Authorization) {
-        config.headers.Authorization = `Bearer ${session?.data?.accessToken}`;
+        config.headers.Authorization = `Bearer ${session?.data?.user?.accessToken}`;
       }
       return config;
     });

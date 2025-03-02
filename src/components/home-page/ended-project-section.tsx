@@ -152,7 +152,7 @@ const EndedProjectSection = () => {
               key={item.id}
               className='rounded-lg overflow-hidden h-[400px]'
             >
-              <ProjectItem key={item.id} data={item} />
+              {/* <ProjectItem key={item.id} data={item} /> */}
             </SwiperSlide>
           ))}
         </Swiper>

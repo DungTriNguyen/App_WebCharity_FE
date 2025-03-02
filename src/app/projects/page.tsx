@@ -39,13 +39,6 @@ const ProjectPage = ({
 }) => {
   const currentFilter = searchParams.filter || 'all';
 
-  const session = useSession();
-  console.log(session);
-
-  const { data } = useGetProjectQuery();
-
-  console.log(data);
-
   return (
     <div className='container 2xl:max-w-[1200px] mx-auto py-16'>
       <div className='flex justify-center gap-8 mb-10'>
@@ -123,7 +116,7 @@ const ProjectPage = ({
           <SearchIcon className='absolute right-4 top-0 bottom-0 m-auto' />
         </div>
       </div>
-      <ProjectList filter={currentFilter} />
+      {/* <ProjectList filter={currentFilter} /> */}
     </div>
   );
 };

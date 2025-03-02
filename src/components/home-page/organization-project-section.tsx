@@ -140,7 +140,7 @@ const OrganizationProjectSection = () => {
           >
             {projects.map((item) => (
               <SwiperSlide key={item.id}>
-                <ProjectItem key={item.id} data={item} />
+                {/* <ProjectItem key={item.id} data={item} /> */}
               </SwiperSlide>
             ))}
             <div className='swiper-pagination !bottom-[-20px]' />

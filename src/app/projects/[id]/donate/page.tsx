@@ -44,9 +44,7 @@ const DonatePage = () => {
             </div>
           </div>
           <Separator />
-          <div className='p-4'>
-            <ProjectItem data={projectData} />
-          </div>
+          <div className='p-4'>{/* <ProjectItem data={projectData} /> */}</div>
         </Card>
       </div>
       <div className='w-3/5'>
