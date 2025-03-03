@@ -4,7 +4,7 @@ import ProjectItem from './project-item';
 import { useGetProjectQuery } from '@/hooks/use-project';
 
 const ProjectList = () => {
-  const { data } = useGetProjectQuery();
+  const { data } = useGetProjectQuery({});
   console.log(data);
 
   const projects = [

@@ -7,100 +7,12 @@ import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { useGetProjectQuery } from '@/hooks/use-project';
+import { CAMPAIGN_ROLE } from '@/app/enum';
 
 const IndividualProjectSection = () => {
-  const projects = [
-    {
-      id: 1,
-      title: 'Chiến dịch 1',
-      description: 'Mô tả chiến dịch 1',
-      image: 'https://via.placeholder.com/150',
-      raised: 1000000,
-      goal: 2000000,
-      timeLeft: 10,
-      details: [
-        {
-          unit: 'tình nguyện viên',
-          current: 15,
-          total: 20,
-          label: 'đăng ký tình nguyện',
-          count: 10,
-        },
-      ],
-    },
-    {
-      id: 2,
-      title: 'Chiến dịch 2',
-      description: 'Mô tả chiến dịch 2',
-      image: 'https://via.placeholder.com/150',
-      raised: 1000000,
-      goal: 2000000,
-      timeLeft: 10,
-      details: [
-        {
-          unit: 'tình nguyện viên',
-          current: 15,
-          total: 20,
-          label: 'đăng ký tình nguyện',
-          count: 10,
-        },
-      ],
-    },
-    {
-      id: 3,
-      title: 'Chiến dịch 2',
-      description: 'Mô tả chiến dịch 2',
-      image: 'https://via.placeholder.com/150',
-      raised: 1000000,
-      goal: 2000000,
-      timeLeft: 10,
-      details: [
-        {
-          unit: 'tình nguyện viên',
-          current: 15,
-          total: 20,
-          label: 'đăng ký tình nguyện',
-          count: 10,
-        },
-      ],
-    },
-    {
-      id: 4,
-      title: 'Chiến dịch 2',
-      description: 'Mô tả chiến dịch 2',
-      image: 'https://via.placeholder.com/150',
-      raised: 1000000,
-      goal: 2000000,
-      timeLeft: 10,
-      details: [
-        {
-          unit: 'tình nguyện viên',
-          current: 15,
-          total: 20,
-          label: 'đăng ký tình nguyện',
-          count: 10,
-        },
-      ],
-    },
-    {
-      id: 5,
-      title: 'Chiến dịch 2',
-      description: 'Mô tả chiến dịch 2',
-      image: 'https://via.placeholder.com/150',
-      raised: 1000000,
-      goal: 2000000,
-      timeLeft: 10,
-      details: [
-        {
-          unit: 'tình nguyện viên',
-          current: 15,
-          total: 20,
-          label: 'đăng ký tình nguyện',
-          count: 10,
-        },
-      ],
-    },
-  ];
+  const { data } = useGetProjectQuery({ role: CAMPAIGN_ROLE.INDIVIDUAL });
+
   return (
     <div>
       {/* <h3 className='text-3xl font-bold text-center'>
@@ -138,9 +50,9 @@ const IndividualProjectSection = () => {
             loop={true}
             className='relative'
           >
-            {projects.map((item) => (
+            {data?.data?.map((item: TCampaign) => (
               <SwiperSlide key={item.id}>
-                {/* <ProjectItem key={item.id} data={item} /> */}
+                <ProjectItem key={item.id} data={item} />
               </SwiperSlide>
             ))}
             <div className='swiper-pagination !bottom-[-20px]' />

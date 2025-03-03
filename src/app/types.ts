@@ -1,3 +1,5 @@
+import { CAMPAIGN_ROLE, CAMPAIGN_TYPE } from './enum';
+
 type TCampaignDetail = {
   unit: string;
   current: number;
@@ -41,3 +43,10 @@ type TDonatedData = {
   amount: string;
   updatedAt: string;
 };
+
+type TCampaignType =
+  | CAMPAIGN_TYPE.DONATE
+  | CAMPAIGN_TYPE.VOLUNTEER
+  | CAMPAIGN_TYPE.MULTIPLE;
+
+type TCampaignRole = CAMPAIGN_ROLE.ORIGANIZATION | CAMPAIGN_ROLE.INDIVIDUAL;
