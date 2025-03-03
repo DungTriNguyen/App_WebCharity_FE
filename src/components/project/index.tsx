@@ -1,8 +1,12 @@
 'use client';
 import React from 'react';
 import ProjectItem from './project-item';
+import { useGetProjectQuery } from '@/hooks/use-project';
 
 const ProjectList = () => {
+  const { data } = useGetProjectQuery();
+  console.log(data);
+
   const projects = [
     {
       id: 1,
@@ -137,7 +141,7 @@ const ProjectList = () => {
   return (
     <div className='mt-8'>
       <ul className='grid grid-cols-3 gap-8'>
-        {projects.map((item) => {
+        {data?.data.map((item) => {
           return <ProjectItem key={item.id} data={item} />;
         })}
       </ul>

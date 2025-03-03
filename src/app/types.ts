@@ -8,13 +8,31 @@ type TCampaignDetail = {
 
 type TCampaign = {
   id: number;
-  title: string;
-  description: string;
-  image: string;
-  raised: number;
-  goal: number;
-  timeLeft: number;
-  details: TCampaignDetail[];
+  is_organization: boolean;
+  is_individual: boolean;
+  front_status: number;
+  front_status_label: string; // "Đã kết thúc"
+  category: {
+    id: number;
+    name: string; // "Người cao tuổi"
+    icon: string; // SVG string
+    status: number;
+    projects_count: number | null;
+  };
+  name: string; // "Nhóm 1"
+  type: string; // "Quyên góp và tình nguyện"
+  background_image: string; // URL
+  donation_percent: number;
+  donations_sum_amount: string | null;
+  donations_sum_amount_formatted: string; // "0đ"
+  donation_target: string; // "100000000.0000"
+  donations_count: number;
+  volunteer_percent: number;
+  volunteers_without_canceled_count: number;
+  volunteer_quantity: number;
+  diff_date: string; // "Đã kết thúc"
+  start_date: string; // "19/02/2025 | 12:00"
+  end_date: string; // "23/02/2025 | 12:00"
 };
 
 type TDonatedData = {
