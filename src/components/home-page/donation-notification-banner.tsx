@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
-import { useKeenSlider } from 'keen-slider/react';
-import 'keen-slider/keen-slider.min.css';
+import React, { useState } from 'react';
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from 'swiper/modules';
 
 interface DonationNotification {
   id: string;
@@ -27,61 +27,56 @@ const DonationNotificationBanner: React.FC = () => {
       avatarUrl: '/member.png',
       timestamp: '4 phút trước',
     },
-    // Add more sample notifications here
   ]);
 
-  const [sliderRef] = useKeenSlider<HTMLDivElement>({
-    vertical: true,
-    loop: true,
-    slides: {
-      perView: 1,
-      spacing: 10,
-    },
-    dragSpeed: 1,
-    mode: 'free-snap',
-  });
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      // Simulate fetching new notifications in a real app
-      // Here you would call an API to get the latest donations
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <div className='w-full bg-gray-100 py-2 overflow-hidden'>
-      <div ref={sliderRef} className='keen-slider h-20'>
-        {notifications.map((notification) => (
-          <div
-            key={notification.id}
-            className='keen-slider__slide flex items-center space-x-3 px-4 py-2'
+    <div className='w-full'>
+      <Swiper
+        style={
+          {
+            '--swiper-navigation-color': '#fff',
+            '--swiper-pagination-color': '#00A7EF',
+            '--swiper-pagination-bottom': '0',
+            'swiper-navigation-disabled': true,
+          } as React.CSSProperties
+        }
+        loop={true}
+        spaceBetween={24}
+        navigation={false}
+        slidesPerView={1}
+        modules={[Autoplay]}
+        className='mySwiper2 h-20'
+        pagination={{
+          clickable: false,
+        }}
+        direction={'vertical'}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
+        simulateTouch={false}
+      >
+        {notifications.map((item) => (
+          <SwiperSlide
+            key={item.id}
+            className='rounded-lg overflow-hidden h-ful'
           >
-            <div className='relative w-12 h-12 rounded-full overflow-hidden'>
-              <Image
-                src={notification.avatarUrl}
-                alt={notification.username}
-                layout='fill'
-                objectFit='cover'
-                className='rounded-full'
-              />
-            </div>
-            <div className='flex-grow'>
-              <p className='text-sm'>
-                <span className='font-bold'>{notification.username}</span>
-                <span className='text-gray-600 ml-1'>vừa ủng hộ</span>
-                {notification.message && (
-                  <span className='text-gray-700 ml-1'>
-                    {notification.message}
+            <div className='flex gap-4 p-4'>
+              <div className='h-12 w-12 rounded-full bg-pink-300 flex-none'></div>
+              <div>
+                <p className='line-clamp-1'>
+                  <span className='font-bold'>{item.username}</span>
+                  <span> vừa ủng hộ </span>
+                  <span className='text-orange-500 font-bold'>
+                    {item.message}
                   </span>
-                )}
-              </p>
-              <p className='text-xs text-gray-500'>{notification.timestamp}</p>
+                </p>
+                <p className='italic'>{item.timestamp}</p>
+              </div>
             </div>
-          </div>
+          </SwiperSlide>
         ))}
-      </div>
+      </Swiper>
     </div>
   );
 };

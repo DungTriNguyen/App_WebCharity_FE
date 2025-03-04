@@ -32,7 +32,9 @@ const HomePage = () => {
     <>
       <div className='bg-main-banner h-screen w-full relative'>
         {/* Notification Banner */}
-        <DonationNotificationBanner />
+        <div className='absolute left-10 top-10 bg-white h-20 w-1/3 rounded-full overflow-hidden'>
+          <DonationNotificationBanner />
+        </div>
         <div className='absolute top-0 left-0 bottom-0 right-0 bg-black opacity-10'></div>
       </div>
       <div className='container 2xl:max-w-[1200px] mx-auto flex flex-col gap-8'>
