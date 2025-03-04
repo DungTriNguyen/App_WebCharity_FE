@@ -12,55 +12,58 @@ import {
   Activity,
   Users,
 } from 'lucide-react';
-
-const categories = [
-  {
-    icon: Shield,
-    label: 'Xóa đói',
-  },
-  {
-    icon: Baby,
-    label: 'Trẻ em',
-  },
-  {
-    icon: PersonStanding,
-    label: 'Người cao tuổi',
-  },
-  {
-    icon: Heart,
-    label: 'Người nghèo',
-  },
-  {
-    icon: Heart,
-    label: 'Người nghèo',
-  },
-  {
-    icon: Heart,
-    label: 'Người nghèo',
-  },
-  {
-    icon: Heart,
-    label: 'Người nghèo',
-  },
-  {
-    icon: Heart,
-    label: 'Người nghèo',
-  },
-  {
-    icon: Heart,
-    label: 'Người nghèo',
-  },
-  {
-    icon: Activity,
-    label: 'Bệnh hiểm nghèo',
-  },
-  {
-    icon: Users,
-    label: 'Dân tộc thiểu số',
-  },
-];
+import { useGetCategoryQuery } from '@/hooks/use-categories';
 
 const CampaignSlider = () => {
+  const { data: category } = useGetCategoryQuery();
+  console.log('day la categories:', category);
+  // const categories = [
+  //   {
+  //     icon: Shield,
+  //     label: 'Xóa đói',
+  //   },
+  //   {
+  //     icon: Baby,
+  //     label: 'Trẻ em',
+  //   },
+  //   {
+  //     icon: PersonStanding,
+  //     label: 'Người cao tuổi',
+  //   },
+  //   {
+  //     icon: Heart,
+  //     label: 'Người nghèo',
+  //   },
+  //   {
+  //     icon: Heart,
+  //     label: 'Người nghèo',
+  //   },
+  //   {
+  //     icon: Heart,
+  //     label: 'Người nghèo',
+  //   },
+  //   {
+  //     icon: Heart,
+  //     label: 'Người nghèo',
+  //   },
+  //   {
+  //     icon: Heart,
+  //     label: 'Người nghèo',
+  //   },
+  //   {
+  //     icon: Heart,
+  //     label: 'Người nghèo',
+  //   },
+  //   {
+  //     icon: Activity,
+  //     label: 'Bệnh hiểm nghèo',
+  //   },
+  //   {
+  //     icon: Users,
+  //     label: 'Dân tộc thiểu số',
+  //   },
+  // ];
+
   return (
     <div className='relative [&_.swiper-button-prev]:top-[35%] [&_.swiper-button-next]:top-[35%] [&_.swiper-button-prev]:text-[#0BAEFF] [&_.swiper-button-next]:text-[#0BAEFF] py-12 [&_.swiper-button-prev]:scale-50 [&_.swiper-button-next]:scale-50 [&_.swiper-button-prev]::after:text-sm [&_.swiper-button-next]::after:text-sm'>
       <div className='[&>.swiper]:px-[25px]'>
@@ -85,19 +88,37 @@ const CampaignSlider = () => {
           }}
           className='relative'
         >
-          {categories.map((category, index) => (
-            <SwiperSlide
-              key={index}
-              className='flex items-center justify-between gap-2 cursor-pointer group py-4 px-[25px]'
-            >
-              <div className='p-2.5 rounded-full bg-[#0BAEFF]/10 group-hover:bg-[#0BAEFF] transition-colors'>
-                <category.icon className='w-5 h-5 text-[#0BAEFF] group-hover:text-white' />
-              </div>
-              <span className='text-sm text-gray-600 group-hover:text-[#0BAEFF] transition-colors'>
-                {category.label}
-              </span>
-            </SwiperSlide>
-          ))}
+          {category?.data?.map((categories: any) => {
+            // Function to modify SVG with custom classes
+            const customizeSvg = (svgString: string) => {
+              if (!svgString) return '';
+
+              // Add custom classes and potentially modify other attributes
+              return svgString.replace(
+                '<svg',
+                `<svg 
+      class="w-5 h-5 text-[#0BAEFF] group-hover:text-white"`
+              );
+            };
+            return (
+              <SwiperSlide
+                key={categories.id}
+                className='flex items-center justify-between gap-2 cursor-pointer group py-4 px-[25px]'
+              >
+                <div
+                  className='p-2.5 rounded-full bg-[#0BAEFF]/10 group-hover:bg-[#ffffff] transition-colors '
+                  dangerouslySetInnerHTML={{
+                    __html: customizeSvg(categories.icon),
+                  }}
+                >
+                  {/* <categories.icon className='w-5 h-5 text-[#0BAEFF] group-hover:text-white' /> */}
+                </div>
+                <span className='text-sm text-gray-600 group-hover:text-[#0BAEFF] transition-colors'>
+                  {categories.name}
+                </span>
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
       </div>
     </div>

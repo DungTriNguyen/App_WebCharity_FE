@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useAxiosAuth } from './use-axios-auth';
+import { TCampaignType, TCampaignRole } from '@/app/enum';
 
 const useGetProjectQuery = ({
   type,

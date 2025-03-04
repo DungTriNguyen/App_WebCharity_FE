@@ -1,35 +1,38 @@
 import React from 'react';
+import { useGetStatisticQuery } from '@/hooks/use-statistic';
 
 const ArchivementSection = () => {
+  const { data: statistics } = useGetStatisticQuery();
+  console.log('day la statistic:', statistics);
   const archievements = [
     {
       label: 'Tổ chức',
-      value: '235',
+      value: statistics?.data.organization_count || 0,
       color: '#999EF6',
     },
     {
       label: 'Cá nhân',
-      value: '1.240',
+      value: statistics?.data.individual_count || 0,
       color: '#17CAD7',
     },
     {
       label: 'Chiến dịch',
-      value: '6.347',
+      value: statistics?.data.project_count || 0,
       color: '#FF6D6D',
     },
     {
       label: 'Thành viên',
-      value: '235',
+      value: statistics?.data.user_count || 0,
       color: '#0CA55C',
     },
     {
       label: 'Lượt ủng hộ',
-      value: '235',
+      value: statistics?.data.donation_count || 0,
       color: '#FF9D2D',
     },
     {
       label: 'Số tiền (tỷ đồng)',
-      value: '235',
+      value: statistics?.data.donation_count || 0,
       color: '#7AB6FC',
     },
   ];
