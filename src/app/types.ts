@@ -50,3 +50,21 @@ type TCampaignType =
   | CAMPAIGN_TYPE.MULTIPLE;
 
 type TCampaignRole = CAMPAIGN_ROLE.ORIGANIZATION | CAMPAIGN_ROLE.INDIVIDUAL;
+
+export type TContactFormData = {
+  name: string;
+  email: string;
+  phone?: string;
+  message: string;
+};
+
+export type TStatisticData = {
+  organization_count: number;
+  individual_count: number;
+  user_count: number;
+  project_count: number;
+  donation_count: number;
+  total_donation_amount: number;
+};
+
+export type TSCategotyData = {};

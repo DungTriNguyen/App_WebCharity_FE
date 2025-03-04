@@ -11,7 +11,10 @@ import { useGetProjectQuery } from '@/hooks/use-project';
 import { CAMPAIGN_ROLE, CAMPAIGN_TYPE } from '@/app/enum';
 
 const OrganizationProjectSection = () => {
-  const { data } = useGetProjectQuery({ role: CAMPAIGN_ROLE.ORIGANIZATION });
+  const { data } = useGetProjectQuery({
+    role: CAMPAIGN_ROLE.ORIGANIZATION,
+    type: CAMPAIGN_TYPE.MULTIPLE,
+  });
   // const projects = [
   //   {
   //     id: 1,

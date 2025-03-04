@@ -8,10 +8,13 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { useGetProjectQuery } from '@/hooks/use-project';
-import { CAMPAIGN_ROLE } from '@/app/enum';
+import { CAMPAIGN_ROLE, CAMPAIGN_TYPE } from '@/app/enum';
 
 const IndividualProjectSection = () => {
-  const { data } = useGetProjectQuery({ role: CAMPAIGN_ROLE.INDIVIDUAL });
+  const { data } = useGetProjectQuery({
+    role: CAMPAIGN_ROLE.INDIVIDUAL,
+    type: CAMPAIGN_TYPE.MULTIPLE,
+  });
 
   return (
     <div>

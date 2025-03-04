@@ -7,6 +7,7 @@ import SocialInfoSection from '@/components/home-page/social-info-section';
 import { Separator } from '@/components/ui/separator';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
+import DonationNotificationBanner from '@/components/home-page/donation-notification-banner';
 
 // phần em chỉnh
 import CategoriesProjectsList from '@/components/home-page/categories-projects-list';
@@ -31,27 +32,7 @@ const HomePage = () => {
     <>
       <div className='bg-main-banner h-screen w-full relative'>
         {/* Notification Banner */}
-        <div className='absolute top-8 left-8 bg-white/90 backdrop-blur rounded-2xl shadow-lg p-4 max-w-md w-full z-10 items-between justify-between'>
-          <div className='flex items-center gap-4'>
-            <div className='relative w-12 h-12'>
-              <Image
-                src={recentDonation.user.avatar}
-                alt='User Avatar'
-                fill
-                className='rounded-full object-cover'
-              />
-            </div>
-            <div>
-              <p className='font-medium text-base'>
-                {recentDonation.user.name}
-              </p>
-              <p className='text-sm text-gray-600'>
-                Đã ủng hộ {recentDonation.amount.toLocaleString()} VND
-              </p>
-              <p className='text-sm text-gray-500'>{recentDonation.time}</p>
-            </div>
-          </div>
-        </div>
+        <DonationNotificationBanner />
         <div className='absolute top-0 left-0 bottom-0 right-0 bg-black opacity-10'></div>
       </div>
       <div className='container 2xl:max-w-[1200px] mx-auto flex flex-col gap-8'>
