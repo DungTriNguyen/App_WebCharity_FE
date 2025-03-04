@@ -1,7 +1,9 @@
+'use client';
 import React, { useState } from 'react';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
+import { useDonationQuery } from '@/hooks/use-donation';
 
 interface DonationNotification {
   id: string;
@@ -12,6 +14,9 @@ interface DonationNotification {
 }
 
 const DonationNotificationBanner: React.FC = () => {
+  const { data } = useDonationQuery({ page: 1, limit: 5 });
+  console.log(data);
+
   const [notifications, setNotifications] = useState<DonationNotification[]>([
     {
       id: '1',
