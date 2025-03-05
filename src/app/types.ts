@@ -1,4 +1,4 @@
-import { CAMPAIGN_ROLE, CAMPAIGN_TYPE } from './enum';
+// import { CAMPAIGN_ROLE, CAMPAIGN_TYPE } from './enum';
 
 type TCampaignDetail = {
   unit: string;
@@ -44,21 +44,14 @@ type TDonatedData = {
   updatedAt: string;
 };
 
-type TCampaignType =
-  | CAMPAIGN_TYPE.DONATE
-  | CAMPAIGN_TYPE.VOLUNTEER
-  | CAMPAIGN_TYPE.MULTIPLE;
-
-type TCampaignRole = CAMPAIGN_ROLE.ORIGANIZATION | CAMPAIGN_ROLE.INDIVIDUAL;
-
-export type TContactFormData = {
+type TContactFormData = {
   name: string;
   email: string;
   phone?: string;
   message: string;
 };
 
-export type TStatisticData = {
+type TStatisticData = {
   organization_count: number;
   individual_count: number;
   user_count: number;
@@ -67,4 +60,4 @@ export type TStatisticData = {
   total_donation_amount: number;
 };
 
-export type TSCategotyData = {};
+type TSCategotyData = {};

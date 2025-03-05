@@ -8,7 +8,3 @@ export enum CAMPAIGN_ROLE {
   ORIGANIZATION = 'tổ chức gây quỹ',
   INDIVIDUAL = 'cá nhân gây quỹ',
 }
-
-// Type aliases for the enums
-export type TCampaignType = CAMPAIGN_TYPE;
-export type TCampaignRole = CAMPAIGN_ROLE;

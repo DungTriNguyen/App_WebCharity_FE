@@ -5,7 +5,6 @@ import { useEffect } from 'react';
 
 const useAxiosAuth = () => {
   const session = useSession();
-  console.log(session);
 
   useEffect(() => {
     const requestInterceptor = apiAuth.interceptors.request.use((config) => {
