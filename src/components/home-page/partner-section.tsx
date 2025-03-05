@@ -2,14 +2,14 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { SETTING_TYPE } from '@/app/enum';
-import { useGetCompanionUnitQuery } from '@/hooks/use-companion-unit';
+import { useGetSettingPage } from '@/hooks/use-setting';
 
 const PartnerSection: React.FC = () => {
   const {
     data: companionUnit,
     isLoading,
     isError,
-  } = useGetCompanionUnitQuery({
+  } = useGetSettingPage({
     key: SETTING_TYPE.COMPANION_UNIT,
   });
 

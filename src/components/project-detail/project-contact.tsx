@@ -7,16 +7,25 @@ import FacebookIcon from '../icons/facebook-icon';
 import Link from 'next/link';
 import GmailIcon from '../icons/gmail-icon';
 import TelephoneIcon from '../icons/telephone-icon';
+import { TCampaign } from '@/app/types';
 
-const ProjectContact = () => {
+const ProjectContact = ({ project }: { project: TCampaign }) => {
   return (
     <Card className='p-6 flex flex-col gap-2'>
       <h4>Thông tin tổ chức / cá nhân vận động chiến dịch </h4>
       <div className='flex gap-2 items-center'>
-        <Image alt='' width={48} height={48} src={redCrossLogo.src} />
+        <Image
+          alt='avatar'
+          width={48}
+          height={48}
+          src={project?.user?.avatar_url}
+          className='rounded-full'
+        />
         <div>
-          <p>Hội chữ thập đỏ Việt Nam</p>
-          <Badge className='rounded-full'>Tổ chức</Badge>
+          <p>{project?.user?.name}</p>
+          <Badge className='rounded-full'>
+            {project?.is_organization ? 'Tổ chức' : 'Cá nhân'}
+          </Badge>
         </div>
       </div>
       <div className='flex gap-2 items-center'>

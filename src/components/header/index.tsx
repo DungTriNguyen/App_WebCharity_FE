@@ -72,13 +72,13 @@ const Header = () => {
       icon: 'ℹ️',
     },
     {
-      label: 'Hướng dẫn quyên góp',
-      href: '/',
+      label: 'Điều khoản ',
+      href: '/terms',
       icon: '📖',
     },
     {
       label: 'Chính sách bảo mật',
-      href: '/privacy-policy',
+      href: '/policy',
       icon: '🔒',
     },
     {

@@ -12,29 +12,46 @@ export type TCampaign = {
   id: number;
   is_organization: boolean;
   is_individual: boolean;
-  front_status: number;
+  front_status: string;
   front_status_label: string; // "Đã kết thúc"
   category: {
     id: number;
-    name: string; // "Người cao tuổi"
-    icon: string; // SVG string
+    name: string | null; // "Người cao tuổi"
+    icon: string | null; // SVG string
     status: number;
-    projects_count: number | null;
+    projects_count: number;
   };
-  name: string; // "Nhóm 1"
+  user: {
+    id: number;
+    name: string | null;
+    username: string | null;
+    email: string | null;
+    phone_number: string | null;
+    birth_of_date: string | null;
+    status: number;
+    status_label: string;
+    status_badge: string;
+    gender: string;
+    address: string | null;
+    avatar_url: string;
+    description: string | null;
+  };
+  name: string | null; // "Nhóm 1"
   type: string; // "Quyên góp và tình nguyện"
   background_image: string; // URL
-  donation_percent: number;
-  donations_sum_amount: string | null;
+  related_images: string[]; // URL
+  content: string | null;
+  donation_percent: number | null;
+  donations_sum_amount: string;
   donations_sum_amount_formatted: string; // "0đ"
-  donation_target: string; // "100000000.0000"
-  donations_count: number;
-  volunteer_percent: number;
-  volunteers_without_canceled_count: number;
-  volunteer_quantity: number;
-  diff_date: string; // "Đã kết thúc"
-  start_date: string; // "19/02/2025 | 12:00"
-  end_date: string; // "23/02/2025 | 12:00"
+  donation_target: string | null; // "100000000.0000"
+  donations_count: string;
+  volunteer_percent: number | null;
+  volunteers_without_canceled_count: string;
+  volunteer_quantity: number | null;
+  diff_date: string | null; // "Đã kết thúc"
+  start_date: string | null; // "19/02/2025 | 12:00"
+  end_date: string | null; // "23/02/2025 | 12:00"
 };
 
 type TDonatedData = {
@@ -224,5 +241,66 @@ export type TSSetting = {
     value: string | null;
     image: string;
     images: [string];
+  };
+};
+
+export type TSVolunteer = {
+  data: {
+    id: number;
+    user: {
+      id: number;
+      name: string;
+      username: string;
+      email: string;
+      phone_number: string | null;
+      birth_of_date: string | null;
+      status: number;
+      status_label: string;
+      status_badge: string;
+      gender: string;
+      address: string | null;
+      avatar_url: string;
+      description: string | null;
+    };
+    project: {
+      id: number;
+      category_id: number;
+      user_id: number;
+      name: string;
+      donation_target: string;
+      volunteer_quantity: number;
+      start_date: string;
+      end_date: string;
+      content: string;
+      status: number;
+      type: string;
+      created_at: string;
+      updated_at: string;
+      background_image: string;
+      related_images: [];
+      front_status: null;
+      media: [];
+    };
+    department: {
+      id: number;
+      code: string;
+      name: string;
+      description: string;
+      status: number;
+      created_at: string;
+      updated_at: string | null;
+      thumbnail_url: string;
+      media: [];
+    };
+    name: string;
+    email: string;
+    phone_number: string | null;
+    note: string | null;
+    student_code: string;
+    class: string;
+    status: number;
+    status_label: string;
+    status_badge: string;
+    created_at: string;
   };
 };

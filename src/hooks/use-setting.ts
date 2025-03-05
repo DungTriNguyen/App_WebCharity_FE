@@ -3,10 +3,10 @@ import { useAxiosAuth } from './use-axios-auth';
 import { SETTING_TYPE } from '@/app/enum';
 import { TSSetting } from '@/app/types';
 
-const useGetCompanionUnitQuery = ({ key }: { key?: SETTING_TYPE }) => {
+const useGetSettingPage = ({ key }: { key?: SETTING_TYPE }) => {
   const apiAuth = useAxiosAuth();
   return useQuery<TSSetting>({
-    queryKey: ['companion_unit', key],
+    queryKey: ['setting_page', key],
     queryFn: async () => {
       try {
         const res = await apiAuth.get(`/setting/value/${key}`);
@@ -20,4 +20,4 @@ const useGetCompanionUnitQuery = ({ key }: { key?: SETTING_TYPE }) => {
   });
 };
 
-export { useGetCompanionUnitQuery };
+export { useGetSettingPage };

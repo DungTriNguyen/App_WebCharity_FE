@@ -6,19 +6,25 @@ import ProjectTab from './project-tab';
 import ProjectStatus from './project-status';
 import ProjectContact from './project-contact';
 import ProjectProcessing from './project-processing';
+import { useGetProjectByID } from '@/hooks/use-project';
+import { TCampaign } from '@/app/types';
 
-const ProjectDetail = () => {
+const ProjectDetail = ({ project_id }: { project_id: number }) => {
+  const { data: projectById } = useGetProjectByID({ project_id });
+  // console.log('get project by id', projectById);
+  // console.log('name content: ', projectById?.content);
+  const project = projectById?.data?.[0];
   return (
     <div className='flex-col 2xl:max-w-[1200px] mx-auto'>
       <div className='container 2xl:max-w-[1200px] mx-auto flex gap-8 my-8'>
         <div className='w-3/5'>
-          <h3 className='font-bold text-xl'>Project name</h3>
-          <ProjectSwiper />
-          <ProjectTab />
+          <h3 className='font-bold text-2xl mb-4'>{project?.name}</h3>
+          <ProjectSwiper project={project} />
+          <ProjectTab project={project} />
         </div>
         <div className='w-2/5 flex flex-col gap-4'>
-          <ProjectStatus />
-          <ProjectContact />
+          <ProjectStatus project={project} />
+          <ProjectContact project={project} />
         </div>
       </div>
       <div className='mt-20'>

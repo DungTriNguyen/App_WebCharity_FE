@@ -10,8 +10,10 @@ import { Button } from '../ui/button';
 import { SquareArrowOutUpRightIcon } from 'lucide-react';
 import redCrossLogo from '../../../public/red-cross-logo.png';
 import { useParams, useRouter } from 'next/navigation';
+import { TCampaign } from '@/app/types';
+import { CAMPAIGN_TYPE } from '@/app/enum';
 
-const ProjectStatus = () => {
+const ProjectStatus = ({ project }: { project: TCampaign }) => {
   const params = useParams();
   const router = useRouter();
   console.log(params);
@@ -21,8 +23,14 @@ const ProjectStatus = () => {
       <div>
         <p>Tổ chức / cá nhân đồng hành với chiến dịch </p>
         <div className='flex gap-2 items-center'>
-          <Image alt='' width={48} height={48} src={redCrossLogo.src} />
-          <p>Hội chữ thập đỏ Việt Nam</p>
+          <Image
+            alt='avatar'
+            width={48}
+            height={48}
+            src={project?.user?.avatar_url}
+            className='rounded-full'
+          />
+          <p>{project?.user?.name}</p>
         </div>
       </div>
       <Separator />
@@ -31,48 +39,123 @@ const ProjectStatus = () => {
           <TargetIcon width='40' height='40' />
           <div className='flex flex-col'>
             <span className='text-gray-500'>Mục tiêu chiến dịch</span>
-            <span className='font-bold'>100.000.000 VND</span>
-            <span className='font-bold'>100 tình nguyện viên</span>
+            {project?.type == CAMPAIGN_TYPE.DONATE && (
+              <span className='font-bold'>{project?.donation_target} VND</span>
+            )}
+            {project?.type == CAMPAIGN_TYPE.VOLUNTEER && (
+              <span className='font-bold'>
+                {project?.volunteer_quantity} tình nguyện viên
+              </span>
+            )}
+            {project?.type == CAMPAIGN_TYPE.MULTIPLE && (
+              <>
+                <span className='font-bold'>
+                  {project?.donation_target} VND
+                </span>
+                <span className='font-bold'>
+                  {project?.volunteer_quantity} tình nguyện viên
+                </span>
+              </>
+            )}
           </div>
         </div>
         <div className='flex gap-2'>
           <ClockIcon width='40' height='40' />
           <div className='flex flex-col'>
             <span className='text-gray-500'>Thời gian còn lại</span>
-            <span className='font-bold'>10 ngày</span>
+            <span className='font-bold'>{[project?.diff_date]}</span>
           </div>
         </div>
       </div>
-      <div>
-        <p className='font-bold'>Tiền ủng hộ</p>
-        <Progress value={60} />
-        <div className='flex w-full'>
-          <p>
-            đã đạt được <span className='font-bold'>1500000/1000000 VND</span>
-          </p>
-          <p className='ml-auto'>15%</p>
+      {project?.type == CAMPAIGN_TYPE.DONATE && (
+        <div>
+          <p className='font-bold'>Tiền ủng hộ</p>
+          <Progress value={project?.donation_percent || 0} />
+          <div className='flex w-full'>
+            <p>
+              đã đạt được{' '}
+              <span className='font-bold'>
+                {project?.donations_sum_amount}/{project?.donation_target} VND
+              </span>
+            </p>
+            <p className='ml-auto'>{project?.donation_percent || 0}%</p>
+          </div>
         </div>
-      </div>
-      <div>
-        <p className='font-bold'>Tình nguyện viên</p>
-        <Progress value={60} />
-        <div className='flex w-full'>
-          <p>
-            đã đạt được <span className='font-bold'>15/20 TNV</span>
-          </p>
-          <p className='ml-auto'>15%</p>
+      )}
+      {project?.type == CAMPAIGN_TYPE.VOLUNTEER && (
+        <div>
+          <p className='font-bold'>Tình nguyện viên</p>
+
+          <Progress value={project?.volunteer_percent || 0} />
+          <div className='flex w-full'>
+            <p>
+              đã đạt được{' '}
+              <span className='font-bold'>
+                15/{project.volunteer_quantity} TNV
+              </span>
+            </p>
+            <p className='ml-auto'>{project?.volunteer_percent || 0}%</p>
+          </div>
         </div>
-      </div>
+      )}
+      {project?.type == CAMPAIGN_TYPE.MULTIPLE && (
+        <>
+          <div>
+            <p className='font-bold'>Tiền ủng hộ</p>
+            <Progress value={project?.donation_percent || 0} />
+            <div className='flex w-full'>
+              <p>
+                đã đạt được{' '}
+                <span className='font-bold'>
+                  {project?.donations_sum_amount}/{project?.donation_target} VND
+                </span>
+              </p>
+              <p className='ml-auto'>{project?.donation_percent || 0}%</p>
+            </div>
+          </div>
+          <div>
+            <p className='font-bold'>Tình nguyện viên</p>
+            <Progress value={project?.volunteer_percent || 0} />
+            <div className='flex w-full'>
+              <p>
+                đã đạt được{' '}
+                <span className='font-bold'>
+                  15/{project.volunteer_quantity} TNV
+                </span>
+              </p>
+              <p className='ml-auto'>{project?.volunteer_percent || 0}%</p>
+            </div>
+          </div>
+        </>
+      )}
+
       <div className='flex justify-around'>
-        <Button onClick={() => router.push(`${params.id}/donate`)}>
-          Ủng hộ tiền
-        </Button>
-        <Button
-          variant={'outline'}
-          onClick={() => router.push(`${params.id}/register-volunteer`)}
-        >
-          Tham gia tình nguyện
-        </Button>
+        {project?.type === CAMPAIGN_TYPE.DONATE && (
+          <Button onClick={() => router.push(`${params.id}/donate`)}>
+            Ủng hộ tiền
+          </Button>
+        )}
+        {project?.type === CAMPAIGN_TYPE.VOLUNTEER && (
+          <Button
+            variant={'outline'}
+            onClick={() => router.push(`${params.id}/register-volunteer`)}
+          >
+            Tham gia tình nguyện
+          </Button>
+        )}
+        {project?.type === CAMPAIGN_TYPE.MULTIPLE && (
+          <>
+            <Button onClick={() => router.push(`${params.id}/donate`)}>
+              Ủng hộ tiền
+            </Button>
+            <Button
+              variant={'outline'}
+              onClick={() => router.push(`${params.id}/register-volunteer`)}
+            >
+              Tham gia tình nguyện
+            </Button>
+          </>
+        )}
       </div>
       <Button variant={'link'} className='ml-auto'>
         Chia sẻ để lan tỏa yêu thương <SquareArrowOutUpRightIcon />

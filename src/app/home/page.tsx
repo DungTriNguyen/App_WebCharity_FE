@@ -19,14 +19,14 @@ import React from 'react';
 const HomePage = () => {
   const { data } = useSession();
 
-  const recentDonation = {
-    user: {
-      name: data?.user?.name || 'Người dùng',
-      avatar: data?.user?.image || '/default-avatar.png',
-    },
-    time: '19:07 - 28/02/2025',
-    amount: 500000,
-  };
+  // const recentDonation = {
+  //   user: {
+  //     name: data?.user?.name || 'Người dùng',
+  //     avatar: data?.user?.image || '/default-avatar.png',
+  //   },
+  //   time: '19:07 - 28/02/2025',
+  //   amount: 500000,
+  // };
 
   return (
     <>

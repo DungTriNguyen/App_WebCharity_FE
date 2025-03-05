@@ -1,3 +1,4 @@
+'use client';
 import ProjectItem from '@/components/project/project-item';
 import { Card } from '@/components/ui/card';
 import Image from 'next/image';
@@ -5,8 +6,12 @@ import React from 'react';
 import redCrossLogo from '../../../../../public/red-cross-logo.png';
 import { Separator } from '@/components/ui/separator';
 import DonateForm from '@/components/project-detail/donate-form';
+import { useGetProjectByID } from '@/hooks/use-project';
 
-const DonatePage = () => {
+const DonatePage = ({ params }: { params: { id: number } }) => {
+  const { data: projectById } = useGetProjectByID({ project_id: params.id });
+  const project = projectById?.data?.[0];
+  console.log('donation project token', project);
   const projectData = {
     id: 6,
     title: 'Chiến dịch 2',
@@ -44,7 +49,9 @@ const DonatePage = () => {
             </div>
           </div>
           <Separator />
-          <div className='p-4'>{/* <ProjectItem data={projectData} /> */}</div>
+          <div className='p-4'>
+            <ProjectItem data={projectData} />
+          </div>
         </Card>
       </div>
       <div className='w-3/5'>
