@@ -16,7 +16,7 @@ import { useGetCategoryQuery } from '@/hooks/use-categories';
 
 const CampaignSlider = () => {
   const { data: category } = useGetCategoryQuery();
-  console.log('day la categories:', category);
+  // console.log('day la categories:', category);
   // const categories = [
   //   {
   //     icon: Shield,

@@ -5,7 +5,7 @@ import ProjectTab from './project-tab';
 
 import ProjectStatus from './project-status';
 import ProjectContact from './project-contact';
-import HightLightProject from './project-hightlight';
+import ProjectProcessing from './project-processing';
 
 const ProjectDetail = () => {
   return (
@@ -22,7 +22,7 @@ const ProjectDetail = () => {
         </div>
       </div>
       <div className='mt-20'>
-        <HightLightProject/>
+        <ProjectProcessing />
       </div>
     </div>
   );

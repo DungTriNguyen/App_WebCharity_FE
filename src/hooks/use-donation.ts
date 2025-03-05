@@ -1,9 +1,16 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { useAxiosAuth } from './use-axios-auth';
+import { TApiResponse, TSDonationData } from '../app/types';
 
-const useDonationQuery = ({ limit, page }: { limit: number; page: number }) => {
+const useDonationQuery = ({
+  limit,
+  page,
+}: {
+  limit: number;
+  page: number;
+}): UseQueryResult<TApiResponse<TSDonationData>, Error> => {
   const apiAuth = useAxiosAuth();
-  return useQuery({
+  return useQuery<TApiResponse<TSDonationData>, Error>({
     queryKey: ['get_donations', limit, page],
     queryFn: async () => {
       try {
