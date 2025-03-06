@@ -11,7 +11,7 @@ import { useGetProjectQuery } from '@/hooks/use-project';
 import { TCampaign } from '@/app/types';
 
 const ProjectProcessing = () => {
-  const { data } = useGetProjectQuery({});
+  const { data: project } = useGetProjectQuery({});
   // const projects = [
   //   {
   //     id: 1,
@@ -141,9 +141,9 @@ const ProjectProcessing = () => {
             loop={true}
             className='relative'
           >
-            {data?.data.map((item: TCampaign) => (
+            {project?.data.map((item: TCampaign) => (
               <SwiperSlide key={item.id}>
-                <ProjectItem key={item.id} data={item} />
+                <ProjectItem key={item.id} project={item} />
               </SwiperSlide>
             ))}
             <div className='swiper-pagination !bottom-[-20px]' />

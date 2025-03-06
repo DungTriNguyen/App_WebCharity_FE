@@ -2,37 +2,96 @@ import React from 'react';
 import { Label } from '../ui/label';
 import { CalendarFoldIcon, HandCoinsIcon, HandHeartIcon } from 'lucide-react';
 import { Button } from '../ui/button';
-// import { Progress } from '../ui/progress';
+import { Progress } from '../ui/progress';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
+import { TCampaign } from '@/app/types';
+import { CAMPAIGN_TYPE } from '@/app/enum';
 
-const ProjectItem = ({ data }: { data: TCampaign }) => {
+const ProjectItem = ({ project }: { project: TCampaign }) => {
   return (
     <div className='min-w-[350px]'>
       <div
         className={cn(
           'rounded-xl overflow-hidden h-[300px] bg-opacity-10 bg-cover mb-2 flex flex-col p-2 relative'
         )}
-        style={{ backgroundImage: `url(${data.background_image})` }}
+        style={{ backgroundImage: `url(${project?.background_image})` }}
       >
         <div className='absolute top-0 left-0 right-0 bottom-0 bg-white bg-opacity-20'></div>
         <div className='bg-black text-accent bg-opacity-50 mt-auto rounded-full py-4 px-6 flex gap-2 items-center z-10'>
           <div className='w-full'>
-            {/* {data.details.map((item, index) => {
-              return (
-                <div key={index} className='flex flex-col gap-2 w-full'>
+            {project?.type === CAMPAIGN_TYPE.DONATE && (
+              <div className='flex flex-col gap-2 w-full'>
+                <div className='flex justify-between'>
+                  <span>
+                    {project?.donations_sum_amount || 0}/
+                    {project?.donation_target || 0} VNĐ
+                  </span>
+                  <span>
+                    {Math.floor(
+                      (project?.donations_sum_amount * 100 || 0) /
+                        project?.donation_target || 0
+                    )}
+                    %
+                  </span>
+                </div>
+                <Progress value={project?.donation_percent || 0} />
+              </div>
+            )}
+            {project?.type === CAMPAIGN_TYPE.VOLUNTEER && (
+              <div className='flex flex-col gap-2 w-full'>
+                <div className='flex justify-between'>
+                  <span>
+                    {project?.volunteers_without_canceled_count || 0} /
+                    {project?.volunteer_quantity || 0} TNV
+                  </span>
+                  <span>
+                    {Math.floor(
+                      (project?.volunteers_without_canceled_count * 100 || 0) /
+                        project?.volunteer_quantity || 0
+                    )}
+                    %
+                  </span>
+                </div>
+                <Progress value={project?.volunteer_percent || 0} />
+              </div>
+            )}
+            {project?.type === CAMPAIGN_TYPE.MULTIPLE && (
+              <>
+                <div className='flex flex-col gap-2 w-full'>
                   <div className='flex justify-between'>
                     <span>
-                      {item.current}/{item.total} {item.unit}
+                      {project?.donations_sum_amount || 0}/
+                      {project?.donation_target || 0} VNĐ
                     </span>
                     <span>
-                      {Math.floor((item.current * 100) / item.total)}%
+                      {Math.floor(
+                        (project?.donations_sum_amount * 100 || 0) /
+                          project?.donation_target || 0
+                      )}
+                      %
                     </span>
                   </div>
-                  <Progress value={(item.current * 100) / item.total} />
+                  <Progress value={project?.donation_percent || 0} />
                 </div>
-              );
-            })} */}
+                <div className='flex flex-col gap-2 w-full'>
+                  <div className='flex justify-between'>
+                    <span>
+                      {project?.volunteers_without_canceled_count || 0}/
+                      {project?.volunteer_quantity || 0} TNV
+                    </span>
+                    <span>
+                      {Math.floor(
+                        (project?.volunteers_without_canceled_count * 100 ||
+                          0) / project?.volunteer_quantity || 0
+                      )}
+                      %
+                    </span>
+                  </div>
+                  <Progress value={project?.volunteer_percent || 0} />
+                </div>
+              </>
+            )}
           </div>
           <Button
             size={'icon'}
@@ -44,25 +103,36 @@ const ProjectItem = ({ data }: { data: TCampaign }) => {
         </div>
       </div>
       <Label className='font-bold text-lg mt-2'>
-        <Link href={`/projects/${data.id}`}>{data.name}</Link>
+        <Link href={`/projects/${project?.id}`}>{project?.name}</Link>
       </Label>
       <div className='flex justify-between text-gray-400'>
         <span className='flex gap-1 items-center'>
           <HandHeartIcon strokeWidth={1} />
-          <div>
-            {/* {data.details.map((item, index) => {
-              return (
-                <p key={index}>
-                  {item.count} lượt {item.label}
+          <div className=''>
+            {project?.type === CAMPAIGN_TYPE.DONATE && (
+              <p>{project?.donations_count} lượt ủng hộ</p>
+            )}
+            {project?.type === CAMPAIGN_TYPE.VOLUNTEER && (
+              <p>
+                {project?.volunteers_without_canceled_count} lượt tham gia tình
+                nguyện
+              </p>
+            )}
+            {project?.type === CAMPAIGN_TYPE.MULTIPLE && (
+              <div>
+                <p>{project?.donations_count} lượt ủng hộ</p>
+                <p>
+                  {project?.volunteers_without_canceled_count} lượt tham gia
+                  tình nguyện
                 </p>
-              );
-            })} */}
+              </div>
+            )}
           </div>
         </span>
         <span className='flex gap-1 items-center'>
           <CalendarFoldIcon strokeWidth={1} />
-          {/* {data.timeLeft} ngày */}
-          {data.front_status_label}
+          {project?.diff_date}
+          {/* {project?.front_status_label} */}
         </span>
       </div>
     </div>

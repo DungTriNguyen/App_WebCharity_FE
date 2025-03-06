@@ -8,12 +8,7 @@ const nextConfig: NextConfig = {
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
   },
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'kltnctsv.io.vn',
-      },
-    ],
+    domains: ['kltnctsv.io.vn'],
   },
 };
 

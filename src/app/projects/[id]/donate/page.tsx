@@ -2,14 +2,16 @@
 import ProjectItem from '@/components/project/project-item';
 import { Card } from '@/components/ui/card';
 import Image from 'next/image';
-import React from 'react';
+import React, { use } from 'react';
 import redCrossLogo from '../../../../../public/red-cross-logo.png';
 import { Separator } from '@/components/ui/separator';
 import DonateForm from '@/components/project-detail/donate-form';
 import { useGetProjectByID } from '@/hooks/use-project';
 
-const DonatePage = ({ params }: { params: { id: number } }) => {
-  const { data: projectById } = useGetProjectByID({ project_id: params.id });
+const DonatePage = (props: { params: Promise<{ id: number }> }) => {
+  const params = use(props.params);
+  const { id } = params;
+  const { data: projectById } = useGetProjectByID({ project_id: id });
   const project = projectById?.data?.[0];
   console.log('donation project token', project);
   const projectData = {
@@ -42,15 +44,21 @@ const DonatePage = ({ params }: { params: { id: number } }) => {
       <div className='w-2/5'>
         <Card className='flex flex-col'>
           <div className='flex gap-2 items-center p-4'>
-            <Image alt='' width={48} height={48} src={redCrossLogo.src} />
+            <Image
+              alt=''
+              width={48}
+              height={48}
+              src={project?.user?.avatar_url}
+              className='rounded-full'
+            />
             <div className=''>
               <p>Tiền ủng hộ được chuyển đến</p>
-              <p className='text-primary text-xl'>Hội chữ thập đỏ Việt Nam</p>
+              <p className='text-primary text-xl'>{project?.user?.name}</p>
             </div>
           </div>
           <Separator />
           <div className='p-4'>
-            <ProjectItem data={projectData} />
+            <ProjectItem project={project} />
           </div>
         </Card>
       </div>

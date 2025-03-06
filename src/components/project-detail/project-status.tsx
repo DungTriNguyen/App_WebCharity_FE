@@ -18,6 +18,19 @@ const ProjectStatus = ({ project }: { project: TCampaign }) => {
   const router = useRouter();
   console.log(params);
 
+  function formatCurrencyToVND(value: number): string {
+    return (
+      value
+        .toLocaleString('vi-VN', {
+          style: 'currency',
+          currency: 'VND',
+          minimumFractionDigits: 0,
+        })
+        .replace('₫', '')
+        .trim() + ' ₫'
+    );
+  }
+
   return (
     <Card className='p-6 flex flex-col gap-4'>
       <div>
@@ -40,7 +53,9 @@ const ProjectStatus = ({ project }: { project: TCampaign }) => {
           <div className='flex flex-col'>
             <span className='text-gray-500'>Mục tiêu chiến dịch</span>
             {project?.type == CAMPAIGN_TYPE.DONATE && (
-              <span className='font-bold'>{project?.donation_target} VND</span>
+              <span className='font-bold'>
+                {formatCurrencyToVND(project?.donation_target || 0)}
+              </span>
             )}
             {project?.type == CAMPAIGN_TYPE.VOLUNTEER && (
               <span className='font-bold'>
@@ -50,7 +65,7 @@ const ProjectStatus = ({ project }: { project: TCampaign }) => {
             {project?.type == CAMPAIGN_TYPE.MULTIPLE && (
               <>
                 <span className='font-bold'>
-                  {project?.donation_target} VND
+                  {formatCurrencyToVND(project?.donation_target)}
                 </span>
                 <span className='font-bold'>
                   {project?.volunteer_quantity} tình nguyện viên
@@ -75,7 +90,8 @@ const ProjectStatus = ({ project }: { project: TCampaign }) => {
             <p>
               đã đạt được{' '}
               <span className='font-bold'>
-                {project?.donations_sum_amount}/{project?.donation_target} VND
+                {formatCurrencyToVND(project?.donations_sum_amount || 0)}/
+                {formatCurrencyToVND(project?.donation_target || 0)}
               </span>
             </p>
             <p className='ml-auto'>{project?.donation_percent || 0}%</p>
@@ -91,7 +107,8 @@ const ProjectStatus = ({ project }: { project: TCampaign }) => {
             <p>
               đã đạt được{' '}
               <span className='font-bold'>
-                15/{project.volunteer_quantity} TNV
+                {project?.volunteers_without_canceled_count || 0}/
+                {project.volunteer_quantity || 0} TNV
               </span>
             </p>
             <p className='ml-auto'>{project?.volunteer_percent || 0}%</p>
@@ -107,7 +124,8 @@ const ProjectStatus = ({ project }: { project: TCampaign }) => {
               <p>
                 đã đạt được{' '}
                 <span className='font-bold'>
-                  {project?.donations_sum_amount}/{project?.donation_target} VND
+                  {formatCurrencyToVND(project?.donations_sum_amount || 0)}/
+                  {formatCurrencyToVND(project?.donation_target || 0)}
                 </span>
               </p>
               <p className='ml-auto'>{project?.donation_percent || 0}%</p>
@@ -120,7 +138,8 @@ const ProjectStatus = ({ project }: { project: TCampaign }) => {
               <p>
                 đã đạt được{' '}
                 <span className='font-bold'>
-                  15/{project.volunteer_quantity} TNV
+                  {project?.volunteers_without_canceled_count || 0}/
+                  {project.volunteer_quantity || 0} TNV
                 </span>
               </p>
               <p className='ml-auto'>{project?.volunteer_percent || 0}%</p>

@@ -12,7 +12,7 @@ import { CAMPAIGN_ROLE } from '@/app/enum';
 import { TCampaign } from '@/app/types';
 
 const IndividualProjectSection = () => {
-  const { data } = useGetProjectQuery({
+  const { data: project } = useGetProjectQuery({
     role: CAMPAIGN_ROLE.INDIVIDUAL,
   });
 
@@ -53,9 +53,9 @@ const IndividualProjectSection = () => {
             loop={true}
             className='relative'
           >
-            {data?.data?.map((item: TCampaign) => (
+            {project?.data?.map((item: TCampaign) => (
               <SwiperSlide key={item.id}>
-                <ProjectItem key={item.id} data={item} />
+                <ProjectItem key={item.id} project={item} />
               </SwiperSlide>
             ))}
             <div className='swiper-pagination !bottom-[-20px]' />

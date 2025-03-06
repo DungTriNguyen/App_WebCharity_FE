@@ -6,11 +6,12 @@ import DonatedList from './donated-list';
 import { TCampaign } from '@/app/types';
 import VolunteerList from './volunteer-list';
 import { CAMPAIGN_TYPE } from '@/app/enum';
-const tabList = [
-  { label: 'Câu chuyện', value: 'summary', component: <SummaryCampaign /> },
-  { label: 'Danh sách ủng hộ', value: 'supported', component: <DonatedList /> },
-  { label: 'Danh sách TNV', value: 'vulunteer', component: <VolunteerList /> },
-];
+
+// const tabList = [
+//   { label: 'Câu chuyện', value: 'summary', component: <SummaryCampaign /> },
+//   { label: 'Danh sách ủng hộ', value: 'supported', component: <DonatedList /> },
+//   { label: 'Danh sách TNV', value: 'vulunteer', component: <VolunteerList /> },
+// ];
 
 const ProjectTab = ({ project }: { project: TCampaign }) => {
   let cleanContent = DOMPurify.sanitize(project?.content || '', {
@@ -20,7 +21,7 @@ const ProjectTab = ({ project }: { project: TCampaign }) => {
   });
 
   // Loại bỏ ảnh có src rỗng
-  cleanContent = cleanContent.replace(/<img[^>]*src=["']{1}["'][^>]*>/g, '');
+  cleanContent = cleanContent.replace(/<Image[^>]*src=["']{1}["'][^>]*>/g, '');
 
   // Initialize an empty tab list
   const tabList = [];
@@ -87,14 +88,12 @@ const ProjectTab = ({ project }: { project: TCampaign }) => {
       </TabsList>
 
       <TabsContent value='summary'>
-        {cleanContent ? (
+        {
           <div
-            className='prose max-w-full prose-lg prose-img:rounded-lg prose-h3:text-xl prose-h3:font-bold prose-p:text-gray-700'
-            dangerouslySetInnerHTML={{ __html: cleanContent }}
+            className=''
+            dangerouslySetInnerHTML={{ __html: project?.content || '' }}
           />
-        ) : (
-          <p>Không có nội dung</p>
-        )}
+        }
       </TabsContent>
     </Tabs>
   );

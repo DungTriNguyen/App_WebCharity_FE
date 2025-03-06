@@ -42,13 +42,13 @@ export type TCampaign = {
   related_images: string[]; // URL
   content: string | null;
   donation_percent: number | null;
-  donations_sum_amount: string;
-  donations_sum_amount_formatted: string; // "0đ"
-  donation_target: string | null; // "100000000.0000"
+  donations_sum_amount: number;
+  donations_sum_amount_formatted: number; // "0đ"
+  donation_target: number | 0; // "100000000.0000"
   donations_count: string;
   volunteer_percent: number | null;
-  volunteers_without_canceled_count: string;
-  volunteer_quantity: number | null;
+  volunteers_without_canceled_count: number;
+  volunteer_quantity: number | 0;
   diff_date: string | null; // "Đã kết thúc"
   start_date: string | null; // "19/02/2025 | 12:00"
   end_date: string | null; // "23/02/2025 | 12:00"

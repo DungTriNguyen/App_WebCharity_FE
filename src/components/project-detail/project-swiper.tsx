@@ -58,7 +58,6 @@ const ProjectSwiper = ({ project }: { project: TCampaign }) => {
   // ];
   const onLoadSwiper = (swiper: SwiperType) => {
     console.log(typeof swiper);
-
     setThumbsSwiper(swiper);
   };
   return (
@@ -82,7 +81,29 @@ const ProjectSwiper = ({ project }: { project: TCampaign }) => {
             key={index}
             className='rounded-lg overflow-hidden max-h-[600px]'
           >
-            <img alt='img-project' src={item} className='w-full bg-contain' />
+            <div className='image-container' style={{ position: 'relative' }}>
+              <img
+                alt='img-project'
+                src={item}
+                className='w-full bg-contain'
+                onClick={() => {
+                  setPhotoIndex(index);
+                  setIsOpen(true);
+                }}
+              />
+              <div
+                className='image-label rounded-2xl'
+                style={{
+                  position: 'absolute',
+                  top: '15px',
+                  right: '15px',
+                  backgroundColor: 'rgba(255, 255, 255, 1)',
+                  padding: '10px 20px 10px 20px',
+                }}
+              >
+                {project?.category?.name}
+              </div>
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>
