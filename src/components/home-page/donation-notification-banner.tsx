@@ -36,7 +36,7 @@ const DonationNotificationBanner: React.FC = () => {
     } else if (diffMonths >= 1) {
       return `${diffMonths} tháng trước`;
     } else if (diffDays >= 1) {
-      return `${diffDays} day trước`;
+      return `${diffDays} ngày trước`;
     } else if (diffHours >= 1) {
       return `${diffHours} giờ trước`;
     } else if (diffMinutes >= 1) {
