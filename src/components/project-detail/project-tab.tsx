@@ -3,7 +3,6 @@ import DOMPurify from 'dompurify';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import SummaryCampaign from './summary-campaign';
 import DonatedList from './donated-list';
-import { TCampaign } from '@/app/types';
 import VolunteerList from './volunteer-list';
 import { CAMPAIGN_TYPE } from '@/app/enum';
 
@@ -14,14 +13,14 @@ import { CAMPAIGN_TYPE } from '@/app/enum';
 // ];
 
 const ProjectTab = ({ project }: { project: TCampaign }) => {
-  let cleanContent = DOMPurify.sanitize(project?.content || '', {
+  const cleanContent = DOMPurify.sanitize(project?.content || '', {
     ADD_TAGS: ['img'],
     ADD_ATTR: ['src', 'alt', 'width', 'height'],
     FORBID_ATTR: ['onerror', 'onload'],
   });
 
   // Loại bỏ ảnh có src rỗng
-  cleanContent = cleanContent.replace(/<Image[^>]*src=["']{1}["'][^>]*>/g, '');
+  cleanContent.replace(/<Image[^>]*src=["']{1}["'][^>]*>/g, '');
 
   // Initialize an empty tab list
   const tabList = [];
@@ -88,12 +87,12 @@ const ProjectTab = ({ project }: { project: TCampaign }) => {
       </TabsList>
 
       <TabsContent value='summary'>
-        {
+        {project?.content ? (
           <div
             className=''
-            dangerouslySetInnerHTML={{ __html: project?.content || '' }}
+            dangerouslySetInnerHTML={{ __html: project.content }}
           />
-        }
+        ) : null}
       </TabsContent>
     </Tabs>
   );

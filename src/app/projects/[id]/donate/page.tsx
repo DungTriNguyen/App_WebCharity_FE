@@ -3,7 +3,6 @@ import ProjectItem from '@/components/project/project-item';
 import { Card } from '@/components/ui/card';
 import Image from 'next/image';
 import React, { use } from 'react';
-import redCrossLogo from '../../../../../public/red-cross-logo.png';
 import { Separator } from '@/components/ui/separator';
 import DonateForm from '@/components/project-detail/donate-form';
 import { useGetProjectByID } from '@/hooks/use-project';
@@ -14,31 +13,7 @@ const DonatePage = (props: { params: Promise<{ id: number }> }) => {
   const { data: projectById } = useGetProjectByID({ project_id: id });
   const project = projectById?.data?.[0];
   console.log('donation project token', project);
-  const projectData = {
-    id: 6,
-    title: 'Chiến dịch 2',
-    description: 'Mô tả chiến dịch 2',
-    image: 'https://via.placeholder.com/150',
-    raised: 1000000,
-    goal: 2000000,
-    timeLeft: 10,
-    details: [
-      {
-        unit: 'tình nguyện viên',
-        current: 15,
-        total: 20,
-        label: 'đăng ký tình nguyện',
-        count: 10,
-      },
-      {
-        unit: 'vnd',
-        current: 1500000,
-        total: 30000000,
-        label: 'ủng hộ tiền',
-        count: 10,
-      },
-    ],
-  };
+
   return (
     <div className='container 2xl:max-w-[1200px] mx-auto my-8 flex gap-8'>
       <div className='w-2/5'>
