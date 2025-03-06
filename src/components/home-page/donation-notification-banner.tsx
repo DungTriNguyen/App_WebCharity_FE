@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import { useDonationQuery } from '@/hooks/use-donation';
-import { TSDonationData } from '@/app/types';
 import Image from 'next/image';
 
 const DonationNotificationBanner: React.FC = () => {
@@ -15,6 +14,37 @@ const DonationNotificationBanner: React.FC = () => {
   // console.log('donationL:', donations);`
 
   const [notifications, setNotifications] = useState<TSDonationData[]>([]);
+
+  const getTimeDifference = (targetDate: string) => {
+    const now = new Date().getTime();
+    const target = new Date(targetDate).getTime();
+
+    // Get difference in milliseconds
+    const diffMs = now - target;
+
+    // Convert to different units
+    const diffSeconds = Math.floor(diffMs / 1000);
+    const diffMinutes = Math.floor(diffSeconds / 60);
+    const diffHours = Math.floor(diffMinutes / 60);
+    const diffDays = Math.floor(diffHours / 24);
+    const diffMonths = Math.floor(diffDays / 30);
+    const diffYears = Math.floor(diffDays / 365);
+
+    // Return appropriate string based on the largest applicable unit
+    if (diffYears >= 1) {
+      return `${diffYears} năm trước`;
+    } else if (diffMonths >= 1) {
+      return `${diffMonths} tháng trước`;
+    } else if (diffDays >= 1) {
+      return `${diffDays} day trước`;
+    } else if (diffHours >= 1) {
+      return `${diffHours} giờ trước`;
+    } else if (diffMinutes >= 1) {
+      return `${diffMinutes} phút trước`;
+    } else {
+      return `${diffSeconds} giây trước`;
+    }
+  };
 
   useEffect(() => {
     if (donations && Array.isArray(donations.data)) {
@@ -62,10 +92,10 @@ const DonationNotificationBanner: React.FC = () => {
         {notifications.map((item: TSDonationData) => (
           <SwiperSlide
             key={item.id}
-            className='rounded-lg overflow-hidden h-ful'
+            className='rounded-lg overflow-hidden h-full'
           >
             <div className='flex gap-4 p-4'>
-              <div className='h-12 w-12 rounded-full bg-pink-300 flex-none'>
+              <div className='h-12 w-12 rounded-full flex-none'>
                 <Image
                   src={item.user.avatar_url}
                   alt='avatar'
@@ -82,7 +112,7 @@ const DonationNotificationBanner: React.FC = () => {
                     {item.project.name}
                   </span>
                 </p>
-                <p className='italic'>{item.created_at}</p>
+                <p className='italic'>{getTimeDifference(item.created_at)}</p>
               </div>
             </div>
           </SwiperSlide>

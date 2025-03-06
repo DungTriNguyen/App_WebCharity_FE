@@ -89,143 +89,141 @@ type TStatisticData = {
 type TSCategotyData = {};
 
 type TSDonationData = {
-  data: {
+  id: number;
+  user: {
     id: number;
-    user: {
-      id: number;
-      name: string | null;
-      username: string | null;
-      email: string | null;
-      phone_number: string | null;
-      birth_of_date: string | null;
-      email_verified_at: string | null;
-      status: number;
-      department_id: number | null;
-      class: string | null;
-      student_code: string | null;
-      gender: string;
-      address: string | null;
-      description: string | null;
-      created_at: string | null;
-      updated_at: string | null;
-      deleted_at: string | null;
-      avatar_url: string;
-      media: [
-        {
-          id: number;
-          model_type: string;
-          model_id: number;
-          uuid: string | null;
-          collection_name: string;
-          name: string;
-          file_name: string;
-          mime_type: string | null;
-          disk: string;
-          conversions_disk: string | null;
-          size: number;
-          manipulations: [null];
-          custom_properties: [null];
-          generated_conversions: [null];
-          responsive_images: [null];
-          order_column: number | null;
-          created_at: string | null;
-          updated_at: string | null;
-          preview_url: string;
-          original_url: string;
-        }
-      ];
-    };
-    project: {
-      id: number;
-      category_id: number;
-      user_id: number;
-      name: string | null;
-      donation_target: string | null;
-      volunteer_quantity: number | null;
-      start_date: string | null;
-      end_date: string | null;
-      content: string | null;
-      status: number;
-      type: string;
-      created_at: string | null;
-      updated_at: string | null;
-      front_status: string;
-      background_image: string;
-      related_images: string;
-      media: [
-        {
-          id: number;
-          model_type: string;
-          model_id: number;
-          uuid: string;
-          collection_name: string;
-          name: string;
-          file_name: string;
-          mime_type: string;
-          disk: string;
-          conversions_disk: string;
-          size: number;
-          manipulations: [null];
-          custom_properties: [null];
-          generated_conversions: [null];
-          responsive_images: [null];
-          order_column: number;
-          created_at: string;
-          updated_at: string;
-          preview_url: string;
-          original_url: string;
-        }
-      ];
-    };
-    department: {
-      id: number;
-      code: string | null;
-      name: string | null;
-      description: string | null;
-      status: number;
-      created_at: string | null;
-      updated_at: string | null;
-      thumbnail_url: string;
-      media: [
-        {
-          id: number;
-          model_type: string;
-          model_id: number;
-          uuid: string | null;
-          collection_name: string;
-          name: string;
-          file_name: string;
-          mime_type: string | null;
-          disk: string;
-          conversions_disk: string | null;
-          size: number;
-          manipulations: [null];
-          custom_properties: [null];
-          generated_conversions: [null];
-          responsive_images: [null];
-          order_column: number | null;
-          created_at: string | null;
-          updated_at: string | null;
-          preview_url: string;
-          original_url: string;
-        }
-      ];
-    };
-    account_number: string | null;
-    account_name: string | null;
-    code: string | null;
     name: string | null;
+    username: string | null;
     email: string | null;
     phone_number: string | null;
-    amount: string;
-    is_anonymous: number;
-    anonymous_status_label: string;
-    anonymous_status_badge: string;
-    note: string | null;
-    student_code: string | null;
+    birth_of_date: string | null;
+    email_verified_at: string | null;
+    status: number;
+    department_id: number | null;
     class: string | null;
-    created_at: string;
+    student_code: string | null;
+    gender: string;
+    address: string | null;
+    description: string | null;
+    created_at: string | null;
+    updated_at: string | null;
+    deleted_at: string | null;
+    avatar_url: string;
+    media: [
+      {
+        id: number;
+        model_type: string;
+        model_id: number;
+        uuid: string | null;
+        collection_name: string;
+        name: string;
+        file_name: string;
+        mime_type: string | null;
+        disk: string;
+        conversions_disk: string | null;
+        size: number;
+        manipulations: [null];
+        custom_properties: [null];
+        generated_conversions: [null];
+        responsive_images: [null];
+        order_column: number | null;
+        created_at: string | null;
+        updated_at: string | null;
+        preview_url: string;
+        original_url: string;
+      }
+    ];
   };
+  project: {
+    id: number;
+    category_id: number;
+    user_id: number;
+    name: string | null;
+    donation_target: string | null;
+    volunteer_quantity: number | null;
+    start_date: string | null;
+    end_date: string | null;
+    content: string | null;
+    status: number;
+    type: string;
+    created_at: string | null;
+    updated_at: string | null;
+    front_status: string;
+    background_image: string;
+    related_images: string;
+    media: [
+      {
+        id: number;
+        model_type: string;
+        model_id: number;
+        uuid: string;
+        collection_name: string;
+        name: string;
+        file_name: string;
+        mime_type: string;
+        disk: string;
+        conversions_disk: string;
+        size: number;
+        manipulations: [null];
+        custom_properties: [null];
+        generated_conversions: [null];
+        responsive_images: [null];
+        order_column: number;
+        created_at: string;
+        updated_at: string;
+        preview_url: string;
+        original_url: string;
+      }
+    ];
+  };
+  department: {
+    id: number;
+    code: string | null;
+    name: string | null;
+    description: string | null;
+    status: number;
+    created_at: string | null;
+    updated_at: string | null;
+    thumbnail_url: string;
+    media: [
+      {
+        id: number;
+        model_type: string;
+        model_id: number;
+        uuid: string | null;
+        collection_name: string;
+        name: string;
+        file_name: string;
+        mime_type: string | null;
+        disk: string;
+        conversions_disk: string | null;
+        size: number;
+        manipulations: [null];
+        custom_properties: [null];
+        generated_conversions: [null];
+        responsive_images: [null];
+        order_column: number | null;
+        created_at: string | null;
+        updated_at: string | null;
+        preview_url: string;
+        original_url: string;
+      }
+    ];
+  };
+  account_number: string | null;
+  account_name: string | null;
+  code: string | null;
+  name: string | null;
+  email: string | null;
+  phone_number: string | null;
+  amount: string;
+  is_anonymous: number;
+  anonymous_status_label: string;
+  anonymous_status_badge: string;
+  note: string | null;
+  student_code: string | null;
+  class: string | null;
+  created_at: string;
 };
 
 type TSSetting = {
