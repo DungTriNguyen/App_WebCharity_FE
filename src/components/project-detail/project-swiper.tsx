@@ -15,6 +15,7 @@ import 'yet-another-react-lightbox/styles.css';
 // import required modules
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 import { TCampaign } from '@/app/types';
+import Image from 'next/image';
 
 const ProjectSwiper = ({ project }: { project: TCampaign }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
@@ -74,18 +75,20 @@ const ProjectSwiper = ({ project }: { project: TCampaign }) => {
         navigation={true}
         thumbs={{ swiper: thumbsSwiper }}
         modules={[FreeMode, Navigation, Thumbs]}
-        className='mySwiper2 max-h-[600px]'
+        className='mySwiper2 max-h-[450px]'
       >
         {project?.related_images?.map((item, index) => (
           <SwiperSlide
             key={index}
-            className='rounded-lg overflow-hidden max-h-[600px]'
+            className='rounded-lg overflow-hidden max-h-[450px]'
           >
             <div className='image-container' style={{ position: 'relative' }}>
-              <img
+              <Image
+                width={600}
+                height={450}
                 alt='img-project'
                 src={item}
-                className='w-full bg-contain'
+                className='w-full h-full bg-contain object-fill'
                 onClick={() => {
                   setPhotoIndex(index);
                   setIsOpen(true);
@@ -122,7 +125,9 @@ const ProjectSwiper = ({ project }: { project: TCampaign }) => {
             key={index}
             className='rounded-lg overflow-hidden cursor-pointer'
           >
-            <img
+            <Image
+              width={160}
+              height={100}
               alt='image-project'
               src={item}
               className='w-full bg-contain max-h-[100px]'

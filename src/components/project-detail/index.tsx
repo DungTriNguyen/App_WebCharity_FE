@@ -7,7 +7,6 @@ import ProjectStatus from './project-status';
 import ProjectContact from './project-contact';
 import ProjectProcessing from './project-processing';
 import { useGetProjectByID } from '@/hooks/use-project';
-import { TCampaign } from '@/app/types';
 
 const ProjectDetail = ({ project_id }: { project_id: number }) => {
   const { data: projectById } = useGetProjectByID({ project_id });

@@ -1,6 +1,18 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { CAMPAIGN_ROLE } from '@/app/enum';
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
+
+export const getCampaignRole = (key: string) => {
+  switch (key) {
+    case 'individual':
+      return CAMPAIGN_ROLE.INDIVIDUAL;
+    case 'organization':
+      return CAMPAIGN_ROLE.ORIGANIZATION;
+    default:
+      return;
+  }
+};

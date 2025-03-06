@@ -1,4 +1,4 @@
-import { CAMPAIGN_ROLE, CAMPAIGN_TYPE } from './enum';
+// import { CAMPAIGN_ROLE, CAMPAIGN_TYPE } from './enum';
 
 type TCampaignDetail = {
   unit: string;
@@ -8,7 +8,7 @@ type TCampaignDetail = {
   count: number;
 };
 
-export type TCampaign = {
+type TCampaign = {
   id: number;
   is_organization: boolean;
   is_individual: boolean;
@@ -61,14 +61,7 @@ type TDonatedData = {
   updatedAt: string;
 };
 
-type TCampaignType =
-  | CAMPAIGN_TYPE.DONATE
-  | CAMPAIGN_TYPE.VOLUNTEER
-  | CAMPAIGN_TYPE.MULTIPLE;
-
-type TCampaignRole = CAMPAIGN_ROLE.ORIGANIZATION | CAMPAIGN_ROLE.INDIVIDUAL;
-
-export type TContactFormData = {
+type TContactFormData = {
   name: string;
   email: string;
   phone?: string;
@@ -76,7 +69,7 @@ export type TContactFormData = {
   message: string;
 };
 
-export type TApiResponse<T = any> = {
+type TApiResponse<T = any> = {
   message: string;
   data?: {
     status: boolean;
@@ -84,7 +77,7 @@ export type TApiResponse<T = any> = {
   errors?: Record<string, string[]>;
 };
 
-export type TStatisticData = {
+type TStatisticData = {
   organization_count: number;
   individual_count: number;
   user_count: number;
@@ -93,9 +86,9 @@ export type TStatisticData = {
   total_donation_amount: number;
 };
 
-export type TSCategotyData = {};
+type TSCategotyData = {};
 
-export type TSDonationData = {
+type TSDonationData = {
   data: {
     id: number;
     user: {
@@ -235,7 +228,7 @@ export type TSDonationData = {
   };
 };
 
-export type TSSetting = {
+type TSSetting = {
   data: {
     key: string;
     value: string | null;
@@ -244,7 +237,7 @@ export type TSSetting = {
   };
 };
 
-export type TSVolunteer = {
+type TSVolunteer = {
   data: {
     id: number;
     user: {

@@ -1,15 +1,24 @@
 import { useQuery } from '@tanstack/react-query';
 import { useAxiosAuth } from './use-axios-auth';
-import { TCampaignRole } from '@/app/enum';
-import { TCampaign } from '@/app/types';
+import { CAMPAIGN_ROLE, CAMPAIGN_TYPE } from '@/app/enum';
 
-const useGetProjectQuery = ({ role }: { role?: TCampaignRole }) => {
+const useGetProjectQuery = ({
+  type,
+  role,
+  keyword,
+}: {
+  type?: CAMPAIGN_TYPE;
+  role?: CAMPAIGN_ROLE;
+  keyword?: string;
+}) => {
   const apiAuth = useAxiosAuth();
-  return useQuery<TCampaign>({
-    queryKey: ['project_list', role],
+  return useQuery({
+    queryKey: ['project_list', type, role, keyword],
     queryFn: async () => {
       try {
-        const res = await apiAuth.get('/project', { params: { role } });
+        const res = await apiAuth.get('/project', {
+          params: { type, role, keyword },
+        });
         return res.data;
       } catch (e: any) {
         throw Error(e?.response?.data?.message);

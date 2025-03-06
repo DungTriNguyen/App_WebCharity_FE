@@ -5,7 +5,6 @@ import { Button } from '../ui/button';
 import { Progress } from '../ui/progress';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { TCampaign } from '@/app/types';
 import { CAMPAIGN_TYPE } from '@/app/enum';
 
 const ProjectItem = ({ project }: { project: TCampaign }) => {

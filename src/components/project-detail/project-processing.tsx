@@ -8,7 +8,6 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { useGetProjectQuery } from '@/hooks/use-project';
-import { TCampaign } from '@/app/types';
 
 const ProjectProcessing = () => {
   const { data: project } = useGetProjectQuery({});
@@ -133,7 +132,7 @@ const ProjectProcessing = () => {
               },
             }}
             navigation
-            pagination={{ clickable: true }}
+            pagination={{ clickable: true, dynamicBullets: true }}
             autoplay={{
               delay: 5000,
               disableOnInteraction: false,
