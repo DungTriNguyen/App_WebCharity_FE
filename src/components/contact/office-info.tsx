@@ -83,7 +83,14 @@ const OfficeInfo = () => {
       </Button>
       <Separator className='my-4' />
       <h4 className='font-bold text-xl'>Bản đồ</h4>
-      <div className='rounded-xl overflow-hidden h-[300px] bg-[url(https://picsum.photos/800/600)] bg-opacity-40 bg-cover mb-2 flex flex-col p-2 mt-4' />
+      <div className='rounded-xl overflow-hidden h-[300px]'>
+        <iframe
+          src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6027.512847192194!2d106.67968337655424!3d10.759922359494851!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f1b7c3ed289%3A0xa06651894598e488!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBTw6BpIEfDsm4!5e1!3m2!1svi!2s!4v1741253083695!5m2!1svi!2s'
+          width='600'
+          height='450'
+          loading='lazy'
+        ></iframe>
+      </div>
     </div>
   );
 };

@@ -1,14 +1,25 @@
+'use client';
 import React from 'react';
+import { useGetSettingPage } from '@/hooks/use-setting';
+import { SETTING_TYPE } from '../enum';
 
-const PrivacyPolicyPage = () => {
+const PrivacyTermsPage = () => {
+  const {
+    data: terms,
+    isLoading,
+    isError,
+  } = useGetSettingPage({
+    key: SETTING_TYPE.TERMS,
+  });
   return (
     <>
       <div className='bg-policy-banner h-[350px] w-full bg-cover flex items-center justify-center text-white text-6xl font-bold relative'>
         <div className='absolute top-0 left-0 bottom-0 right-0 bg-black opacity-50'></div>
-        <div className='absolute'>Chính sách bảo mật</div>
+        <div className='absolute'>Điều khoản</div>
       </div>
       <div className='container 2xl:max-w-[1200px] mx-auto mt-8'>
-        Chào mừng bạn đến với ứng dụng Thiện nguyện minh bạch. Trên hành trình
+        {terms?.data.value}
+        {/* Chào mừng bạn đến với ứng dụng Thiện nguyện minh bạch. Trên hành trình
         thực hiện sứ mệnh thiện nguyện, lan tỏa yêu thương của mình, MBBank hi
         vọng bạn vui lòng dành thời gian đọc, tìm hiểu những điều khoản sau đây
         GIẢI THÍCH KHÁI NIỆM 1. “Ứng dụng Thiện nguyện” (Gọi tắt là ứng dụng) là
@@ -225,10 +236,10 @@ const PrivacyPolicyPage = () => {
         nhãn hiệu Ứng Dụng của MBBank được bảo vệ bởi luật pháp hiện hành và
         việc sử dụng Ứng Dụng không cấu thành bất kỳ quyền sở hữu hoặc bất kỳ
         quyền hoặc giấy phép sử dụng nào mà không có sự cho phép trước bằng văn
-        bản của MBBank.
+        bản của MBBank. */}
       </div>
     </>
   );
 };
 
-export default PrivacyPolicyPage;
+export default PrivacyTermsPage;

@@ -1,38 +1,36 @@
 'use client';
-import React, { useState } from 'react';
-
+import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import { useDonationQuery } from '@/hooks/use-donation';
-
-interface DonationNotification {
-  id: string;
-  username: string;
-  avatarUrl: string;
-  message?: string;
-  timestamp: string;
-}
+import { TSDonationData } from '@/app/types';
+import Image from 'next/image';
 
 const DonationNotificationBanner: React.FC = () => {
-  const { data } = useDonationQuery({ page: 1, limit: 5 });
-  console.log(data);
+  const {
+    data: donations,
+    isLoading,
+    error,
+  } = useDonationQuery({ page: 1, limit: 5 });
+  // console.log('donationL:', donations);`
 
-  const [notifications, setNotifications] = useState<DonationNotification[]>([
-    {
-      id: '1',
-      username: 'PHAN THI KIM PHUONG',
-      avatarUrl: '/sgu-logo.png',
-      message:
-        'Lời khẩn cầu của một người mẹ tìm liều thuốc mắc nhất thế giới để cứu mạng con trai!',
-      timestamp: '4 phút trước',
-    },
-    {
-      id: '2',
-      username: 'Người ủng hộ ẩn danh',
-      avatarUrl: '/member.png',
-      timestamp: '4 phút trước',
-    },
-  ]);
+  const [notifications, setNotifications] = useState<TSDonationData[]>([]);
+
+  useEffect(() => {
+    if (donations && Array.isArray(donations.data)) {
+      setNotifications(donations.data); // Chỉ set nếu donations.data là mảng
+    }
+  }, [donations]);
+
+  // Handle loading state
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  // Handle error state
+  if (error) {
+    return <div>Error fetching donations: {error.message}</div>;
+  }
 
   return (
     <div className='w-full'>
@@ -42,7 +40,7 @@ const DonationNotificationBanner: React.FC = () => {
             '--swiper-navigation-color': '#fff',
             '--swiper-pagination-color': '#00A7EF',
             '--swiper-pagination-bottom': '0',
-            'swiper-navigation-disabled': true,
+            // 'swiper-navigation-disabled': true,
           } as React.CSSProperties
         }
         loop={true}
@@ -61,22 +59,30 @@ const DonationNotificationBanner: React.FC = () => {
         }}
         simulateTouch={false}
       >
-        {notifications.map((item) => (
+        {notifications.map((item: TSDonationData) => (
           <SwiperSlide
             key={item.id}
             className='rounded-lg overflow-hidden h-ful'
           >
             <div className='flex gap-4 p-4'>
-              <div className='h-12 w-12 rounded-full bg-pink-300 flex-none'></div>
+              <div className='h-12 w-12 rounded-full bg-pink-300 flex-none'>
+                <Image
+                  src={item.user.avatar_url}
+                  alt='avatar'
+                  width={100}
+                  height={100}
+                  className='rounded-full'
+                />
+              </div>
               <div>
                 <p className='line-clamp-1'>
-                  <span className='font-bold'>{item.username}</span>
+                  <span className='font-bold'>{item.account_name}</span>
                   <span> vừa ủng hộ </span>
-                  <span className='text-orange-500 font-bold'>
-                    {item.message}
+                  <span className='text-blue-500 font-bold'>
+                    {item.project.name}
                   </span>
                 </p>
-                <p className='italic'>{item.timestamp}</p>
+                <p className='italic'>{item.created_at}</p>
               </div>
             </div>
           </SwiperSlide>

@@ -22,10 +22,12 @@ import {
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { Input } from '../ui/input';
+import { Avatar, AvatarImage } from '@radix-ui/react-avatar';
 
 const Header = () => {
   const { data } = useSession();
   const router = useRouter();
+  // console.log('thong tin user:', data?.user.image);
 
   const ACTIVITIES_ITEMS = [
     {
@@ -64,6 +66,29 @@ const Header = () => {
   ];
 
   const ABOUT_US_ITEMS = [
+    {
+      label: 'Thông tin chung',
+      href: '/about-us',
+      icon: 'ℹ️',
+    },
+    {
+      label: 'Điều khoản ',
+      href: '/terms',
+      icon: '📖',
+    },
+    {
+      label: 'Chính sách bảo mật',
+      href: '/policy',
+      icon: '🔒',
+    },
+    {
+      label: 'Liên hệ',
+      href: '/contact',
+      icon: '📞',
+    },
+  ];
+
+  const INFORMATION_USER_ITEMS = [
     {
       label: 'Thông tin chung',
       href: '/about-us',
@@ -172,14 +197,18 @@ const Header = () => {
           </DropdownMenu>
 
           {data ? (
-            <Button
-              variant='ghost'
-              className='gap-2 hover:bg-primary/10'
-              onClick={logout}
-            >
-              <LogOutIcon className='h-6 w-6' />
-              Đăng xuất
-            </Button>
+            <div className='flex'>
+              <Avatar>{/* <AvatarImage src={'/sgu-logo.png'} /> */}</Avatar>
+              {renderMenu(INFORMATION_USER_ITEMS, '')}
+              <Button
+                variant='ghost'
+                className='gap-2 hover:bg-primary/10'
+                onClick={logout}
+              >
+                <LogOutIcon className='h-6 w-6' />
+                Đăng xuất
+              </Button>
+            </div>
           ) : (
             <Button
               variant='default'

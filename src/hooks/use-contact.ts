@@ -1,26 +1,32 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAxiosAuth } from './use-axios-auth';
-import { TContactFormData } from '@/app/types';
+import { TContactFormData, TApiResponse } from '@/app/types';
 
 const usePostContactMutation = () => {
   const apiAuth = useAxiosAuth();
+  const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: async (contactFormData: TContactFormData) => {
+  return useMutation<TApiResponse, Error, TContactFormData>({
+    mutationFn: async (contactFormData) => {
       try {
-        const res = await apiAuth.post('/contact', contactFormData);
+        const res = await apiAuth.post<TApiResponse>(
+          '/contact/store',
+          contactFormData
+        );
         return res.data;
       } catch (error: any) {
-        throw Error(
-          error?.response?.data?.message || 'Failed to submit contact form'
-        );
+        const errorMessage =
+          error.response?.data?.message || 'An unexpected error occurred';
+        throw new Error(errorMessage);
       }
     },
     onSuccess: (data) => {
-      console.log('Contact form submitted successfully', data);
+      // console.log('Contact form submitted', data);
+      // Optionally invalidate or update related queries if needed
+      // queryClient.invalidateQueries({ queryKey: ['contacts'] });
     },
     onError: (error) => {
-      console.error('Contact form submission failed', error);
+      console.error('Contact form submission failed', error.message);
     },
   });
 };

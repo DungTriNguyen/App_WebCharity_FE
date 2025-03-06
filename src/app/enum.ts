@@ -8,3 +8,10 @@ export enum CAMPAIGN_ROLE {
   ORIGANIZATION = 'tổ chức gây quỹ',
   INDIVIDUAL = 'cá nhân gây quỹ',
 }
+
+export enum SETTING_TYPE {
+  POLICY = 'policy',
+  TERMS = 'terms',
+  BANNER = 'banner',
+  COMPANION_UNIT = 'companion_unit',
+}

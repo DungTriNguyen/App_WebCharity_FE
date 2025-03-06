@@ -8,7 +8,7 @@ const ProjectDetailPage = (props: { params: Promise<{ id: number }> }) => {
 
   console.log(id, 'project id');
 
-  return <ProjectDetail />;
+  return <ProjectDetail project_id={id} />;
 };
 
 export default ProjectDetailPage;

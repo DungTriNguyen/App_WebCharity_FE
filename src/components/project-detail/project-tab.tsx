@@ -1,27 +1,78 @@
 import React from 'react';
+import DOMPurify from 'dompurify';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import SummaryCampaign from './summary-campaign';
 import DonatedList from './donated-list';
+import { TCampaign } from '@/app/types';
+import VolunteerList from './volunteer-list';
+import { CAMPAIGN_TYPE } from '@/app/enum';
 
-const tabList = [
-  {
-    label: 'Câu chuyện',
-    value: 'summary',
-    component: <SummaryCampaign />,
-  },
-  {
-    label: 'Danh sách ủng hộ',
-    value: 'supported',
-    component: <DonatedList />,
-  },
-  {
-    label: 'Danh sách TNV',
-    value: 'vulunteer',
-    component: <DonatedList />,
-  },
-];
+// const tabList = [
+//   { label: 'Câu chuyện', value: 'summary', component: <SummaryCampaign /> },
+//   { label: 'Danh sách ủng hộ', value: 'supported', component: <DonatedList /> },
+//   { label: 'Danh sách TNV', value: 'vulunteer', component: <VolunteerList /> },
+// ];
 
-const ProjectTab = () => {
+const ProjectTab = ({ project }: { project: TCampaign }) => {
+  let cleanContent = DOMPurify.sanitize(project?.content || '', {
+    ADD_TAGS: ['img'],
+    ADD_ATTR: ['src', 'alt', 'width', 'height'],
+    FORBID_ATTR: ['onerror', 'onload'],
+  });
+
+  // Loại bỏ ảnh có src rỗng
+  cleanContent = cleanContent.replace(/<Image[^>]*src=["']{1}["'][^>]*>/g, '');
+
+  // Initialize an empty tab list
+  const tabList = [];
+
+  // Populate the tab list based on the project type
+  if (project?.type === CAMPAIGN_TYPE.DONATE) {
+    tabList.push(
+      {
+        label: 'Câu chuyện',
+        value: 'summary',
+        component: <SummaryCampaign />,
+      },
+      {
+        label: 'Danh sách ủng hộ',
+        value: 'donation',
+        component: <DonatedList />,
+      }
+    );
+  } else if (project?.type === CAMPAIGN_TYPE.VOLUNTEER) {
+    tabList.push(
+      {
+        label: 'Câu chuyện',
+        value: 'summary',
+        component: <SummaryCampaign />,
+      },
+      {
+        label: 'Danh sách TNV',
+        value: 'volunteer',
+        component: <VolunteerList />,
+      }
+    );
+  } else if (project?.type === CAMPAIGN_TYPE.MULTIPLE) {
+    tabList.push(
+      {
+        label: 'Câu chuyện',
+        value: 'summary',
+        component: <SummaryCampaign />,
+      },
+      {
+        label: 'Danh sách ủng hộ',
+        value: 'supported',
+        component: <DonatedList />,
+      },
+      {
+        label: 'Danh sách TNV',
+        value: 'volunteer',
+        component: <VolunteerList />,
+      }
+    );
+  }
+
   return (
     <Tabs defaultValue='summary' className='w-full mt-6'>
       <TabsList className='flex items-center gap-2 justify-start bg-white'>
@@ -35,11 +86,15 @@ const ProjectTab = () => {
           </TabsTrigger>
         ))}
       </TabsList>
-      {tabList.map((item) => (
-        <TabsContent key={item.value} value={item.value}>
-          {item.component}
-        </TabsContent>
-      ))}
+
+      <TabsContent value='summary'>
+        {
+          <div
+            className=''
+            dangerouslySetInnerHTML={{ __html: project?.content || '' }}
+          />
+        }
+      </TabsContent>
     </Tabs>
   );
 };

@@ -24,7 +24,7 @@ const ProjectList = () => {
     <div className='mt-8'>
       <ul className='grid grid-cols-3 gap-8'>
         {data?.data.map((item: TCampaign) => {
-          return <ProjectItem key={item.id} data={item} />;
+          return <ProjectItem key={item.id} project={item} />;
         })}
       </ul>
     </div>

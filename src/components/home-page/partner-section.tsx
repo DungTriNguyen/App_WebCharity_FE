@@ -1,39 +1,30 @@
-import React from 'react';
-import vnpayLogo from '../../../public/vnpay-logo.png';
-import budPrairieLogo from '../../../public/bud-prairie-logo.png';
-import fptLogo from '../../../public/fpt-logo.png';
-import viettelMoneyLogo from '../../../public/viettel-money-logo.png';
-import comartekLogo from '../../../public/comartek-logo.png';
+'use client';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { SETTING_TYPE } from '@/app/enum';
+import { useGetSettingPage } from '@/hooks/use-setting';
 
-const PartnerSection = () => {
-  const partners = [
-    {
-      name: 'VN Pay',
-      logo: vnpayLogo.src,
-      link: 'link 1',
-    },
-    {
-      name: 'FPT',
-      logo: fptLogo.src,
-      link: 'link 2',
-    },
-    {
-      name: 'Viettel Money',
-      logo: viettelMoneyLogo.src,
-      link: 'link 3',
-    },
-    {
-      name: 'Comartek',
-      logo: comartekLogo.src,
-      link: 'link 4',
-    },
-    {
-      name: 'Bud Prairie',
-      logo: budPrairieLogo.src,
-      link: 'link 5',
-    },
-  ];
+const PartnerSection: React.FC = () => {
+  const {
+    data: companionUnit,
+    isLoading,
+    isError,
+  } = useGetSettingPage({
+    key: SETTING_TYPE.COMPANION_UNIT,
+  });
+
+  // Fix lỗi hydration bằng cách render chỉ khi dữ liệu đã có
+  // const [isClient, setIsClient] = useState(false);
+  // useEffect(() => {
+  //   setIsClient(true);
+  // }, []);
+
+  // if (!isClient) return null; // Không render gì cả cho đến khi client load xong
+
+  if (isLoading) return <p>Loading...</p>;
+  if (isError || !companionUnit?.data?.images?.length)
+    return <p>Error loading partners or no images available.</p>;
+
   return (
     <div>
       <h3 className='text-3xl font-bold text-center p-4'>Đơn vị đồng hành</h3>
@@ -41,14 +32,15 @@ const PartnerSection = () => {
         “Tri ân những cá nhân và tổ chức đã có những đóng góp tích cực và to lớn
         trong tất cả các chương trình đã và đang diễn ra”
       </p>
-      <ul className='flex justify-around items-center'>
-        {partners.map((partner) => (
-          <li key={partner.name}>
+      <ul className='flex justify-around items-center gap-4 flex-wrap'>
+        {companionUnit.data.images.map((image: string, index: number) => (
+          <li key={index}>
             <Image
               width={160}
               height={160}
-              src={partner.logo}
-              alt={partner.name}
+              src={image}
+              alt={`Partner ${index + 1}`}
+              className=''
             />
           </li>
         ))}

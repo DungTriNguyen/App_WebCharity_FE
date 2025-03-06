@@ -3,7 +3,7 @@ import { useGetStatisticQuery } from '@/hooks/use-statistic';
 
 const ArchivementSection = () => {
   const { data: statistics } = useGetStatisticQuery();
-  console.log('day la statistic:', statistics);
+  // console.log('day la statistic:', statistics);
   const archievements = [
     {
       label: 'Tổ chức',

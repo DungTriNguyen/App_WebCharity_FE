@@ -8,13 +8,9 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { useGetProjectQuery } from '@/hooks/use-project';
-import { CAMPAIGN_ROLE } from '@/app/enum';
-import { TCampaign } from '@/app/types';
 
-const OrganizationProjectSection = () => {
-  const { data: project } = useGetProjectQuery({
-    role: CAMPAIGN_ROLE.ORIGANIZATION,
-  });
+const ProjectProcessing = () => {
+  const { data: project } = useGetProjectQuery({});
   // const projects = [
   //   {
   //     id: 1,
@@ -110,10 +106,10 @@ const OrganizationProjectSection = () => {
   return (
     <div>
       <h3 className='text-3xl font-bold text-center'>
-        Các chiến dịch gây quỹ đang diễn ra
+        Các chiến dịch đang diễn ra
       </h3>
       <div className='flex justify-between items-center mb-6'>
-        <span className='font-bold'>Chiến dịch của tổ chức</span>
+        <span className='font-bold'>Chiến dịch của tổ chức & cá nhân</span>
         <Button variant={'link'}>
           Xem tất cả <MoveRightIcon size={24} />
         </Button>
@@ -136,7 +132,7 @@ const OrganizationProjectSection = () => {
               },
             }}
             navigation
-            pagination={{ clickable: true }}
+            pagination={{ clickable: true, dynamicBullets: true }}
             autoplay={{
               delay: 5000,
               disableOnInteraction: false,
@@ -157,4 +153,4 @@ const OrganizationProjectSection = () => {
   );
 };
 
-export default OrganizationProjectSection;
+export default ProjectProcessing;
