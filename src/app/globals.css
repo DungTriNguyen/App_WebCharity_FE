@@ -89,33 +89,21 @@ body {
 
 @layer base {
   .custom-content h1 {
-    font-size: 32px;
-    font-weight: bold;
-    margin: 10px 0;
+    @apply text-4xl font-bold my-2;
   }
   .custom-content h2 {
-    font-size: 28px;
-    font-weight: bold;
-    margin: 8px 0;
+    @apply text-3xl font-bold my-2;
   }
   .custom-content h3 {
-    font-size: 24px;
-    font-weight: bold;
-    margin: 6px 0;
+    @apply text-2xl font-bold my-1.5;
   }
   .custom-content h4 {
-    font-size: 20px;
-    font-weight: bold;
-    margin: 4px 0;
+    @apply text-xl font-bold my-1;
   }
   .custom-content h5 {
-    font-size: 18px;
-    font-weight: bold;
-    margin: 2px 0;
+    @apply text-lg font-bold my-0.5;
   }
   .custom-content p {
-    font-size: 16px;
-    line-height: 1.6;
-    margin: 0;
+    @apply text-base leading-relaxed m-0;
   }
 }
