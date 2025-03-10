@@ -33,7 +33,7 @@ const ProjectContact = ({ project }: { project: TCampaign }) => {
         <Link href={'https://facebook.com'}>Facebook...</Link>
       </div>
       <div className='flex gap-2 items-center'>
-        <GmailIcon />
+        <GmailIcon width='36' height='36' />
         <Link href={'https://gmail.com'}>Gmail...</Link>
       </div>
       <div className='flex gap-2 items-center'>
