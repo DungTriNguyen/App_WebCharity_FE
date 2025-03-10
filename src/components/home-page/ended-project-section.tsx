@@ -7,7 +7,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 // import required modules
-import { Pagination } from 'swiper/modules';
+import { Pagination, Thumbs } from 'swiper/modules';
 const EndedProjectSection = () => {
   const projects = [
     {
@@ -141,10 +141,11 @@ const EndedProjectSection = () => {
           spaceBetween={24}
           navigation={true}
           slidesPerView={3}
-          modules={[Pagination]}
+          modules={[Pagination, Thumbs]}
           className='mySwiper2 h-[400px]'
           pagination={{
             clickable: true,
+            dynamicBullets: true,
           }}
         >
           {projects.map((item) => (
