@@ -13,7 +13,8 @@ const ProjectDetail = ({ project_id }: { project_id: number }) => {
   // console.log('get project by id', projectById);
   // console.log('name content: ', projectById?.content);
   const project = projectById?.data?.[0];
-  return (
+
+  return project ? (
     <div className='flex-col 2xl:max-w-[1200px] mx-auto'>
       <div className='container 2xl:max-w-[1200px] mx-auto flex gap-8 my-8'>
         <div className='w-3/5'>
@@ -30,7 +31,7 @@ const ProjectDetail = ({ project_id }: { project_id: number }) => {
         <ProjectProcessing />
       </div>
     </div>
-  );
+  ) : null;
 };
 
 export default ProjectDetail;

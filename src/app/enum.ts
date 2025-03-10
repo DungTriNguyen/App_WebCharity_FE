@@ -15,3 +15,10 @@ export enum SETTING_TYPE {
   BANNER = 'banner',
   COMPANION_UNIT = 'companion_unit',
 }
+
+export enum CAMPAIGN_STATUS {
+  IN_PROGRESS = 'Đang thực hiện',
+  COMPLETED = 'Đạt mục tiêu',
+  ENDED = 'Đã kết thúc',
+  PENDING = 'Tạm dừng',
+}
