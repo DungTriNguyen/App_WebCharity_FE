@@ -4,7 +4,7 @@ import { CalendarFoldIcon, HandCoinsIcon, HandHeartIcon } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Progress } from '../ui/progress';
 import Link from 'next/link';
-import { cn } from '@/lib/utils';
+import { cn, formatCurrencyToVND } from '@/lib/utils';
 import { CAMPAIGN_TYPE } from '@/app/enum';
 
 const ProjectItem = ({ project }: { project: TCampaign }) => {
@@ -23,8 +23,11 @@ const ProjectItem = ({ project }: { project: TCampaign }) => {
               <div className='flex flex-col gap-2 w-full'>
                 <div className='flex justify-between'>
                   <span>
-                    {project?.donations_sum_amount || 0}/
-                    {project?.donation_target || 0} VNĐ
+                    {formatCurrencyToVND(
+                      Number(project?.donations_sum_amount) || 0
+                    )}
+                    /
+                    {formatCurrencyToVND(Number(project?.donation_target) || 0)}
                   </span>
                   <span>
                     {Math.floor(
@@ -60,8 +63,13 @@ const ProjectItem = ({ project }: { project: TCampaign }) => {
                 <div className='flex flex-col gap-2 w-full'>
                   <div className='flex justify-between'>
                     <span>
-                      {project?.donations_sum_amount || 0}/
-                      {project?.donation_target || 0} VNĐ
+                      {formatCurrencyToVND(
+                        Number(project?.donations_sum_amount) || 0
+                      )}{' '}
+                      /{' '}
+                      {formatCurrencyToVND(
+                        Number(project?.donation_target) || 0
+                      )}
                     </span>
                     <span>
                       {Math.floor(

@@ -16,3 +16,16 @@ export const getCampaignRole = (key: string) => {
       return;
   }
 };
+
+export const formatCurrencyToVND = (value: number): string => {
+  return (
+    value
+      .toLocaleString('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+        minimumFractionDigits: 0,
+      })
+      .replace('₫', '')
+      .trim() + ' VNĐ'
+  );
+};
