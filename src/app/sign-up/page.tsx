@@ -1,4 +1,5 @@
 'use client';
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -8,10 +9,10 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { Checkbox } from '@/components/ui/checkbox';
 import { useRouter } from 'next/navigation';
-import React from 'react';
-import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Form,
@@ -21,15 +22,11 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { useLoginMutation } from '@/hooks/use-login';
-import InstagramIcon from '@/components/icons/instagram-icon';
 import FacebookIcon from '@/components/icons/facebook-icon';
-import TwitterIcon from '@/components/icons/twitter-icon';
-import TiktokIcon from '@/components/icons/tiktok-icon';
-import Link from 'next/link';
 import GmailIcon from '@/components/icons/gmail-icon';
+import Link from 'next/link';
 
-const LoginPage = () => {
+const SignUpPage = () => {
   const socialInfo = [
     {
       key: 'facebook',
@@ -45,22 +42,36 @@ const LoginPage = () => {
   const router = useRouter();
 
   const formSchema = z.object({
+    name: z.string().min(1, {
+      message: 'Họ tên không được để trống',
+    }),
     email: z.string().min(1, {
       message: 'Email không được để trống',
+    }),
+    phone: z.string().min(1, {
+      message: 'Số điện thoại không được để trống',
     }),
     password: z.string().min(1, {
       message: 'Mật khẩu không được để trống',
     }),
+    confirmPassword: z.string().min(1, {
+      message: 'Xác nhận mật khẩu không được để trống',
+    }),
+    term: z.literal<boolean>(true, {
+      errorMap: () => ({ message: 'Vui lòng đồng ý với các điều khoản' }),
+    }),
   });
-
-  const { mutate: loginAction, isPending } = useLoginMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
+      name: '',
       email: '',
+      phone: '',
       password: '',
+      confirmPassword: '',
+      term: false,
     },
   });
 
@@ -68,8 +79,6 @@ const LoginPage = () => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
-    const { email, password } = values;
-    loginAction({ email, password });
   };
 
   return (
@@ -77,7 +86,7 @@ const LoginPage = () => {
       <Card className='w-[480px]'>
         <CardHeader>
           <CardTitle className='text-center font-bold text-2xl'>
-            Đăng Nhập
+            Đăng Ký
           </CardTitle>
           <CardDescription></CardDescription>
         </CardHeader>
@@ -87,6 +96,20 @@ const LoginPage = () => {
               className='flex flex-col gap-4'
               onSubmit={form.handleSubmit(onSubmit)}
             >
+              <FormField
+                control={form.control}
+                name='name'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Họ tên</FormLabel>
+                    <FormControl>
+                      <Input placeholder='Họ tên' {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
               <FormField
                 control={form.control}
                 name='email'
@@ -100,6 +123,21 @@ const LoginPage = () => {
                   </FormItem>
                 )}
               />
+
+              <FormField
+                control={form.control}
+                name='phone'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Điện thoại</FormLabel>
+                    <FormControl>
+                      <Input placeholder='Điện thoại' {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
               <FormField
                 control={form.control}
                 name='password'
@@ -117,25 +155,54 @@ const LoginPage = () => {
                   </FormItem>
                 )}
               />
-              <Button type='submit' disabled={!form.formState.isValid}>
-                Đăng Nhập
-              </Button>
+
+              <FormField
+                control={form.control}
+                name='confirmPassword'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Nhập lại mật khẩu</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder='Xác nhận mật khẩu'
+                        type='password'
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name='term'
+                render={({ field }) => (
+                  <FormItem className='flex items-center gap-2'>
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormLabel className='!mt-0'>
+                      Đồng ý với các điều khoản và điều kiện
+                    </FormLabel>
+                  </FormItem>
+                )}
+              />
+              <Button type='submit'>Đăng ký</Button>
             </form>
           </Form>
-          <div className='flex justify-between'>
-            <div className='flex items-center gap-1'>
-              Bạn chưa có tài khoản?{' '}
-              <Button
-                type='button'
-                variant={'link'}
-                className='p-0'
-                onClick={() => router.push('/sign-up')}
-              >
-                Đăng ký ngay
-              </Button>
-            </div>
-            <Button variant={'link'} className='p-0' type='button'>
-              Quên mật khẩu
+          <div className='flex justify-start gap-1 items-center'>
+            Bạn đã có tài khoản?
+            <Button
+              type='button'
+              variant={'link'}
+              className='p-0'
+              onClick={() => router.push('/login')}
+            >
+              Đăng nhập ngay
             </Button>
           </div>
           <p className='text-center mb-2'>Hoặc</p>
@@ -157,4 +224,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default SignUpPage;

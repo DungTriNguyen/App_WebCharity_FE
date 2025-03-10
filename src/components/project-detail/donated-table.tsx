@@ -20,10 +20,11 @@ import {
 } from '@tanstack/react-table';
 import EmptyRow from '../table/empty-row';
 import { cn } from '@/lib/utils';
+import { Skeleton } from '../ui/skeleton';
 
 interface IDonatedList {
-  data: TDonatedData[];
-  columns: ColumnDef<TDonatedData>[];
+  data: TSDonationData[];
+  columns: ColumnDef<TSDonationData>[];
   loading: boolean;
 }
 const DonatedTable = (props: IDonatedList) => {

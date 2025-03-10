@@ -32,17 +32,17 @@ const Header = () => {
   const ACTIVITIES_ITEMS = [
     {
       label: 'Quyên góp tiền',
-      href: '/',
+      href: '/donation',
       icon: '💰',
     },
     {
       label: 'Đăng ký tình nguyện viên',
-      href: '/',
+      href: '/register-volunteer',
       icon: '🤝',
     },
     {
       label: 'Quyên góp và ĐKTNV',
-      href: '/',
+      href: '/donation',
       icon: '❤️',
     },
   ];
@@ -90,25 +90,25 @@ const Header = () => {
 
   const INFORMATION_USER_ITEMS = [
     {
-      label: 'Thông tin chung',
-      href: '/about-us',
+      label: 'Xem trang cá nhân',
+      href: '/',
       icon: 'ℹ️',
     },
     {
-      label: 'Hướng dẫn quyên góp',
-      href: '/',
+      label: 'Chỉnh sửa thông tin cá nhân',
+      href: '/donation',
       icon: '📖',
     },
     {
-      label: 'Chính sách bảo mật',
+      label: 'Lịch sử ủng hộ/ ĐK TNV',
       href: '/privacy-policy',
       icon: '🔒',
     },
-    {
-      label: 'Liên hệ',
-      href: '/contact',
-      icon: '📞',
-    },
+    // {
+    //   label: 'Liên hệ',
+    //   href: '/contact',
+    //   icon: '📞',
+    // },
   ];
 
   const renderMenu = (
@@ -152,7 +152,7 @@ const Header = () => {
     <header className='w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 sticky top-0 z-50'>
       <nav className='container 2xl:max-w-[1200px] mx-auto h-16 flex items-center justify-between px-4'>
         <div className='flex items-center gap-6'>
-          <Link href='/home' className='flex items-center gap-2'>
+          <Link href='/' className='flex items-center gap-2'>
             <Image
               src={logo}
               alt='Logo'
@@ -162,6 +162,7 @@ const Header = () => {
             />
             <span className='font-bold text-xl text-primary'>SGUCharity</span>
           </Link>
+
           <div className='flex items-center gap-4 pl-[255px]'>
             {renderMenu(CATEGORY_ITEMS, 'Danh mục')}
             {renderMenu(ACTIVITIES_ITEMS, 'Hoạt động')}
@@ -170,6 +171,13 @@ const Header = () => {
         </div>
 
         <div className='flex items-center gap-4'>
+          <div className='flex items-center gap-4 '>
+            <Link href='/register' className='flex items-center gap-2'>
+              <Button variant='default' className='hover:opacity-70'>
+                Tạo dự án
+              </Button>
+            </Link>
+          </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button

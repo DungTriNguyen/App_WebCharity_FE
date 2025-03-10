@@ -12,7 +12,7 @@ const useLoginMutation = () => {
       password: string;
     }) => {
       await signIn('credentials', {
-        callbackUrl: '/home',
+        callbackUrl: '/',
         redirect: true,
         email,
         password,

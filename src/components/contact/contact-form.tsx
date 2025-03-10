@@ -12,15 +12,15 @@ import { Label } from '../ui/label';
 import { Textarea } from '../ui/textarea';
 import { Button } from '../ui/button';
 import { usePostContactMutation } from '@/hooks/use-contact';
-import { TContactFormData } from '@/app/types';
 import { toast } from '@/hooks/use-toast';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState<TContactFormData>({
     name: '',
     email: '',
-    phone: '',
-    message: '',
+    phone_number: '',
+    subject: '',
+    content: '',
   });
 
   const [errors, setErrors] = useState<Record<string, string[]>>({});
@@ -33,12 +33,13 @@ const ContactForm = () => {
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    // Clear specific field error when user starts typing
-    if (errors[name]) {
-      const newErrors = { ...errors };
+
+    // Xóa lỗi khi người dùng nhập lại dữ liệu
+    setErrors((prevErrors) => {
+      const newErrors = { ...prevErrors };
       delete newErrors[name];
-      setErrors(newErrors);
-    }
+      return newErrors;
+    });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -49,21 +50,29 @@ const ContactForm = () => {
     mutate(formData, {
       onSuccess: (response) => {
         if (response.data?.status) {
-          setSuccessMessage(response.message || 'Thêm mới liên hệ thành công.');
-          // Reset form after successful submission
+          setSuccessMessage('Gửi liên hệ thành công.');
+          toast.success('Gửi liên hệ thành công.');
+
+          // Reset form sau khi gửi thành công
           setFormData({
             name: '',
             email: '',
-            phone: '',
-            message: '',
+            phone_number: '',
+            subject: '',
+            content: '',
           });
         }
       },
       onError: (error: any) => {
         const errorResponse = error.response?.data;
+
         if (errorResponse?.errors) {
-          setErrors(errorResponse.errors);
+          setErrors(errorResponse.errors); // Cập nhật lỗi từ server
         }
+
+        toast.error(
+          errorResponse?.message || 'Đã có lỗi xảy ra. Vui lòng thử lại!'
+        );
       },
     });
   };
@@ -73,9 +82,8 @@ const ContactForm = () => {
       <CardHeader>
         <CardTitle className='text-3xl'>Liên hệ</CardTitle>
         <CardDescription>
-          Nếu bạn có câu hỏi cần giải đáp, chúng tôi rất sẵn lòng trò chuyện
-          cùng bạn. Hãy điền vào biểu mẫu bên dưới, chúng tôi sẽ liên hệ lại
-          trong thời gian sớm nhất.
+          Nếu bạn có câu hỏi cần giải đáp, hãy điền vào biểu mẫu bên dưới. Chúng
+          tôi sẽ liên hệ lại trong thời gian sớm nhất.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -84,77 +92,43 @@ const ContactForm = () => {
             {successMessage}
           </div>
         )}
+
         <form onSubmit={handleSubmit} className='flex flex-col gap-6'>
-          <div>
-            <Label>
-              Họ và tên <span className='text-red-500'>*</span>
-            </Label>
-            <Input
-              name='name'
-              value={formData.name}
-              onChange={handleChange}
-              placeholder='Nhập họ tên'
-            />
-            {errors.name && (
-              <p className='text-red-500 text-sm mt-1'>{errors.name[0]}</p>
-            )}
-          </div>
-
-          <div>
-            <Label>
-              Email <span className='text-red-500'>*</span>
-            </Label>
-            <Input
-              name='email'
-              value={formData.email}
-              onChange={handleChange}
-              placeholder='Nhập email'
-            />
-            {errors.email && (
-              <p className='text-red-500 text-sm mt-1'>{errors.email[0]}</p>
-            )}
-          </div>
-
-          <div>
-            <Label>
-              Số điện thoại <span className='text-red-500'>*</span>
-            </Label>
-            <Input
-              name='phone'
-              value={formData.phone}
-              onChange={handleChange}
-              placeholder='Nhập số điện thoại'
-              type='tel'
-            />
-            {errors.phone_number && (
-              <p className='text-red-500 text-sm mt-1'>
-                {errors.phone_number[0]}
-              </p>
-            )}
-          </div>
-
-          <div>
-            <Label>
-              Chủ đề <span className='text-red-500'>*</span>
-            </Label>
-            <Input
-              name='subject'
-              value={formData.subject || ''}
-              onChange={handleChange}
-              placeholder='Nhập chủ đề'
-            />
-            {errors.subject && (
-              <p className='text-red-500 text-sm mt-1'>{errors.subject[0]}</p>
-            )}
-          </div>
+          {[
+            { label: 'Họ và tên', name: 'name', type: 'text', required: true },
+            { label: 'Email', name: 'email', type: 'email', required: true },
+            {
+              label: 'Số điện thoại',
+              name: 'phone_number',
+              type: 'tel',
+              required: false,
+            },
+            { label: 'Chủ đề', name: 'subject', type: 'text', required: true },
+          ].map(({ label, name, type, required }) => (
+            <div key={name}>
+              <Label>
+                {label} {required && <span className='text-red-500'>*</span>}
+              </Label>
+              <Input
+                name={name}
+                type={type}
+                value={formData[name as keyof TContactFormData]}
+                onChange={handleChange}
+                placeholder={`Nhập ${label.toLowerCase()}`}
+              />
+              {errors[name] && (
+                <p className='text-red-500 text-sm mt-1'>{errors[name][0]}</p>
+              )}
+            </div>
+          ))}
 
           <div>
             <Label>
               Nội dung <span className='text-red-500'>*</span>
             </Label>
             <Textarea
-              name='message'
-              value={formData.message}
+              name='content'
+              value={formData.content}
               onChange={handleChange}
               placeholder='Nhập nội dung'
               className='min-h-[250px] overflow-y-auto'

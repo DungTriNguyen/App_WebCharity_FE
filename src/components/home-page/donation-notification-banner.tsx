@@ -97,7 +97,7 @@ const DonationNotificationBanner: React.FC = () => {
             <div className='flex gap-4 p-4'>
               <div className='h-12 w-12 rounded-full flex-none'>
                 <Image
-                  src={item.user.avatar_url}
+                  src={item?.user?.avatar_url}
                   alt='avatar'
                   width={100}
                   height={100}

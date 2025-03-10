@@ -47,7 +47,7 @@ const IndividualProjectSection = () => {
             navigation
             pagination={{ clickable: true, dynamicBullets: true }}
             autoplay={{
-              delay: 5000,
+              delay: 3000,
               disableOnInteraction: false,
             }}
             loop={true}

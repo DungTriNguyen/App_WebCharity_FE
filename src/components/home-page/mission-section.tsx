@@ -73,7 +73,7 @@ const MissionSection = () => {
         width={1440}
         height={100}
         src={missionImage.src}
-        alt=''
+        alt='misson'
         className='w-full mt-4'
       />
     </div>

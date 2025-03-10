@@ -64,9 +64,9 @@ type TDonatedData = {
 type TContactFormData = {
   name: string;
   email: string;
-  phone?: string;
+  phone_number?: string;
   subject?: string;
-  message: string;
+  content: string;
 };
 
 type TApiResponse<T = any> = {

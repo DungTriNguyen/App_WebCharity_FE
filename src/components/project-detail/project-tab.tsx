@@ -31,12 +31,12 @@ const ProjectTab = ({ project }: { project: TCampaign }) => {
       {
         label: 'Câu chuyện',
         value: 'summary',
-        component: <SummaryCampaign />,
+        component: <SummaryCampaign project={project} />,
       },
       {
         label: 'Danh sách ủng hộ',
         value: 'donation',
-        component: <DonatedList />,
+        component: <DonatedList project={project} />,
       }
     );
   } else if (project?.type === CAMPAIGN_TYPE.VOLUNTEER) {
@@ -44,12 +44,12 @@ const ProjectTab = ({ project }: { project: TCampaign }) => {
       {
         label: 'Câu chuyện',
         value: 'summary',
-        component: <SummaryCampaign />,
+        component: <SummaryCampaign project={project} />,
       },
       {
         label: 'Danh sách TNV',
         value: 'volunteer',
-        component: <VolunteerList />,
+        component: <VolunteerList project={project} />,
       }
     );
   } else if (project?.type === CAMPAIGN_TYPE.MULTIPLE) {
@@ -57,17 +57,17 @@ const ProjectTab = ({ project }: { project: TCampaign }) => {
       {
         label: 'Câu chuyện',
         value: 'summary',
-        component: <SummaryCampaign />,
+        component: <SummaryCampaign project={project} />,
       },
       {
         label: 'Danh sách ủng hộ',
         value: 'supported',
-        component: <DonatedList />,
+        component: <DonatedList project={project} />,
       },
       {
         label: 'Danh sách TNV',
         value: 'volunteer',
-        component: <VolunteerList />,
+        component: <VolunteerList project={project} />,
       }
     );
   }
@@ -89,7 +89,7 @@ const ProjectTab = ({ project }: { project: TCampaign }) => {
       <TabsContent value='summary'>
         {project?.content ? (
           <div
-            className=''
+            className='custom-content'
             dangerouslySetInnerHTML={{ __html: project.content }}
           />
         ) : null}

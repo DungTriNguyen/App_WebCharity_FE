@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAxiosAuth } from './use-axios-auth';
-import { TContactFormData, TApiResponse } from '@/app/types';
 
 const usePostContactMutation = () => {
   const apiAuth = useAxiosAuth();
