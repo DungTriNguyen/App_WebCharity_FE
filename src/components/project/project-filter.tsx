@@ -45,7 +45,7 @@ const ProjectFilter = () => {
                     {[
                       CAMPAIGN_STATUS.IN_PROGRESS,
                       CAMPAIGN_STATUS.COMPLETED,
-                      CAMPAIGN_STATUS.ENDED,
+                      CAMPAIGN_STATUS.PENDING,
                       CAMPAIGN_STATUS.ENDED,
                     ].map((item) => (
                       <SelectItem value={item} key={item}>
