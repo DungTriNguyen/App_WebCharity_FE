@@ -1,13 +1,11 @@
 import React from 'react';
 import { Card } from '../ui/card';
 import Image from 'next/image';
-import redCrossLogo from '../../../public/red-cross-logo.png';
 import { Badge } from '../ui/badge';
 import FacebookIcon from '../icons/facebook-icon';
 import Link from 'next/link';
 import GmailIcon from '../icons/gmail-icon';
 import TelephoneIcon from '../icons/telephone-icon';
-import { TCampaign } from '@/app/types';
 
 const ProjectContact = ({ project }: { project: TCampaign }) => {
   return (
