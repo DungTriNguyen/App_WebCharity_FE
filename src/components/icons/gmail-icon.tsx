@@ -1,8 +1,8 @@
 import React from 'react';
 
 const GmailIcon = ({
-  width = '30',
-  height = '30',
+  width = '80',
+  height = '80',
 }: {
   width?: string;
   height?: string;

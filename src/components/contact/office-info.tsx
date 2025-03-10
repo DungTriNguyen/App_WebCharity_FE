@@ -42,8 +42,8 @@ const OfficeInfo = () => {
           lời chào.
         </p>
         <p>
-          <b>Địa chỉ: </b>14E21 Thảo Điền, Phường Thảo Điền, Thành phố Thủ Đức,
-          Thành phố Hồ Chí Minh
+          <b>Địa chỉ: </b>273 Đ. An Đ. Vương, Phường 2, Quận 5, TP. Hồ Chí Minh,
+          Việt Nam
         </p>
         <p>
           <b>Số điện thoại: </b>+84 283 827 8787
@@ -52,7 +52,7 @@ const OfficeInfo = () => {
           <b>Giờ làm việc: </b>Thứ 2 - Thứ 6, 9h - 18h
         </p>
         <p>
-          <b>Email: </b>testing@gmail.com
+          <b>Email: </b>daihocsaigon@sgu.edu.vn
         </p>
         <p>Dõi theo chúng tôi trên mạng xã hội</p>
         <div className='flex gap-4 '>

@@ -10,7 +10,7 @@ import DonatedTable from './donated-table';
 import { donatedColumn } from './donated-column';
 import { TSVolunteer } from '@/app/types';
 
-const VolunteerList = () => {
+const VolunteerList = ({ project }: { project: TCampaign }) => {
   const volunteerData: TSVolunteer[] = [
     // {
     //   id: '123',

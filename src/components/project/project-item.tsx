@@ -8,6 +8,18 @@ import { cn } from '@/lib/utils';
 import { CAMPAIGN_TYPE } from '@/app/enum';
 
 const ProjectItem = ({ project }: { project: TCampaign }) => {
+  function formatCurrencyToVND(value: number): string {
+    return (
+      value
+        .toLocaleString('vi-VN', {
+          style: 'currency',
+          currency: 'VND',
+          minimumFractionDigits: 0,
+        })
+        .replace('₫', '')
+        .trim() + ' ₫'
+    );
+  }
   return (
     <div className='min-w-[350px]'>
       <div
@@ -23,13 +35,16 @@ const ProjectItem = ({ project }: { project: TCampaign }) => {
               <div className='flex flex-col gap-2 w-full'>
                 <div className='flex justify-between'>
                   <span>
-                    {project?.donations_sum_amount || 0}/
-                    {project?.donation_target || 0} VNĐ
+                    {formatCurrencyToVND(
+                      Number(project?.donations_sum_amount || 0)
+                    )}
+                    /
+                    {formatCurrencyToVND(Number(project?.donation_target || 0))}
                   </span>
                   <span>
                     {Math.floor(
-                      (project?.donations_sum_amount * 100 || 0) /
-                        project?.donation_target || 0
+                      (Number(project?.donations_sum_amount) * 100 || 0) /
+                        Number(project?.donation_target || 0)
                     )}
                     %
                   </span>
@@ -60,13 +75,18 @@ const ProjectItem = ({ project }: { project: TCampaign }) => {
                 <div className='flex flex-col gap-2 w-full'>
                   <div className='flex justify-between'>
                     <span>
-                      {project?.donations_sum_amount || 0}/
-                      {project?.donation_target || 0} VNĐ
+                      {formatCurrencyToVND(
+                        Number(project?.donations_sum_amount || 0)
+                      )}
+                      /
+                      {formatCurrencyToVND(
+                        Number(project?.donation_target || 0)
+                      )}
                     </span>
                     <span>
                       {Math.floor(
-                        (project?.donations_sum_amount * 100 || 0) /
-                          project?.donation_target || 0
+                        (Number(project?.donations_sum_amount) * 100 || 0) /
+                          Number(project?.donation_target || 0)
                       )}
                       %
                     </span>

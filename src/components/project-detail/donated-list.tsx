@@ -8,34 +8,42 @@ import {
 } from '../ui/card';
 import DonatedTable from './donated-table';
 import { donatedColumn } from './donated-column';
+import { useDonationQuery } from '@/hooks/use-donation';
 
-const DonatedList = () => {
-  const donatedData: TDonatedData[] = [
-    {
-      id: '123',
-      supporter: 'Nguyen Van A',
-      amount: '100000',
-      updatedAt: '2025/01/02',
-    },
-    {
-      id: '1',
-      supporter: 'Nguyen Van A',
-      amount: '100000',
-      updatedAt: '2025/01/02',
-    },
-    {
-      id: '2',
-      supporter: 'Nguyen Van A',
-      amount: '100000',
-      updatedAt: '2025/01/02',
-    },
-    {
-      id: '3',
-      supporter: 'Nguyen Van A',
-      amount: '100000',
-      updatedAt: '2025/01/02',
-    },
-  ];
+const DonatedList = ({ project }: { project: TCampaign }) => {
+  const projectId = project.id;
+  const { data: donationData, isLoading } = useDonationQuery({
+    limit: 10,
+    page: 1,
+    projectId,
+  });
+
+  // const donatedData: TDonatedData[] = [
+  //   {
+  //     id: '123',
+  //     supporter: 'Nguyen Van A',
+  //     amount: '100000',
+  //     updatedAt: '2025/01/02',
+  //   },
+  //   {
+  //     id: '1',
+  //     supporter: 'Nguyen Van A',
+  //     amount: '100000',
+  //     updatedAt: '2025/01/02',
+  //   },
+  //   {
+  //     id: '2',
+  //     supporter: 'Nguyen Van A',
+  //     amount: '100000',
+  //     updatedAt: '2025/01/02',
+  //   },
+  //   {
+  //     id: '3',
+  //     supporter: 'Nguyen Van A',
+  //     amount: '100000',
+  //     updatedAt: '2025/01/02',
+  //   },
+  // ];
   return (
     <Card>
       <CardHeader>
@@ -45,8 +53,8 @@ const DonatedList = () => {
       <CardContent>
         <DonatedTable
           columns={donatedColumn}
-          data={donatedData}
-          loading={false}
+          data={donationData?.data?.data || []}
+          loading={isLoading}
         />
       </CardContent>
     </Card>

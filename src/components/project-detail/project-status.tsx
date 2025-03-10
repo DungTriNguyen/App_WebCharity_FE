@@ -65,7 +65,7 @@ const ProjectStatus = ({ project }: { project: TCampaign }) => {
             {project?.type == CAMPAIGN_TYPE.MULTIPLE && (
               <>
                 <span className='font-bold'>
-                  {formatCurrencyToVND(project?.donation_target)}
+                  {formatCurrencyToVND(Number(project?.donation_target) || 0)}
                 </span>
                 <span className='font-bold'>
                   {project?.volunteer_quantity} tình nguyện viên

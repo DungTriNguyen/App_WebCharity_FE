@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SummaryCampaign = () => {
+const SummaryCampaign = ({ project }: { project: TCampaign }) => {
   return (
     <div>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime fuga vitae

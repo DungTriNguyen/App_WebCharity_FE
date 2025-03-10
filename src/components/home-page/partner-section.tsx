@@ -33,7 +33,7 @@ const PartnerSection: React.FC = () => {
         trong tất cả các chương trình đã và đang diễn ra”
       </p>
       <ul className='flex justify-around items-center gap-4 flex-wrap'>
-        {companionUnit.data.images.map((image: string, index: number) => (
+        {companionUnit?.data?.images?.map((image: string, index: number) => (
           <li key={index}>
             <Image
               width={160}

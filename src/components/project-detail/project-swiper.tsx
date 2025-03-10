@@ -120,17 +120,17 @@ const ProjectSwiper = ({ project }: { project: TCampaign }) => {
         modules={[FreeMode, Navigation, Thumbs]}
         className='mySwiper max-h-[100px] mt-6'
       >
-        {project?.related_images?.map((item, index) => (
+        {project?.related_images?.map((item: string, index) => (
           <SwiperSlide
             key={index}
             className='rounded-lg overflow-hidden cursor-pointer'
           >
             <Image
               width={160}
-              height={100}
+              height={200}
               alt='image-project'
               src={item}
-              className='w-full bg-contain max-h-[100px]'
+              className='w-full bg-contain max-h-[150px]'
               onClick={() => {
                 setPhotoIndex(index);
                 setIsOpen(true);
@@ -144,7 +144,7 @@ const ProjectSwiper = ({ project }: { project: TCampaign }) => {
         open={isOpen}
         close={() => setIsOpen(false)}
         index={photoIndex}
-        slides={project?.related_images?.map((img) => ({ src: img }))}
+        slides={project?.related_images?.map((img: string) => ({ src: img }))}
       />
     </>
   );
