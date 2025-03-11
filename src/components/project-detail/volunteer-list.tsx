@@ -20,8 +20,6 @@ const VolunteerList = ({ project }: { project: TCampaign }) => {
     projectId,
   });
 
-  console.log(volunteerData);
-
   // const volunteerData: TSVolunteer[] = [
   //   // {
   //   //   id: '123',
@@ -58,7 +56,7 @@ const VolunteerList = ({ project }: { project: TCampaign }) => {
         <VolunteerTable
           columns={volunteerColumn}
           data={volunteerData?.data || []}
-          loading={false}
+          loading={isLoading}
         />
       </CardContent>
     </Card>

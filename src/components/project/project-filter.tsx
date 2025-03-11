@@ -15,19 +15,25 @@ import { z } from 'zod';
 import { formSchema } from '.';
 import { CAMPAIGN_STATUS, CAMPAIGN_TYPE } from '@/app/enum';
 import { useGetCategoryQuery } from '@/hooks/use-categories';
+import { Button } from '../ui/button';
+import { CloseIcon } from 'yet-another-react-lightbox';
 
 const ProjectFilter = () => {
   const form = useFormContext<z.infer<typeof formSchema>>();
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    // console.log(values);
-  };
+  // const onSubmit = (values: z.infer<typeof formSchema>) => {
+  //   // console.log(values);
+  // };
 
   const { data: categories } = useGetCategoryQuery();
 
+  const resetForm = () => {
+    form.reset();
+  };
+
   return (
     <Form {...form}>
-      <form onSubmit={onSubmit}>
+      <form>
         <div className='flex justify-start gap-4 mb-8'>
           {/* Trạng thái */}
           <FormField
@@ -143,8 +149,10 @@ const ProjectFilter = () => {
               );
             }}
           />
+          <Button type='button' variant={'destructive'} onClick={resetForm}>
+            <CloseIcon />
+          </Button>
         </div>
-        {/* <Button type='submit'>submit</Button> */}
       </form>
     </Form>
   );
