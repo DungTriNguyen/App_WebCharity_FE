@@ -11,6 +11,7 @@ export const formSchema = z.object({
   keyword: z.string().optional(),
   front_status: z.string().optional(),
   type: z.string().optional(),
+  category: z.string().optional(),
 });
 
 const ProjectComponent = () => {
@@ -19,6 +20,7 @@ const ProjectComponent = () => {
       keyword: '',
       front_status: '',
       type: '',
+      category: '',
     },
     resolver: zodResolver(formSchema),
   });

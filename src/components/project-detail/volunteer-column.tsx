@@ -4,7 +4,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { DataTableColumnHeader } from '@/components/table/data-table-column-header';
 import { formatCurrencyToVND } from '@/lib/utils';
 
-export const donatedColumn: ColumnDef<TSDonationData>[] = [
+export const volunteerColumn: ColumnDef<TSVolunteer>[] = [
   {
     accessorKey: 'id',
     header: ({ column }) => (
@@ -17,35 +17,35 @@ export const donatedColumn: ColumnDef<TSDonationData>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'account_name',
+    accessorKey: 'name',
     header: ({ column }) => (
       <DataTableColumnHeader column={column}>
-        Người ủng hộ
+        Người tình nguyện
       </DataTableColumnHeader>
     ),
     cell: ({ row }) => (
       <div className='min-w-[70px] max-w-[300px] w-full'>
-        {row.getValue('account_name')}
+        {row.getValue('name')}
       </div>
     ),
     enableSorting: false,
     enableHiding: false,
   },
-  {
-    accessorKey: 'amount',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column}>
-        Số tiền ủng hộ
-      </DataTableColumnHeader>
-    ),
-    cell: ({ row }) => (
-      <div className='min-w-[60px] max-w-[300px]'>
-        {formatCurrencyToVND(Number(row.getValue('amount')))}
-      </div>
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
+  // {
+  //   accessorKey: 'amount',
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column}>
+  //       Số tiền ủng hộ
+  //     </DataTableColumnHeader>
+  //   ),
+  //   cell: ({ row }) => (
+  //     <div className='min-w-[60px] max-w-[300px]'>
+  //       {formatCurrencyToVND(Number(row.getValue('amount')))}
+  //     </div>
+  //   ),
+  //   enableSorting: false,
+  //   enableHiding: false,
+  // },
 
   {
     accessorKey: 'created_at',

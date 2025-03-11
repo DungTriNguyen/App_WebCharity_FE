@@ -14,6 +14,7 @@ import { Form, FormControl, FormField, FormItem } from '../ui/form';
 import { z } from 'zod';
 import { formSchema } from '.';
 import { CAMPAIGN_STATUS, CAMPAIGN_TYPE } from '@/app/enum';
+import { useGetCategoryQuery } from '@/hooks/use-categories';
 
 const ProjectFilter = () => {
   const form = useFormContext<z.infer<typeof formSchema>>();
@@ -21,6 +22,8 @@ const ProjectFilter = () => {
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     // console.log(values);
   };
+
+  const { data: categories } = useGetCategoryQuery();
 
   return (
     <Form {...form}>
@@ -52,6 +55,35 @@ const ProjectFilter = () => {
                         {item}
                       </SelectItem>
                     ))}
+                  </SelectContent>
+                </Select>
+              </FormItem>
+            )}
+          />
+
+          {/* Loại chương trình */}
+          <FormField
+            control={form.control}
+            name='category'
+            render={({ field }) => (
+              <FormItem>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger className='w-[250px]'>
+                      <SelectValue placeholder='Loại chương trình' />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {categories?.data?.map((item: TSCategotyData) => {
+                      return (
+                        <SelectItem value={`${item.id}`} key={item.id}>
+                          {item.name}
+                        </SelectItem>
+                      );
+                    })}
                   </SelectContent>
                 </Select>
               </FormItem>

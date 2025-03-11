@@ -86,14 +86,11 @@ const ProjectTab = ({ project }: { project: TCampaign }) => {
         ))}
       </TabsList>
 
-      <TabsContent value='summary'>
-        {project?.content ? (
-          <div
-            className='custom-content'
-            dangerouslySetInnerHTML={{ __html: project.content }}
-          />
-        ) : null}
-      </TabsContent>
+      {tabList.map((item) => (
+        <TabsContent key={item.value} value={item.value}>
+          {item.component}
+        </TabsContent>
+      ))}
     </Tabs>
   );
 };

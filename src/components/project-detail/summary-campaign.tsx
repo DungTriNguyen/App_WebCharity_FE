@@ -3,9 +3,12 @@ import React from 'react';
 const SummaryCampaign = ({ project }: { project: TCampaign }) => {
   return (
     <div>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime fuga vitae
-      sint vel molestiae error dolor perferendis a! Nulla iste minima harum ad
-      vel maxime quaerat soluta nobis ipsum explicabo.
+      {project?.content ? (
+        <div
+          className='custom-content'
+          dangerouslySetInnerHTML={{ __html: project.content }}
+        />
+      ) : null}
     </div>
   );
 };

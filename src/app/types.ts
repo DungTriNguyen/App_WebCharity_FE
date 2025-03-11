@@ -71,9 +71,7 @@ type TContactFormData = {
 
 type TApiResponse<T = any> = {
   message: string;
-  data?: {
-    status: boolean;
-  };
+  data?: any[];
   errors?: Record<string, string[]>;
 };
 
@@ -86,7 +84,13 @@ type TStatisticData = {
   total_donation_amount: number;
 };
 
-type TSCategotyData = {};
+type TSCategotyData = {
+  id: number;
+  name: string;
+  icon: string;
+  status: number;
+  projects_count: number;
+};
 
 type TSDonationData = {
   id: number;

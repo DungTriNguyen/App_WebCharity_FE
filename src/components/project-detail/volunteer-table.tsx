@@ -21,12 +21,12 @@ import {
 import EmptyRow from '../table/empty-row';
 import { Skeleton } from '../ui/skeleton';
 
-interface IDonatedList {
-  data: TSDonationData[];
-  columns: ColumnDef<TSDonationData>[];
+interface IVolunteerList {
+  data: TSVolunteer[];
+  columns: ColumnDef<TSVolunteer>[];
   loading: boolean;
 }
-const DonatedTable = (props: IDonatedList) => {
+const VolunteerTable = (props: IVolunteerList) => {
   const { data, columns, loading = false } = props;
 
   const tableData = React.useMemo(
@@ -114,4 +114,4 @@ const DonatedTable = (props: IDonatedList) => {
   );
 };
 
-export default DonatedTable;
+export default VolunteerTable;

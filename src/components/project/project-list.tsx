@@ -18,6 +18,7 @@ const ProjectList = () => {
     keyword: form.watch('keyword'),
     front_status: form.watch('front_status') as CAMPAIGN_STATUS,
     type: form.watch('type') as CAMPAIGN_TYPE,
+    category: form.watch('category'),
   });
 
   return (

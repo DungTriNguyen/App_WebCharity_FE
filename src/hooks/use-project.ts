@@ -7,35 +7,52 @@ const useGetProjectQuery = ({
   keyword,
   front_status,
   type,
+  category,
 }: {
   type?: CAMPAIGN_TYPE;
   role?: CAMPAIGN_ROLE;
   keyword?: string;
   front_status?: string;
+  category?: string;
 }) => {
   const apiAuth = useAxiosAuth();
   return useQuery({
-    queryKey: ['project_list', role, keyword, type, front_status],
+    queryKey: ['project_list', role, keyword, type, front_status, category],
     queryFn: async () => {
       try {
         const res = await apiAuth.get('/project', {
           params: { role, keyword },
         });
 
-        // filter by local only
-        if (front_status && !type) {
-          return res.data?.data.filter(
-            (item: TCampaign) => item.front_status_label === front_status
+        const conditionFiltered = [
+          {
+            key: 'front_status',
+            value: front_status,
+          },
+          {
+            key: 'type',
+            value: type,
+          },
+          {
+            key: 'category',
+            value: category,
+          },
+        ];
+
+        const filtered = conditionFiltered.filter((item) => !!item.value);
+
+        const result = res.data?.data.filter((item: TCampaign) => {
+          if (!filtered.length) return item;
+          return (
+            (!!front_status
+              ? item.front_status_label === front_status
+              : item) &&
+            (!!type ? item.type === type : item) &&
+            (!!category ? `${item.category.id}` === category : item)
           );
-        } else if (type && !front_status) {
-          return res.data?.data.filter((item: TCampaign) => item.type === type);
-        } else if (front_status && type) {
-          return res.data?.data.filter(
-            (item: TCampaign) =>
-              item.type === type && item.front_status_label === front_status
-          );
-        }
-        return res.data?.data;
+        });
+
+        return result;
       } catch (e: any) {
         throw Error(e?.response?.data?.message);
       }
