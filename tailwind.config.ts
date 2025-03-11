@@ -17,6 +17,7 @@ export default {
         'contact-banner': "url('/contact-banner.png')",
         'login-background': "url('/login-background.jpg')",
         'bg-archievement': "url('/bg-archivement.png')",
+        'user-profile': "url('/user-profile.png')",
       },
       colors: {
         background: 'hsl(var(--background))',

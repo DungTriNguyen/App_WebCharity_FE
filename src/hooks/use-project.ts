@@ -24,25 +24,8 @@ const useGetProjectQuery = ({
           params: { role, keyword },
         });
 
-        const conditionFiltered = [
-          {
-            key: 'front_status',
-            value: front_status,
-          },
-          {
-            key: 'type',
-            value: type,
-          },
-          {
-            key: 'category',
-            value: category,
-          },
-        ];
-
-        const filtered = conditionFiltered.filter((item) => !!item.value);
-
         const result = res.data?.data.filter((item: TCampaign) => {
-          if (!filtered.length) return item;
+          if (!(front_status || type || category)) return item;
           return (
             (!!front_status
               ? item.front_status_label === front_status
@@ -63,7 +46,7 @@ const useGetProjectQuery = ({
 
 const useGetProjectByID = ({ project_id }: { project_id: number }) => {
   const apiAuth = useAxiosAuth();
-  return useQuery<TCampaign>({
+  return useQuery<TApiResponse<TCampaign[]>, Error>({
     queryKey: ['project_id', project_id],
     queryFn: async () => {
       try {

@@ -22,3 +22,9 @@ export enum CAMPAIGN_STATUS {
   ENDED = 'Đã kết thúc',
   PENDING = 'Tạm dừng',
 }
+
+export enum USER_ROLES {
+  USER = 'user',
+  ORIGANIZATION = 'origanization',
+  INDIVIDUAL = 'individual',
+}

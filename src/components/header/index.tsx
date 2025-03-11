@@ -91,17 +91,17 @@ const Header = () => {
   const INFORMATION_USER_ITEMS = [
     {
       label: 'Xem trang cá nhân',
-      href: '/',
+      href: '/user/profile',
       icon: 'ℹ️',
     },
     {
       label: 'Chỉnh sửa thông tin cá nhân',
-      href: '/donation',
+      href: '/user/edit-profile',
       icon: '📖',
     },
     {
       label: 'Lịch sử ủng hộ/ ĐK TNV',
-      href: '/privacy-policy',
+      href: '/user/donated-history',
       icon: '🔒',
     },
     // {

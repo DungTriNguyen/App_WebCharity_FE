@@ -23,11 +23,12 @@ const ProjectTab = ({ project }: { project: TCampaign }) => {
   cleanContent.replace(/<Image[^>]*src=["']{1}["'][^>]*>/g, '');
 
   // Initialize an empty tab list
-  const tabList = [];
+  let tabList: { label: string; value: string; component: React.ReactNode }[] =
+    [];
 
   // Populate the tab list based on the project type
   if (project?.type === CAMPAIGN_TYPE.DONATE) {
-    tabList.push(
+    tabList = [
       {
         label: 'Câu chuyện',
         value: 'summary',
@@ -37,10 +38,10 @@ const ProjectTab = ({ project }: { project: TCampaign }) => {
         label: 'Danh sách ủng hộ',
         value: 'donation',
         component: <DonatedList project={project} />,
-      }
-    );
+      },
+    ];
   } else if (project?.type === CAMPAIGN_TYPE.VOLUNTEER) {
-    tabList.push(
+    tabList = [
       {
         label: 'Câu chuyện',
         value: 'summary',
@@ -50,10 +51,10 @@ const ProjectTab = ({ project }: { project: TCampaign }) => {
         label: 'Danh sách TNV',
         value: 'volunteer',
         component: <VolunteerList project={project} />,
-      }
-    );
+      },
+    ];
   } else if (project?.type === CAMPAIGN_TYPE.MULTIPLE) {
-    tabList.push(
+    tabList = [
       {
         label: 'Câu chuyện',
         value: 'summary',
@@ -68,8 +69,8 @@ const ProjectTab = ({ project }: { project: TCampaign }) => {
         label: 'Danh sách TNV',
         value: 'volunteer',
         component: <VolunteerList project={project} />,
-      }
-    );
+      },
+    ];
   }
 
   return (
