@@ -2,6 +2,8 @@ import { USER_ROLES } from '@/app/enum';
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import SummaryInfo from './summary-info';
+import OwnedDonateList from './owned-donate-list';
+import ManagedProjectList from './managed-project/managed-project-list';
 
 const UserTab = ({ role = USER_ROLES.USER }: { role: USER_ROLES }) => {
   const menuUser: {
@@ -12,12 +14,12 @@ const UserTab = ({ role = USER_ROLES.USER }: { role: USER_ROLES }) => {
     {
       label: 'Ủng hộ',
       value: 'donate',
-      component: <div>Ủng hộ component</div>,
+      component: <OwnedDonateList />,
     },
     {
       label: 'Tham gia',
       value: 'participate',
-      component: <div>tham gia component</div>,
+      component: <OwnedDonateList />, // need to be separate component
     },
   ];
 
@@ -29,7 +31,7 @@ const UserTab = ({ role = USER_ROLES.USER }: { role: USER_ROLES }) => {
     {
       label: 'Chiến dịch',
       value: 'campaign',
-      component: <div>Ủng hộ component</div>,
+      component: <ManagedProjectList />,
     },
     {
       label: 'Người tham gia',

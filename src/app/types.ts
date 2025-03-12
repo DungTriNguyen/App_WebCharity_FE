@@ -92,6 +92,29 @@ type TSCategotyData = {
   projects_count: number;
 };
 
+type TDonationMedia = {
+  id: number;
+  model_type: string;
+  model_id: number;
+  uuid: string | null;
+  collection_name: string;
+  name: string;
+  file_name: string;
+  mime_type: string | null;
+  disk: string;
+  conversions_disk: string | null;
+  size: number;
+  manipulations: [null];
+  custom_properties: [null];
+  generated_conversions: [null];
+  responsive_images: [null];
+  order_column: number | null;
+  created_at: string | null;
+  updated_at: string | null;
+  preview_url: string;
+  original_url: string;
+};
+
 type TSDonationData = {
   id: number;
   user: {
@@ -113,30 +136,7 @@ type TSDonationData = {
     updated_at: string | null;
     deleted_at: string | null;
     avatar_url: string;
-    media: [
-      {
-        id: number;
-        model_type: string;
-        model_id: number;
-        uuid: string | null;
-        collection_name: string;
-        name: string;
-        file_name: string;
-        mime_type: string | null;
-        disk: string;
-        conversions_disk: string | null;
-        size: number;
-        manipulations: [null];
-        custom_properties: [null];
-        generated_conversions: [null];
-        responsive_images: [null];
-        order_column: number | null;
-        created_at: string | null;
-        updated_at: string | null;
-        preview_url: string;
-        original_url: string;
-      }
-    ];
+    media: TDonationMedia[];
   };
   project: {
     id: number;
@@ -155,30 +155,7 @@ type TSDonationData = {
     front_status: string;
     background_image: string;
     related_images: string;
-    media: [
-      {
-        id: number;
-        model_type: string;
-        model_id: number;
-        uuid: string;
-        collection_name: string;
-        name: string;
-        file_name: string;
-        mime_type: string;
-        disk: string;
-        conversions_disk: string;
-        size: number;
-        manipulations: [null];
-        custom_properties: [null];
-        generated_conversions: [null];
-        responsive_images: [null];
-        order_column: number;
-        created_at: string;
-        updated_at: string;
-        preview_url: string;
-        original_url: string;
-      }
-    ];
+    media: TDonationMedia[];
   };
   department: {
     id: number;
@@ -189,30 +166,7 @@ type TSDonationData = {
     created_at: string | null;
     updated_at: string | null;
     thumbnail_url: string;
-    media: [
-      {
-        id: number;
-        model_type: string;
-        model_id: number;
-        uuid: string | null;
-        collection_name: string;
-        name: string;
-        file_name: string;
-        mime_type: string | null;
-        disk: string;
-        conversions_disk: string | null;
-        size: number;
-        manipulations: [null];
-        custom_properties: [null];
-        generated_conversions: [null];
-        responsive_images: [null];
-        order_column: number | null;
-        created_at: string | null;
-        updated_at: string | null;
-        preview_url: string;
-        original_url: string;
-      }
-    ];
+    media: TDonationMedia[];
   };
   account_number: string | null;
   account_name: string | null;
