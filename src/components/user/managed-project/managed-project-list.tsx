@@ -1,5 +1,6 @@
 import { Card } from '@/components/ui/card';
 import React from 'react';
+import ManagedProjectItem from './managed-project-item';
 
 const ManagedProjectList = () => {
   const project: TCampaign[] = [
@@ -60,7 +61,13 @@ const ManagedProjectList = () => {
       donations_sum_amount_formatted: 0,
     },
   ];
-  return <Card className='p-4'>ManagedProjectList</Card>;
+  return (
+    <Card className='p-4'>
+      {project.map((item) => (
+        <ManagedProjectItem key={item.id} project={item} />
+      ))}
+    </Card>
+  );
 };
 
 export default ManagedProjectList;
