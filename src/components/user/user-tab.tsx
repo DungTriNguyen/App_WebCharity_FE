@@ -36,17 +36,17 @@ const UserTab = ({ role = USER_ROLES.USER }: { role: USER_ROLES }) => {
     {
       label: 'Người tham gia',
       value: 'participate',
-      component: <div>tham gia component</div>,
+      component: <OwnedDonateList />,
     },
     {
       label: 'Người ủng hộ',
       value: 'supporter',
-      component: <div>tham gia component</div>,
+      component: <OwnedDonateList />,
     },
     {
       label: 'Sao kê',
       value: 'report',
-      component: <div>tham gia component</div>,
+      component: <OwnedDonateList />,
     },
   ];
 
