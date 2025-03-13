@@ -172,7 +172,7 @@ const Header = () => {
 
         <div className='flex items-center gap-4'>
           <div className='flex items-center gap-4 '>
-            <Link href='/register' className='flex items-center gap-2'>
+            <Link href='/create-project' className='flex items-center gap-2'>
               <Button variant='default' className='hover:opacity-70'>
                 Tạo dự án
               </Button>

@@ -26,9 +26,16 @@ import RegisterOrganizationOrIndividual from '@/components/register/register-org
 
 const RegisterPage = () => {
   return (
-    <div className='bg-login-background min-h-screen w-full bg-cover object-contain bg-no-repeat flex justify-center items-center'>
-      <RegisterOrganizationOrIndividual />
-    </div>
+    <>
+      <div className='bg-contact-banner h-[350px] w-full bg-cover flex items-center justify-center text-white text-6xl font-bold relative'>
+        <div className='absolute top-0 left-0 bottom-0 right-0 bg-black bg-opacity-35'></div>
+        <div className='absolute'>LIÊN HỆ GÓP Ý - PHẢN HỒI</div>
+      </div>
+      <div className='grid grid-cols-2 gap-8 container 2xl:max-w-[1200px] mx-auto my-8 mt-32'>
+        <Button className='text-xl py-6'>Đăng ký tài khoản cá nhân</Button>
+        <Button className='text-xl py-6'>Đăng ký tài khoản tổ chức</Button>
+      </div>
+    </>
   );
 };
 
