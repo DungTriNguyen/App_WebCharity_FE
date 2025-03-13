@@ -1,9 +1,9 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { useAxiosAuth } from './use-axios-auth';
+import { toast } from 'sonner';
 
 const usePostContactMutation = () => {
   const apiAuth = useAxiosAuth();
-  const queryClient = useQueryClient();
 
   return useMutation<TApiResponse, Error, TContactFormData>({
     mutationFn: async (contactFormData) => {
@@ -23,9 +23,14 @@ const usePostContactMutation = () => {
       // console.log('Contact form submitted', data);
       // Optionally invalidate or update related queries if needed
       // queryClient.invalidateQueries({ queryKey: ['contacts'] });
+      toast('Thành công', {
+        description: 'Thông tin đã được gửi thành công',
+      });
     },
     onError: (error) => {
-      console.error('Contact form submission failed', error.message);
+      toast('Lỗi', {
+        description: error.message,
+      });
     },
   });
 };

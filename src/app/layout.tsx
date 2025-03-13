@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { TanstackProvider } from './providers/tanstack-provider';
 import LayoutTemplate from '@/components/layout-template';
+import { Toaster } from 'sonner';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -32,6 +33,7 @@ export default function RootLayout({
         <TanstackProvider>
           <LayoutTemplate>{children}</LayoutTemplate>
         </TanstackProvider>
+        <Toaster position='top-right' duration={5000} />
       </body>
     </html>
   );

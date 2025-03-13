@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   Card,
   CardContent,
@@ -8,144 +8,162 @@ import {
   CardTitle,
 } from '../ui/card';
 import { Input } from '../ui/input';
-import { Label } from '../ui/label';
 import { Textarea } from '../ui/textarea';
 import { Button } from '../ui/button';
 import { usePostContactMutation } from '@/hooks/use-contact';
-import { toast } from '@/hooks/use-toast';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '../ui/form';
 
 const ContactForm = () => {
-  const [formData, setFormData] = useState<TContactFormData>({
-    name: '',
-    email: '',
-    phone_number: '',
-    subject: '',
-    content: '',
+  const { mutate, isSuccess, isPending } = usePostContactMutation();
+  const formSchema = z.object({
+    name: z.string().min(1, {
+      message: 'Thông tin không được trống',
+    }),
+    email: z.string().min(1, {
+      message: 'Thông tin không được trống',
+    }),
+    phone_number: z.string().min(1, {
+      message: 'Thông tin không được trống',
+    }),
+    subject: z.string().min(1, {
+      message: 'Thông tin không được trống',
+    }),
+    content: z.string().min(1, {
+      message: 'Thông tin không được trống',
+    }),
   });
 
-  const [errors, setErrors] = useState<Record<string, string[]>>({});
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    mode: 'onChange',
+    defaultValues: {
+      name: '',
+      email: '',
+      phone_number: '',
+      subject: '',
+      content: '',
+    },
+  });
 
-  const { mutate, status } = usePostContactMutation();
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    console.log(values);
+    mutate(values);
+    // submit here
+  }
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-
-    // Xóa lỗi khi người dùng nhập lại dữ liệu
-    setErrors((prevErrors) => {
-      const newErrors = { ...prevErrors };
-      delete newErrors[name];
-      return newErrors;
-    });
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setErrors({});
-    setSuccessMessage(null);
-
-    mutate(formData, {
-      onSuccess: (response) => {
-        if (response.data?.status) {
-          setSuccessMessage('Gửi liên hệ thành công.');
-          toast.success('Gửi liên hệ thành công.');
-
-          // Reset form sau khi gửi thành công
-          setFormData({
-            name: '',
-            email: '',
-            phone_number: '',
-            subject: '',
-            content: '',
-          });
-        }
-      },
-      onError: (error: any) => {
-        const errorResponse = error.response?.data;
-
-        if (errorResponse?.errors) {
-          setErrors(errorResponse.errors); // Cập nhật lỗi từ server
-        }
-
-        toast.error(
-          errorResponse?.message || 'Đã có lỗi xảy ra. Vui lòng thử lại!'
-        );
-      },
-    });
-  };
+  useEffect(() => {
+    if (isSuccess) {
+      form.reset();
+    }
+  }, [isSuccess, form]);
 
   return (
-    <Card className='p-8'>
-      <CardHeader>
-        <CardTitle className='text-3xl'>Liên hệ</CardTitle>
-        <CardDescription>
-          Nếu bạn có câu hỏi cần giải đáp, hãy điền vào biểu mẫu bên dưới. Chúng
-          tôi sẽ liên hệ lại trong thời gian sớm nhất.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        {successMessage && (
-          <div className='mb-4 p-4 bg-green-100 text-green-700 rounded'>
-            {successMessage}
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit} className='flex flex-col gap-6'>
-          {[
-            { label: 'Họ và tên', name: 'name', type: 'text', required: true },
-            { label: 'Email', name: 'email', type: 'email', required: true },
-            {
-              label: 'Số điện thoại',
-              name: 'phone_number',
-              type: 'tel',
-              required: false,
-            },
-            { label: 'Chủ đề', name: 'subject', type: 'text', required: true },
-          ].map(({ label, name, type, required }) => (
-            <div key={name}>
-              <Label>
-                {label} {required && <span className='text-red-500'>*</span>}
-              </Label>
-              <Input
-                name={name}
-                type={type}
-                value={formData[name as keyof TContactFormData]}
-                onChange={handleChange}
-                placeholder={`Nhập ${label.toLowerCase()}`}
+    <div>
+      <Card className=''>
+        <CardHeader>
+          <CardTitle className='text-3xl'>Liên hệ</CardTitle>
+          <CardDescription>
+            Nếu bạn có câu hỏi cần giải đáp, hãy điền vào biểu mẫu bên dưới.
+            Chúng tôi sẽ liên hệ lại trong thời gian sớm nhất.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className='grid grid-cols-1 gap-4'
+            >
+              <FormField
+                control={form.control}
+                name='name'
+                render={({ field }) => (
+                  <FormItem className='col-span-1'>
+                    <FormLabel>Họ và tên</FormLabel>
+                    <FormControl>
+                      <Input
+                        type='text'
+                        className=' '
+                        placeholder='Tên'
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-              {errors[name] && (
-                <p className='text-red-500 text-sm mt-1'>{errors[name][0]}</p>
-              )}
-            </div>
-          ))}
+              <FormField
+                control={form.control}
+                name='email'
+                render={({ field }) => (
+                  <FormItem className='col-span-1'>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input type='text' placeholder='Email' {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='phone_number'
+                render={({ field }) => (
+                  <FormItem className='col-span-1'>
+                    <FormLabel>Điện thoại</FormLabel>
+                    <Input type='text' placeholder='Điện thoại' {...field} />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='subject'
+                render={({ field }) => (
+                  <FormItem className='col-span-1'>
+                    <FormLabel>Chủ đề</FormLabel>
+                    <FormControl>
+                      <Input type='text' placeholder='facebook' {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-          <div>
-            <Label>
-              Nội dung <span className='text-red-500'>*</span>
-            </Label>
-            <Textarea
-              name='content'
-              value={formData.content}
-              onChange={handleChange}
-              placeholder='Nhập nội dung'
-              className='min-h-[250px] overflow-y-auto'
-            />
-            {errors.content && (
-              <p className='text-red-500 text-sm mt-1'>{errors.content[0]}</p>
-            )}
-          </div>
+              <FormField
+                control={form.control}
+                name='content'
+                render={({ field }) => (
+                  <FormItem className='col-span-1'>
+                    <FormLabel>Nội dung</FormLabel>
+                    <FormControl>
+                      <Textarea placeholder='Nội dung' {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-          <div>
-            <Button type='submit' disabled={status === 'pending'}>
-              {status === 'pending' ? 'Đang gửi...' : 'Gửi'}
-            </Button>
-          </div>
-        </form>
-      </CardContent>
-    </Card>
+              <div className='col-span-1 flex justify-center'>
+                <Button type='submit' disabled={isPending}>
+                  Cập nhật
+                </Button>
+              </div>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 
