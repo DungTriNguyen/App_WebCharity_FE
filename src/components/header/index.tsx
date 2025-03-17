@@ -55,12 +55,12 @@ const Header = () => {
     },
     {
       label: 'Tổ chức gây quỹ',
-      href: '/organizations',
+      href: '/accounts?type=organizations',
       icon: '🏢',
     },
     {
       label: 'Cá nhân gây quỹ',
-      href: '/individuals',
+      href: '/accounts?type=individuals',
       icon: '👤',
     },
   ];
