@@ -1,5 +1,8 @@
 'use client';
-import React from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { Button } from '../ui/button';
 import {
   Form,
   FormControl,
@@ -8,11 +11,7 @@ import {
   FormLabel,
   FormMessage,
 } from '../ui/form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
 import { Input } from '../ui/input';
-import { Button } from '../ui/button';
 import {
   Select,
   SelectContent,
@@ -52,7 +51,6 @@ const EditProfileForm = () => {
     department: z.string().min(1, {
       message: 'Thông tin không được trống',
     }),
-
     facebookUrl: z.string().optional(),
     youtubeUrl: z.string().optional(),
     tiktokUrl: z.string().optional(),
@@ -88,29 +86,23 @@ const EditProfileForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className='grid grid-cols-2 gap-4'
+        className='grid grid-cols-2 gap-6'
       >
         <FormField
           control={form.control}
           name='name'
           render={({ field }) => (
             <FormItem className='col-span-1'>
-              <FormLabel>Tên người dùng</FormLabel>
+              <FormLabel>
+                Tên người dùng <span style={{ color: 'red' }}>*</span>
+              </FormLabel>
               <FormControl>
-                <Input type='text' className=' ' placeholder='Tên' {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name='address'
-          render={({ field }) => (
-            <FormItem className='col-span-1'>
-              <FormLabel>Địa chỉ</FormLabel>
-              <FormControl>
-                <Input type='text' placeholder='Địa chỉ' {...field} />
+                <Input
+                  type='text'
+                  className=' '
+                  placeholder='Tên người dùng'
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -139,6 +131,52 @@ const EditProfileForm = () => {
             </FormItem>
           )}
         />
+
+        <FormField
+          control={form.control}
+          name='phone'
+          render={({ field }) => (
+            <FormItem className='col-span-1'>
+              <FormLabel>
+                Điện thoại<span style={{ color: 'red' }}>*</span>
+              </FormLabel>
+              <FormControl>
+                <Input type='text' placeholder='Điện thoại' {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='tiktokUrl'
+          render={({ field }) => (
+            <FormItem className='col-span-1'>
+              <FormLabel>Tiktok</FormLabel>
+              <FormControl>
+                <Input type='text' placeholder='Tiktok' {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name='email'
+          render={({ field }) => (
+            <FormItem className='col-span-1'>
+              <FormLabel>
+                Email<span style={{ color: 'red' }}>*</span>
+              </FormLabel>
+              <FormControl>
+                <Input type='text' placeholder='Email' {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <FormField
           control={form.control}
           name='facebookUrl'
@@ -146,7 +184,7 @@ const EditProfileForm = () => {
             <FormItem className='col-span-1'>
               <FormLabel>Facebook</FormLabel>
               <FormControl>
-                <Input type='text' placeholder='facebook' {...field} />
+                <Input type='text' placeholder='Facebook' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -160,7 +198,7 @@ const EditProfileForm = () => {
             <FormItem className='col-span-1'>
               <FormLabel>Ngày sinh</FormLabel>
               <FormControl>
-                <Input type='text' placeholder='birthday' {...field} />
+                <Input type='text' placeholder='Ngày sinh' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -174,49 +212,20 @@ const EditProfileForm = () => {
             <FormItem className='col-span-1'>
               <FormLabel>Youtube</FormLabel>
               <FormControl>
-                <Input type='text' placeholder='youtube' {...field} />
+                <Input type='text' placeholder='Youtube' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-
         <FormField
           control={form.control}
-          name='phone'
+          name='address'
           render={({ field }) => (
             <FormItem className='col-span-1'>
-              <FormLabel>Điện thoại</FormLabel>
+              <FormLabel>Địa chỉ</FormLabel>
               <FormControl>
-                <Input type='text' placeholder='Điện thoại' {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name='tiktokUrl'
-          render={({ field }) => (
-            <FormItem className='col-span-1'>
-              <FormLabel>Tiktok</FormLabel>
-              <FormControl>
-                <Input type='text' placeholder='tiktok' {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name='email'
-          render={({ field }) => (
-            <FormItem className='col-span-1'>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input type='text' placeholder='email' {...field} />
+                <Input type='text' placeholder='Địa chỉ' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

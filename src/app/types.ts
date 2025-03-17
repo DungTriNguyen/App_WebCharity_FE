@@ -253,3 +253,11 @@ type TSVolunteer = {
     created_at: string;
   };
 };
+
+type TRegister = {
+  name: string;
+  email: string;
+  phone_number: string;
+  password: string;
+  password_confirmation: string;
+};

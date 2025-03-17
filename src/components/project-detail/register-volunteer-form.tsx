@@ -1,8 +1,8 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { Button } from '../ui/button';
 import {
   Card,
   CardContent,
@@ -10,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from '../ui/card';
+import { Checkbox } from '../ui/checkbox';
 import {
   Form,
   FormControl,
@@ -19,9 +20,6 @@ import {
   FormMessage,
 } from '../ui/form';
 import { Input } from '../ui/input';
-import { Checkbox } from '../ui/checkbox';
-import { Button } from '../ui/button';
-import { useGetProjectByID } from '@/hooks/use-project';
 
 const RegisterVolunteerForm = () => {
   const formSchema = z.object({

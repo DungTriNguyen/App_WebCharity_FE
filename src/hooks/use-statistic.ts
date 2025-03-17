@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 import { useAxiosAuth } from './use-axios-auth';
-import { TStatisticData } from '@/app/types';
 
 const useGetStatisticQuery = () => {
   const apiAuth = useAxiosAuth();

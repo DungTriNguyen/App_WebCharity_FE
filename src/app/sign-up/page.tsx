@@ -1,5 +1,6 @@
 'use client';
-import React from 'react';
+import FacebookIcon from '@/components/icons/facebook-icon';
+import GmailIcon from '@/components/icons/gmail-icon';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -8,12 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
-import { useRouter } from 'next/navigation';
-import { z } from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Form,
   FormControl,
@@ -22,9 +18,15 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import FacebookIcon from '@/components/icons/facebook-icon';
-import GmailIcon from '@/components/icons/gmail-icon';
+import { Input } from '@/components/ui/input';
+import { usePostRegisterMutation } from '@/hooks/use-register';
+import { zodResolver } from '@hookform/resolvers/zod';
+// import { Checkbox } from '@radix-ui/react-checkbox';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 const SignUpPage = () => {
   const socialInfo = [
@@ -48,13 +50,13 @@ const SignUpPage = () => {
     email: z.string().min(1, {
       message: 'Email không được để trống',
     }),
-    phone: z.string().min(1, {
+    phone_number: z.string().min(1, {
       message: 'Số điện thoại không được để trống',
     }),
     password: z.string().min(1, {
       message: 'Mật khẩu không được để trống',
     }),
-    confirmPassword: z.string().min(1, {
+    password_confirmation: z.string().min(1, {
       message: 'Xác nhận mật khẩu không được để trống',
     }),
     term: z.literal<boolean>(true, {
@@ -62,15 +64,17 @@ const SignUpPage = () => {
     }),
   });
 
+  const { mutate, isSuccess, isPending } = usePostRegisterMutation();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
       name: '',
       email: '',
-      phone: '',
+      phone_number: '',
       password: '',
-      confirmPassword: '',
+      password_confirmation: '',
       term: false,
     },
   });
@@ -78,14 +82,38 @@ const SignUpPage = () => {
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values);
+    // console.log('hahahaah:', values);
+
+    mutate(values);
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      form.reset();
+    }
+  }, [isSuccess, form]);
 
   return (
     <div className='bg-login-background min-h-screen w-full bg-cover object-contain bg-no-repeat flex justify-center items-center'>
       <Card className='w-[480px]'>
         <CardHeader>
           <CardTitle className='text-center font-bold text-2xl'>
+            <Link href='/login'>
+              <svg
+                width='20'
+                height='20'
+                viewBox='0 0 15 15'
+                fill='none'
+                xmlns='http://www.w3.org/2000/svg'
+              >
+                <path
+                  d='M6.85355 3.14645C7.04882 3.34171 7.04882 3.65829 6.85355 3.85355L3.70711 7H12.5C12.7761 7 13 7.22386 13 7.5C13 7.77614 12.7761 8 12.5 8H3.70711L6.85355 11.1464C7.04882 11.3417 7.04882 11.6583 6.85355 11.8536C6.65829 12.0488 6.34171 12.0488 6.14645 11.8536L2.14645 7.85355C1.95118 7.65829 1.95118 7.34171 2.14645 7.14645L6.14645 3.14645C6.34171 2.95118 6.65829 2.95118 6.85355 3.14645Z'
+                  fill='currentColor'
+                  fillRule='evenodd'
+                  clipRule='evenodd'
+                ></path>
+              </svg>
+            </Link>
             Đăng Ký
           </CardTitle>
           <CardDescription></CardDescription>
@@ -126,7 +154,7 @@ const SignUpPage = () => {
 
               <FormField
                 control={form.control}
-                name='phone'
+                name='phone_number'
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Điện thoại</FormLabel>
@@ -158,7 +186,7 @@ const SignUpPage = () => {
 
               <FormField
                 control={form.control}
-                name='confirmPassword'
+                name='password_confirmation'
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Nhập lại mật khẩu</FormLabel>
@@ -191,7 +219,9 @@ const SignUpPage = () => {
                   </FormItem>
                 )}
               />
-              <Button type='submit'>Đăng ký</Button>
+              <Button type='submit' disabled={isPending}>
+                Đăng ký
+              </Button>
             </form>
           </Form>
           <div className='flex justify-start gap-1 items-center'>

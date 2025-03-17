@@ -156,7 +156,7 @@ const ContactForm = () => {
 
               <div className='col-span-1 flex justify-center'>
                 <Button type='submit' disabled={isPending}>
-                  Cập nhật
+                  Gửi
                 </Button>
               </div>
             </form>

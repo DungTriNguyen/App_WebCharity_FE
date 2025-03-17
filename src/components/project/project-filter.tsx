@@ -1,6 +1,6 @@
 'use client';
 import { SearchIcon } from 'lucide-react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Input } from '../ui/input';
 import {
   Select,
@@ -17,18 +17,30 @@ import { CAMPAIGN_STATUS, CAMPAIGN_TYPE } from '@/app/enum';
 import { useGetCategoryQuery } from '@/hooks/use-categories';
 import { Button } from '../ui/button';
 import { CloseIcon } from 'yet-another-react-lightbox';
+import { useSearchParams } from 'next/navigation';
 
 const ProjectFilter = () => {
   const form = useFormContext<z.infer<typeof formSchema>>();
+  const searchParams = useSearchParams();
 
-  // const onSubmit = (values: z.infer<typeof formSchema>) => {
-  //   // console.log(values);
-  // };
+  const defaultValues = {
+    front_status: '',
+    category: '',
+    type: '',
+    keyword: '',
+  };
+
+  useEffect(() => {
+    const type = searchParams.get('type');
+    if (type && form.getValues('type') !== type.toUpperCase()) {
+      form.setValue('type', type.toUpperCase());
+    }
+  }, [searchParams, form]);
 
   const { data: categories } = useGetCategoryQuery();
 
   const resetForm = () => {
-    form.reset();
+    form.reset(defaultValues);
   };
 
   return (
@@ -43,7 +55,7 @@ const ProjectFilter = () => {
               <FormItem>
                 <Select
                   onValueChange={field.onChange}
-                  defaultValue={field.value}
+                  value={field.value || ''}
                 >
                   <FormControl>
                     <SelectTrigger className='w-[180px]'>
@@ -75,7 +87,7 @@ const ProjectFilter = () => {
               <FormItem>
                 <Select
                   onValueChange={field.onChange}
-                  defaultValue={field.value}
+                  value={field.value || ''}
                 >
                   <FormControl>
                     <SelectTrigger className='w-[250px]'>
@@ -83,13 +95,11 @@ const ProjectFilter = () => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {categories?.data?.map((item: TSCategotyData) => {
-                      return (
-                        <SelectItem value={`${item.id}`} key={item.id}>
-                          {item.name}
-                        </SelectItem>
-                      );
-                    })}
+                    {categories?.data?.map((item: TSCategotyData) => (
+                      <SelectItem value={`${item.id}`} key={item.id}>
+                        {item.name}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </FormItem>
@@ -104,7 +114,7 @@ const ProjectFilter = () => {
               <FormItem>
                 <Select
                   onValueChange={field.onChange}
-                  defaultValue={field.value}
+                  value={field.value || ''}
                 >
                   <FormControl>
                     <SelectTrigger className='w-[250px]'>
@@ -130,24 +140,22 @@ const ProjectFilter = () => {
           <FormField
             control={form.control}
             name='keyword'
-            render={({ field }) => {
-              return (
-                <FormItem className='w-full'>
-                  <FormControl className='w-full'>
-                    <div className='relative ml-auto'>
-                      <Input
-                        type='search'
-                        placeholder='Tìm kiếm tên chương trình'
-                        className='w-[300px] ml-auto pr-10'
-                        {...field}
-                        onChange={field.onChange}
-                      />
-                      <SearchIcon className='absolute right-4 top-0 bottom-0 m-auto' />
-                    </div>
-                  </FormControl>
-                </FormItem>
-              );
-            }}
+            render={({ field }) => (
+              <FormItem className='w-full'>
+                <FormControl className='w-full'>
+                  <div className='relative ml-auto'>
+                    <Input
+                      type='search'
+                      placeholder='Tìm kiếm tên chương trình'
+                      className='w-[300px] ml-auto pr-10'
+                      {...field}
+                      onChange={field.onChange}
+                    />
+                    <SearchIcon className='absolute right-4 top-0 bottom-0 m-auto' />
+                  </div>
+                </FormControl>
+              </FormItem>
+            )}
           />
           <Button type='button' variant={'destructive'} onClick={resetForm}>
             <CloseIcon />

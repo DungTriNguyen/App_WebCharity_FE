@@ -1,16 +1,18 @@
 import { useMutation } from '@tanstack/react-query';
-import { useAxiosAuth } from './use-axios-auth';
+import { useRouter } from 'next/navigation'; // Import useRouter từ next/navigation
 import { toast } from 'sonner';
+import { useAxiosAuth } from './use-axios-auth';
 
-const usePostContactMutation = () => {
+const usePostRegisterMutation = () => {
   const apiAuth = useAxiosAuth();
+  const router = useRouter(); // Khởi tạo router
 
-  return useMutation<TApiResponse, Error, TContactFormData>({
-    mutationFn: async (contactFormData) => {
+  return useMutation<TApiResponse, Error, TRegister>({
+    mutationFn: async (registerFormData) => {
       try {
         const res = await apiAuth.post<TApiResponse>(
-          '/contact/store',
-          contactFormData
+          '/register',
+          registerFormData
         );
         return res.data;
       } catch (error: any) {
@@ -24,9 +26,13 @@ const usePostContactMutation = () => {
       // Optionally invalidate or update related queries if needed
       // queryClient.invalidateQueries({ queryKey: ['contacts'] });
       toast.success('Thành công', {
-        description: 'Thông tin đã được gửi thành công',
+        description: 'Đăng ký tài khoản thành công',
         duration: 5000,
       });
+
+      setTimeout(() => {
+        router.push('/login'); // Chuyển hướng về trang đăng nhập
+      }, 2000);
     },
     onError: (error) => {
       toast.error('Lỗi', {
@@ -37,4 +43,4 @@ const usePostContactMutation = () => {
   });
 };
 
-export { usePostContactMutation };
+export { usePostRegisterMutation };

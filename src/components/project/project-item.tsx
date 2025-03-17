@@ -1,11 +1,10 @@
-import React from 'react';
-import { Label } from '../ui/label';
-import { CalendarFoldIcon, HandCoinsIcon, HandHeartIcon } from 'lucide-react';
-import { Button } from '../ui/button';
-import { Progress } from '../ui/progress';
-import Link from 'next/link';
-import { cn, formatCurrencyToVND } from '@/lib/utils';
 import { CAMPAIGN_TYPE } from '@/app/enum';
+import { cn } from '@/lib/utils';
+import { CalendarFoldIcon, HandCoinsIcon, HandHeartIcon } from 'lucide-react';
+import Link from 'next/link';
+import { Button } from '../ui/button';
+import { Label } from '../ui/label';
+import { Progress } from '../ui/progress';
 
 const ProjectItem = ({ project }: { project: TCampaign }) => {
   function formatCurrencyToVND(value: number): string {
