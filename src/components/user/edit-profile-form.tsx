@@ -19,8 +19,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select';
+import {
+  useGetUserProfileQuery,
+  useUpdateUserProfileMutation,
+} from '@/hooks/use-profile';
 
 const EditProfileForm = () => {
+  const { data: profile } = useGetUserProfileQuery();
+  const { mutate, isPending } = useUpdateUserProfileMutation();
+
   const formSchema = z.object({
     name: z.string().min(1, {
       message: 'Thông tin không được trống',
@@ -28,32 +35,26 @@ const EditProfileForm = () => {
     address: z.string().min(1, {
       message: 'Thông tin không được trống',
     }),
-    genre: z.string().min(1, {
+    gender: z.string().min(1, {
       message: 'Thông tin không được trống',
     }),
 
-    birthday: z.string().min(1, {
+    birth_of_date: z.string().min(1, {
       message: 'Thông tin không được trống',
     }),
-    phone: z.string().min(1, {
+    phone_number: z.string().min(1, {
       message: 'Thông tin không được trống',
     }),
     email: z.string().min(1, {
       message: 'Thông tin không được trống',
     }),
 
-    studentId: z.string().min(1, {
-      message: 'Thông tin không được trống',
-    }),
-    class: z.string().min(1, {
-      message: 'Thông tin không được trống',
-    }),
-    department: z.string().min(1, {
-      message: 'Thông tin không được trống',
-    }),
-    facebookUrl: z.string().optional(),
-    youtubeUrl: z.string().optional(),
-    tiktokUrl: z.string().optional(),
+    student_code: z.string().optional().nullable(),
+    class: z.string().optional().nullable(),
+    department_id: z.string().optional().nullable(),
+    facebook: z.string().optional().nullable(),
+    youtube: z.string().optional().nullable(),
+    tiktok: z.string().optional().nullable(),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -61,25 +62,26 @@ const EditProfileForm = () => {
     mode: 'onChange',
     defaultValues: {
       address: '',
-      birthday: '',
+      birth_of_date: '',
       email: '',
-      phone: '',
-      studentId: '',
-      class: '',
-      department: '',
-      facebookUrl: '',
-      genre: '',
+      phone_number: '',
+      facebook: '',
+      gender: '',
       name: '',
-      tiktokUrl: '',
-      youtubeUrl: '',
+      tiktok: '',
+      youtube: '',
+      student_code: '',
+      class: '',
+      department_id: '',
     },
+    values: profile?.data,
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
-
+    mutate(values as TUser);
     // submit here
   }
   return (
@@ -110,11 +112,15 @@ const EditProfileForm = () => {
         />
         <FormField
           control={form.control}
-          name='genre'
+          name='gender'
           render={({ field }) => (
             <FormItem className='col-span-1'>
               <FormLabel>Giới tính</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                value={field.value}
+              >
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder='Giới tính' />
@@ -134,7 +140,7 @@ const EditProfileForm = () => {
 
         <FormField
           control={form.control}
-          name='phone'
+          name='phone_number'
           render={({ field }) => (
             <FormItem className='col-span-1'>
               <FormLabel>
@@ -149,12 +155,17 @@ const EditProfileForm = () => {
         />
         <FormField
           control={form.control}
-          name='tiktokUrl'
+          name='tiktok'
           render={({ field }) => (
             <FormItem className='col-span-1'>
               <FormLabel>Tiktok</FormLabel>
               <FormControl>
-                <Input type='text' placeholder='Tiktok' {...field} />
+                <Input
+                  type='text'
+                  placeholder='Tiktok'
+                  {...field}
+                  value={field.value ?? ''}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -179,12 +190,17 @@ const EditProfileForm = () => {
 
         <FormField
           control={form.control}
-          name='facebookUrl'
+          name='facebook'
           render={({ field }) => (
             <FormItem className='col-span-1'>
               <FormLabel>Facebook</FormLabel>
               <FormControl>
-                <Input type='text' placeholder='Facebook' {...field} />
+                <Input
+                  type='text'
+                  placeholder='Facebook'
+                  {...field}
+                  value={field.value ?? ''}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -193,7 +209,7 @@ const EditProfileForm = () => {
 
         <FormField
           control={form.control}
-          name='birthday'
+          name='birth_of_date'
           render={({ field }) => (
             <FormItem className='col-span-1'>
               <FormLabel>Ngày sinh</FormLabel>
@@ -207,12 +223,17 @@ const EditProfileForm = () => {
 
         <FormField
           control={form.control}
-          name='youtubeUrl'
+          name='youtube'
           render={({ field }) => (
             <FormItem className='col-span-1'>
               <FormLabel>Youtube</FormLabel>
               <FormControl>
-                <Input type='text' placeholder='Youtube' {...field} />
+                <Input
+                  type='text'
+                  placeholder='Youtube'
+                  {...field}
+                  value={field.value ?? ''}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -240,12 +261,17 @@ const EditProfileForm = () => {
         </div>
         <FormField
           control={form.control}
-          name='studentId'
+          name='student_code'
           render={({ field }) => (
             <FormItem className='col-span-1'>
               <FormLabel>MSSV</FormLabel>
               <FormControl>
-                <Input type='text' placeholder='MSSV' {...field} />
+                <Input
+                  type='text'
+                  placeholder='MSSV'
+                  {...field}
+                  value={field.value ?? ''}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -258,7 +284,12 @@ const EditProfileForm = () => {
             <FormItem className='col-span-1'>
               <FormLabel>Lớp</FormLabel>
               <FormControl>
-                <Input type='text' placeholder='Lớp' {...field} />
+                <Input
+                  type='text'
+                  placeholder='Lớp'
+                  {...field}
+                  value={field.value ?? ''}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -266,12 +297,17 @@ const EditProfileForm = () => {
         />
         <FormField
           control={form.control}
-          name='department'
+          name='department_id'
           render={({ field }) => (
             <FormItem className='col-span-1'>
               <FormLabel>Khoa</FormLabel>
               <FormControl>
-                <Input type='text' placeholder='Khoa' {...field} />
+                <Input
+                  type='text'
+                  placeholder='Khoa'
+                  {...field}
+                  value={field.value ?? ''}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -279,7 +315,9 @@ const EditProfileForm = () => {
         />
 
         <div className='col-span-2 flex justify-center'>
-          <Button type='submit'>Cập nhật</Button>
+          <Button type='submit' disabled={isPending || !form.formState.isValid}>
+            Cập nhật
+          </Button>
         </div>
       </form>
     </Form>

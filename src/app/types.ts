@@ -261,3 +261,22 @@ type TRegister = {
   password: string;
   password_confirmation: string;
 };
+
+type TUser = {
+  id: number;
+  name: string;
+  username: string;
+  email: string;
+  phone_number: string;
+  birth_of_date: string; // You can use Date type if you'll be parsing it
+  status: number;
+  status_label: string;
+  status_badge: string;
+  gender: string;
+  address: string;
+  avatar_url: string;
+  description: string | null;
+  facebook: string | null;
+  youtube: string | null;
+  tiktok: string | null;
+};
