@@ -32,8 +32,8 @@ const ProjectFilter = () => {
 
   useEffect(() => {
     const type = searchParams.get('type');
-    if (type && form.getValues('type') !== type.toUpperCase()) {
-      form.setValue('type', type.toUpperCase());
+    if (type && form.getValues('type') !== type) {
+      form.setValue('type', type);
     }
   }, [searchParams, form]);
 
