@@ -1,5 +1,4 @@
 'use client';
-import React from 'react';
 import { useGetSettingPage } from '@/hooks/use-setting';
 import { SETTING_TYPE } from '../enum';
 

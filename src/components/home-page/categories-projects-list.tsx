@@ -1,68 +1,14 @@
 'use client';
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
+import { useGetCategoryQuery } from '@/hooks/use-categories';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import {
-  Shield,
-  Baby,
-  PersonStanding,
-  Heart,
-  Activity,
-  Users,
-} from 'lucide-react';
-import { useGetCategoryQuery } from '@/hooks/use-categories';
+import { Navigation } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 const CampaignSlider = () => {
   const { data: category } = useGetCategoryQuery();
   // console.log('day la categories:', category);
-  // const categories = [
-  //   {
-  //     icon: Shield,
-  //     label: 'Xóa đói',
-  //   },
-  //   {
-  //     icon: Baby,
-  //     label: 'Trẻ em',
-  //   },
-  //   {
-  //     icon: PersonStanding,
-  //     label: 'Người cao tuổi',
-  //   },
-  //   {
-  //     icon: Heart,
-  //     label: 'Người nghèo',
-  //   },
-  //   {
-  //     icon: Heart,
-  //     label: 'Người nghèo',
-  //   },
-  //   {
-  //     icon: Heart,
-  //     label: 'Người nghèo',
-  //   },
-  //   {
-  //     icon: Heart,
-  //     label: 'Người nghèo',
-  //   },
-  //   {
-  //     icon: Heart,
-  //     label: 'Người nghèo',
-  //   },
-  //   {
-  //     icon: Heart,
-  //     label: 'Người nghèo',
-  //   },
-  //   {
-  //     icon: Activity,
-  //     label: 'Bệnh hiểm nghèo',
-  //   },
-  //   {
-  //     icon: Users,
-  //     label: 'Dân tộc thiểu số',
-  //   },
-  // ];
 
   return (
     <div className='relative [&_.swiper-button-prev]:top-[35%] [&_.swiper-button-next]:top-[35%] [&_.swiper-button-prev]:text-[#0BAEFF] [&_.swiper-button-next]:text-[#0BAEFF] py-12 [&_.swiper-button-prev]:scale-50 [&_.swiper-button-next]:scale-50 [&_.swiper-button-prev]::after:text-sm [&_.swiper-button-next]::after:text-sm'>

@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { signIn } from 'next-auth/react';
+import { toast } from 'sonner';
 
 const useLoginMutation = () => {
   return useMutation({
@@ -17,6 +18,12 @@ const useLoginMutation = () => {
         email,
         password,
       });
+    },
+    onSuccess: () => {
+      toast.success('Login successful!', { duration: 5000 });
+    },
+    onError: (error) => {
+      toast.error(`Login failed: ${error.message}`, { duration: 5000 });
     },
   });
 };

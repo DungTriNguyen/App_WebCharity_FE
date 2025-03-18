@@ -1,17 +1,20 @@
 'use client';
 
-import React from 'react';
-import { Button } from '../ui/button';
-import Image from 'next/image';
-import logo from '../../../public/sgu-logo.png';
+import { Avatar } from '@radix-ui/react-avatar';
 import {
   BellIcon,
+  ChevronDownIcon,
   LogInIcon,
   LogOutIcon,
   SearchIcon,
-  ChevronDownIcon,
 } from 'lucide-react';
+import { signOut, useSession } from 'next-auth/react';
+import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import React from 'react';
+import logo from '../../../public/sgu-logo.png';
+import { Button } from '../ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,10 +22,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
-import { signOut, useSession } from 'next-auth/react';
-import Link from 'next/link';
 import { Input } from '../ui/input';
-import { Avatar, AvatarImage } from '@radix-ui/react-avatar';
+import { CAMPAIGN_TYPE } from '@/app/enum';
 
 const Header = () => {
   const { data } = useSession();
@@ -32,17 +33,17 @@ const Header = () => {
   const ACTIVITIES_ITEMS = [
     {
       label: 'Quyên góp tiền',
-      href: '/donation',
+      href: `/projects?type=${CAMPAIGN_TYPE.DONATE}`,
       icon: '💰',
     },
     {
       label: 'Đăng ký tình nguyện viên',
-      href: '/register-volunteer',
+      href: `/projects?type=${CAMPAIGN_TYPE.VOLUNTEER}`,
       icon: '🤝',
     },
     {
       label: 'Quyên góp và ĐKTNV',
-      href: '/donation',
+      href: `/projects?type=${CAMPAIGN_TYPE.MULTIPLE}`,
       icon: '❤️',
     },
   ];
@@ -55,12 +56,12 @@ const Header = () => {
     },
     {
       label: 'Tổ chức gây quỹ',
-      href: '/accounts?type=organizations',
+      href: '/projects?filter=organization',
       icon: '🏢',
     },
     {
       label: 'Cá nhân gây quỹ',
-      href: '/accounts?type=individuals',
+      href: '/projects?filter=individual',
       icon: '👤',
     },
   ];
@@ -163,7 +164,7 @@ const Header = () => {
             <span className='font-bold text-xl text-primary'>SGUCharity</span>
           </Link>
 
-          <div className='flex items-center gap-4 pl-[255px]'>
+          <div className='flex items-center gap-4 pl-[160px] pr-2'>
             {renderMenu(CATEGORY_ITEMS, 'Danh mục')}
             {renderMenu(ACTIVITIES_ITEMS, 'Hoạt động')}
             {renderMenu(ABOUT_US_ITEMS, 'Về chúng tôi')}

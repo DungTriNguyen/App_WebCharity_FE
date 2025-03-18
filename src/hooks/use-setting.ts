@@ -1,7 +1,6 @@
+import { SETTING_TYPE } from '@/app/enum';
 import { useQuery } from '@tanstack/react-query';
 import { useAxiosAuth } from './use-axios-auth';
-import { SETTING_TYPE } from '@/app/enum';
-import { TSSetting } from '@/app/types';
 
 const useGetSettingPage = ({ key }: { key?: SETTING_TYPE }) => {
   const apiAuth = useAxiosAuth();

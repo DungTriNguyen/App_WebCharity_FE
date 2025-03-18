@@ -17,7 +17,7 @@ const UserLayout = ({
         <div className='absolute'>Trang cá nhân</div>
       </div>
       <div className='container 2xl:max-w-[1200px] mx-auto my-8 relative pt-12'>
-        <div className='absolute top-[-84px] left-[calc(50%_-48px)]  rounded-full'>
+        <div className='absolute top-[-84px] left-1/2 transform -translate-x-1/2 flex flex-col items-center'>
           <div className='w-24 h-24 bg-pink-500 mx-auto rounded-full'></div>
           <div className='text-center'>First name last name</div>
           <div className='text-center'>username</div>

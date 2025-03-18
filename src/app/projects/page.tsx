@@ -1,18 +1,7 @@
-import ProjectList from '@/components/project/project-list';
-import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { SearchIcon } from 'lucide-react';
+import ProjectComponent from '@/components/project';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import React, { use } from 'react';
-import ProjectComponent from '@/components/project';
+import { use } from 'react';
 
 const tabList = [
   {
