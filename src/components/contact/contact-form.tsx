@@ -24,17 +24,31 @@ import {
 } from '../ui/form';
 
 const ContactForm = () => {
-  const { mutate, isSuccess, isPending } = usePostContactMutation();
+  const { mutate, isSuccess, isPending, error } = usePostContactMutation();
   const formSchema = z.object({
     name: z.string().min(1, {
       message: 'Thông tin không được trống',
     }),
-    email: z.string().min(1, {
-      message: 'Thông tin không được trống',
-    }),
-    phone_number: z.string().min(1, {
-      message: 'Thông tin không được trống',
-    }),
+    email: z
+      .string()
+      .min(1, {
+        message: 'Thông tin không được trống',
+      })
+      .email({ message: 'Không đúng định dạnh email' }),
+    phone_number: z
+      .string()
+      .min(1, {
+        message: 'Thông tin không được trống',
+      })
+      .max(11, {
+        message: 'Số điện thoại không được quá 11 ký tự',
+      })
+      .regex(
+        new RegExp(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/),
+        {
+          message: 'Không đúng định dạng số điện thoại',
+        }
+      ),
     subject: z.string().min(1, {
       message: 'Thông tin không được trống',
     }),
@@ -123,6 +137,7 @@ const ContactForm = () => {
                   <FormItem className='col-span-1'>
                     <FormLabel>Điện thoại</FormLabel>
                     <Input type='text' placeholder='Điện thoại' {...field} />
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -155,8 +170,11 @@ const ContactForm = () => {
               />
 
               <div className='col-span-1 flex justify-center'>
-                <Button type='submit' disabled={isPending}>
-                  Gửi
+                <Button
+                  type='submit'
+                  disabled={isPending || !form.formState.isValid}
+                >
+                  Cập nhật
                 </Button>
               </div>
             </form>
