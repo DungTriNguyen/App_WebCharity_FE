@@ -1,6 +1,7 @@
 'use client';
 
 import { useGetCategoryQuery } from '@/hooks/use-categories';
+import Link from 'next/link';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
@@ -51,17 +52,19 @@ const CampaignSlider = () => {
                 key={categories.id}
                 className='flex items-center justify-between gap-2 cursor-pointer group py-4 px-[25px]'
               >
-                <div
-                  className='p-2.5 rounded-full bg-[#0BAEFF]/10 group-hover:bg-[#ffffff] transition-colors '
-                  dangerouslySetInnerHTML={{
-                    __html: customizeSvg(categories.icon),
-                  }}
-                >
-                  {/* <categories.icon className='w-5 h-5 text-[#0BAEFF] group-hover:text-white' /> */}
-                </div>
-                <span className='text-sm text-gray-600 group-hover:text-[#0BAEFF] transition-colors'>
-                  {categories.name}
-                </span>
+                <Link href={`/projects?category=${categories.id}`}>
+                  <div
+                    className='p-2.5 rounded-full bg-[#0BAEFF]/10 group-hover:bg-[#ffffff] transition-colors '
+                    dangerouslySetInnerHTML={{
+                      __html: customizeSvg(categories.icon),
+                    }}
+                  >
+                    {/* <categories.icon className='w-5 h-5 text-[#0BAEFF] group-hover:text-white' /> */}
+                  </div>
+                  <span className='text-sm text-gray-600 group-hover:text-[#0BAEFF] transition-colors'>
+                    {categories.name}
+                  </span>
+                </Link>
               </SwiperSlide>
             );
           })}

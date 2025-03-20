@@ -22,6 +22,7 @@ import { useSearchParams } from 'next/navigation';
 const ProjectFilter = () => {
   const form = useFormContext<z.infer<typeof formSchema>>();
   const searchParams = useSearchParams();
+  const { data: categories } = useGetCategoryQuery();
 
   const defaultValues = {
     front_status: '',
@@ -35,9 +36,11 @@ const ProjectFilter = () => {
     if (type && form.getValues('type') !== type) {
       form.setValue('type', type);
     }
+    const category = searchParams.get('category');
+    if (category && form.getValues('category') !== category) {
+      form.setValue('category', category);
+    }
   }, [searchParams, form]);
-
-  const { data: categories } = useGetCategoryQuery();
 
   const resetForm = () => {
     form.reset(defaultValues);

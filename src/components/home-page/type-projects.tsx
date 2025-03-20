@@ -1,7 +1,5 @@
-import React from 'react';
-import { Separator } from '../ui/separator';
-import Image from 'next/image';
-import missionImage from '../../../public/mission-img.png';
+import { CAMPAIGN_TYPE } from '@/app/enum';
+import Link from 'next/link';
 
 const LIST_ICONS = [
   {
@@ -20,7 +18,7 @@ const LIST_ICONS = [
         />
       </svg>
     ),
-    name: 'Ủng hộ tiền',
+    name: CAMPAIGN_TYPE.DONATE,
   },
   {
     key: 2,
@@ -38,7 +36,7 @@ const LIST_ICONS = [
         />
       </svg>
     ),
-    name: 'ĐK tình nguyện viên',
+    name: CAMPAIGN_TYPE.VOLUNTEER,
   },
   {
     key: 3,
@@ -56,7 +54,7 @@ const LIST_ICONS = [
         />
       </svg>
     ),
-    name: 'Ủng hộ tiền & ĐK TNV',
+    name: CAMPAIGN_TYPE.MULTIPLE,
   },
 ];
 
@@ -65,9 +63,11 @@ const TypeProjects = () => {
     <div className='py-4'>
       <div className='flex justify-around items-center'>
         {LIST_ICONS.map((item) => (
-          <div key={item.key} className='flex flex-col items-center'>
-            {item.icon} <p className='mt-2 font-bold'>{item.name}</p>
-          </div>
+          <Link href={`/projects?type=${item.name}`} key={item.key}>
+            <div className='flex flex-col items-center'>
+              {item.icon} <p className='mt-2 font-bold'>{item.name}</p>
+            </div>
+          </Link>
         ))}
       </div>
     </div>
