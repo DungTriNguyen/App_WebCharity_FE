@@ -43,26 +43,61 @@ const SignUpPage = () => {
   ];
   const router = useRouter();
 
-  const formSchema = z.object({
-    name: z.string().min(1, {
-      message: 'Họ tên không được để trống',
-    }),
-    email: z.string().min(1, {
-      message: 'Email không được để trống',
-    }),
-    phone_number: z.string().min(1, {
-      message: 'Số điện thoại không được để trống',
-    }),
-    password: z.string().min(1, {
-      message: 'Mật khẩu không được để trống',
-    }),
-    password_confirmation: z.string().min(1, {
-      message: 'Xác nhận mật khẩu không được để trống',
-    }),
-    term: z.literal<boolean>(true, {
-      errorMap: () => ({ message: 'Vui lòng đồng ý với các điều khoản' }),
-    }),
-  });
+  const formSchema = z
+    .object({
+      name: z.string().min(1, {
+        message: 'Họ tên không được để trống',
+      }),
+      email: z
+        .string()
+        .min(1, {
+          message: 'Email không được để trống',
+        })
+        .email({ message: 'Không đúng định dạnh email' }),
+      phone_number: z
+        .string()
+        .min(1, {
+          message: 'Số điện thoại không được để trống',
+        })
+        .max(11, {
+          message: 'Số điện thoại không được quá 11 ký tự',
+        })
+        .regex(
+          new RegExp(
+            /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
+          ),
+          {
+            message: 'Không đúng định dạng số điện thoại',
+          }
+        ),
+      password: z
+        .string()
+        .min(1, {
+          message: 'Mật khẩu không được để trống',
+        })
+        .regex(
+          new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/, 'gm'),
+          {
+            message:
+              'Mật khẩu phải chứa ít nhất 8 ký tự, 1 chữ hoa, 1 chữ thường và ký tự đặc biệt',
+          }
+        ),
+      password_confirmation: z.string().min(1, {
+        message: 'Xác nhận mật khẩu không được để trống',
+      }),
+      term: z.literal<boolean>(true, {
+        errorMap: () => ({ message: 'Vui lòng đồng ý với các điều khoản' }),
+      }),
+    })
+    .superRefine(({ password_confirmation, password }, ctx) => {
+      if (password_confirmation !== password) {
+        ctx.addIssue({
+          code: 'custom',
+          message: 'Xác nhận mật khẩu không trùng khớp',
+          path: ['password_confirmation'],
+        });
+      }
+    });
 
   const { mutate, isSuccess, isPending } = usePostRegisterMutation();
 
