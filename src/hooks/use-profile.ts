@@ -1,7 +1,7 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { useAxiosAuth } from './use-axios-auth';
 import { queryClient } from '@/app/providers/client';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
+import { useAxiosAuth } from './use-axios-auth';
 
 const useGetUserProfileQuery = () => {
   const apiAuth = useAxiosAuth();
