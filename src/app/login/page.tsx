@@ -21,12 +21,14 @@ import { Input } from '@/components/ui/input';
 import { useLoginMutation } from '@/hooks/use-login';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 const LoginPage = () => {
+  const searchParams = useSearchParams();
+  const error = searchParams.get('error');
   const socialInfo = [
     {
       key: 'facebook',
@@ -74,6 +76,14 @@ const LoginPage = () => {
       form.reset();
     }
   }, [isSuccess, form]);
+
+  useEffect(() => {
+    if (error) {
+      form.setError('password', {
+        message: error,
+      });
+    }
+  }, [error, form]);
 
   return (
     <div className='bg-login-background min-h-screen w-full bg-cover object-contain bg-no-repeat flex justify-center items-center'>

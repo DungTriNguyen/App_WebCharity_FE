@@ -32,16 +32,18 @@ const EditProfileForm = () => {
     name: z.string().min(1, {
       message: 'Thông tin không được trống',
     }),
-    address: z.string().min(1, {
-      message: 'Thông tin không được trống',
-    }),
+    address: z
+      .string()
+      .min(1, {
+        message: 'Thông tin không được trống',
+      })
+      .optional()
+      .nullable(),
     gender: z.string().min(1, {
       message: 'Thông tin không được trống',
     }),
 
-    birth_of_date: z.string().min(1, {
-      message: 'Thông tin không được trống',
-    }),
+    birth_of_date: z.string().optional().nullable(),
     phone_number: z.string().min(1, {
       message: 'Thông tin không được trống',
     }),
@@ -214,7 +216,12 @@ const EditProfileForm = () => {
             <FormItem className='col-span-1'>
               <FormLabel>Ngày sinh</FormLabel>
               <FormControl>
-                <Input type='text' placeholder='Ngày sinh' {...field} />
+                <Input
+                  type='text'
+                  placeholder='Ngày sinh'
+                  {...field}
+                  value={field.value ?? ''}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -246,7 +253,12 @@ const EditProfileForm = () => {
             <FormItem className='col-span-1'>
               <FormLabel>Địa chỉ</FormLabel>
               <FormControl>
-                <Input type='text' placeholder='Địa chỉ' {...field} />
+                <Input
+                  type='text'
+                  placeholder='Địa chỉ'
+                  {...field}
+                  value={field.value ?? ''}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
