@@ -1,15 +1,14 @@
+import { CAMPAIGN_ROLE } from '@/app/enum';
+import { useGetProjectQuery } from '@/hooks/use-project';
 import { MoveRightIcon } from 'lucide-react';
-import React from 'react';
-import { Button } from '../ui/button';
-import ProjectItem from '../project/project-item';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import Link from 'next/link';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { useGetProjectQuery } from '@/hooks/use-project';
-import { CAMPAIGN_ROLE } from '@/app/enum';
-import { TCampaign } from '@/app/types';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import ProjectItem from '../project/project-item';
+import { Button } from '../ui/button';
 
 const IndividualProjectSection = () => {
   const { data: project } = useGetProjectQuery({
@@ -23,9 +22,11 @@ const IndividualProjectSection = () => {
       </h3> */}
       <div className='flex justify-between items-center mb-6'>
         <span className='font-bold'>Chiến dịch của cá nhân</span>
-        <Button variant={'link'}>
-          Xem tất cả <MoveRightIcon size={24} />
-        </Button>
+        <Link href='/projects?filter=individual'>
+          <Button variant={'link'}>
+            Xem tất cả <MoveRightIcon size={24} />
+          </Button>
+        </Link>
       </div>
       <div className='w-full max-w-[1440px] mx-auto'>
         <div className='relative [&_.swiper]:pb-10 [&_.swiper-pagination]:bottom-0 [&_.swiper-button-prev]:top-[35%] [&_.swiper-button-next]:top-[35%]'>

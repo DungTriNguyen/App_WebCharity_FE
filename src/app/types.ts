@@ -35,6 +35,9 @@ type TCampaign = {
     address: string | null;
     avatar_url: string;
     description: string | null;
+    facebook: string | null;
+    youtube: string | null;
+    tiktok: string | null;
   };
   name: string | null; // "Nhóm 1"
   type: string; // "Quyên góp và tình nguyện"

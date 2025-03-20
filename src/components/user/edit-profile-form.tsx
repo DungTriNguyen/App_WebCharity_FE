@@ -32,24 +32,17 @@ const EditProfileForm = () => {
     name: z.string().min(1, {
       message: 'Thông tin không được trống',
     }),
-    address: z
-      .string()
-      .min(1, {
-        message: 'Thông tin không được trống',
-      })
-      .optional()
-      .nullable(),
-    gender: z.string().min(1, {
-      message: 'Thông tin không được trống',
-    }),
 
-    birth_of_date: z.string().optional().nullable(),
     phone_number: z.string().min(1, {
       message: 'Thông tin không được trống',
     }),
     email: z.string().min(1, {
       message: 'Thông tin không được trống',
     }),
+
+    address: z.string().optional().nullable(),
+    gender: z.string().optional().nullable(),
+    birth_of_date: z.string().optional().nullable(),
 
     student_code: z.string().optional().nullable(),
     class: z.string().optional().nullable(),
@@ -120,8 +113,8 @@ const EditProfileForm = () => {
               <FormLabel>Giới tính</FormLabel>
               <Select
                 onValueChange={field.onChange}
-                defaultValue={field.value}
-                value={field.value}
+                defaultValue={field.value ?? ''}
+                value={field.value ?? undefined}
               >
                 <FormControl>
                   <SelectTrigger>
