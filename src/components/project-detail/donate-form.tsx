@@ -305,7 +305,7 @@ const DonateForm = () => {
               name='note'
               render={({ field }) => (
                 <FormItem className='col-span-2'>
-                  <FormLabel>Chủ tài khoản</FormLabel>
+                  <FormLabel>Nội dung</FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder='Nội dung'
