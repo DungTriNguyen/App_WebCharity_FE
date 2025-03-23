@@ -21,53 +21,89 @@ import {
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { Checkbox } from '../ui/checkbox';
+import { useParams } from 'next/navigation';
+import { useDepartmentQuery } from '@/hooks/use-department';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select';
+import { useDonateMutation } from '@/hooks/use-donation';
+import { Textarea } from '../ui/textarea';
 
 const DonateForm = () => {
+  const params = useParams();
+  const projectId = params?.id || 0;
+  const { data } = useDepartmentQuery();
+  const { mutate } = useDonateMutation();
+
   const formSchema = z.object({
-    donateAmount: z.string().min(1, {
+    amount: z.string().min(1, {
       message: 'Thông tin không được trống',
     }),
-    supporter: z.string().min(1, {
+    name: z.string().min(1, {
       message: 'Thông tin không được trống',
     }),
     email: z.string().min(1, {
       message: 'Thông tin không được trống',
     }),
-    phone: z.string().min(1, {
+    phone_number: z.string().min(1, {
       message: 'Thông tin không được trống',
     }),
-    studentId: z.string().min(1, {
+    student_code: z.string().min(1, {
       message: 'Thông tin không được trống',
     }),
     class: z.string().min(1, {
       message: 'Thông tin không được trống',
     }),
-    department: z.string().min(1, {
+    department_id: z.string().min(1, {
       message: 'Thông tin không được trống',
     }),
-    incognito: z.boolean().optional(),
+    is_anonymous: z.boolean(),
+
+    account_number: z.string().min(1, {
+      message: 'Thông tin không được trống',
+    }),
+    account_name: z.string().min(1, {
+      message: 'Thông tin không được trống',
+    }),
+    code: z.string().min(1, {
+      message: 'Thông tin không được trống',
+    }),
+    note: z.string().nullable().optional(),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
-      donateAmount: '',
-      supporter: '',
+      amount: '',
+      name: '',
       email: '',
-      phone: '',
-      studentId: '',
+      phone_number: '',
+      student_code: '',
       class: '',
-      department: '',
-      incognito: false,
+      department_id: '',
+      is_anonymous: false,
+      account_number: '',
+      account_name: '',
+      code: '',
+      note: '',
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
-  }
+    await mutate({
+      ...values,
+      project_id: +projectId,
+      amount: +values.amount,
+    });
+  };
 
   return (
     <Card className=''>
@@ -83,7 +119,7 @@ const DonateForm = () => {
           >
             <FormField
               control={form.control}
-              name='donateAmount'
+              name='amount'
               render={({ field }) => (
                 <FormItem className='col-span-2'>
                   <FormLabel>Nhập số tiền ủng hộ</FormLabel>
@@ -106,7 +142,7 @@ const DonateForm = () => {
             />
             <FormField
               control={form.control}
-              name='supporter'
+              name='name'
               render={({ field }) => (
                 <FormItem className='col-span-2'>
                   <FormLabel>Họ và tên</FormLabel>
@@ -132,7 +168,7 @@ const DonateForm = () => {
             />
             <FormField
               control={form.control}
-              name='phone'
+              name='phone_number'
               render={({ field }) => (
                 <FormItem className='col-span-1'>
                   <FormLabel>Số điện thoại</FormLabel>
@@ -151,7 +187,7 @@ const DonateForm = () => {
             </div>
             <FormField
               control={form.control}
-              name='studentId'
+              name='student_code'
               render={({ field }) => (
                 <FormItem className='col-span-2'>
                   <FormLabel>MSSV</FormLabel>
@@ -177,20 +213,34 @@ const DonateForm = () => {
             />
             <FormField
               control={form.control}
-              name='department'
+              name='department_id'
               render={({ field }) => (
                 <FormItem className='col-span-1'>
                   <FormLabel>Khoa</FormLabel>
-                  <FormControl>
-                    <Input type='text' placeholder='Khoa' {...field} />
-                  </FormControl>
-                  <FormMessage />
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value ?? ''}
+                    value={field.value ?? undefined}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder='Khoa' />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {data?.data.map((item: TDepartment) => (
+                        <SelectItem value={`${item.id}`} key={`${item.id}`}>
+                          {item.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </FormItem>
               )}
             />
             <FormField
               control={form.control}
-              name='incognito'
+              name='is_anonymous'
               render={({ field }) => (
                 <FormItem className='flex flex-row items-start space-x-3 space-y-0 col-span-2'>
                   <FormControl>
@@ -206,7 +256,72 @@ const DonateForm = () => {
                 </FormItem>
               )}
             />
-            <Button type='submit' className='col-span-2'>
+
+            <div className='col-span-2'>
+              <p className='font-bold'>Thông tin tài khoản</p>
+            </div>
+
+            <FormField
+              control={form.control}
+              name='account_name'
+              render={({ field }) => (
+                <FormItem className='col-span-2'>
+                  <FormLabel>Chủ tài khoản</FormLabel>
+                  <FormControl>
+                    <Input type='text' placeholder='Họ và tên' {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='account_number'
+              render={({ field }) => (
+                <FormItem className='col-span-1'>
+                  <FormLabel>Số tài khoản</FormLabel>
+                  <FormControl>
+                    <Input type='text' placeholder='Số tài khoản' {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='code'
+              render={({ field }) => (
+                <FormItem className='col-span-1'>
+                  <FormLabel>Code</FormLabel>
+                  <FormControl>
+                    <Input type='text' placeholder='Code' {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='note'
+              render={({ field }) => (
+                <FormItem className='col-span-2'>
+                  <FormLabel>Chủ tài khoản</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder='Nội dung'
+                      {...field}
+                      value={field.value ?? ''}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button
+              type='submit'
+              className='col-span-2'
+              disabled={!form.formState.isValid}
+            >
               Ủng hộ
             </Button>
           </form>

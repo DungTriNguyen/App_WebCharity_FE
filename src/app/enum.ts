@@ -27,4 +27,5 @@ export enum USER_ROLES {
   USER = 'user',
   ORIGANIZATION = 'origanization',
   INDIVIDUAL = 'individual',
+  ADMIN = 'admin',
 }

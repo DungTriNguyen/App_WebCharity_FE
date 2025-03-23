@@ -47,7 +47,7 @@ const useGetProjectQuery = ({
 const useGetProjectByID = ({ project_id }: { project_id: number }) => {
   const apiAuth = useAxiosAuth();
   return useQuery<TApiResponse<TCampaign[]>, Error>({
-    queryKey: ['project_id', project_id],
+    queryKey: ['get-detail-project', project_id],
     queryFn: async () => {
       try {
         const res = await apiAuth.get(`/project?project_id=${project_id}`);

@@ -5,7 +5,13 @@ import SummaryInfo from './summary-info';
 import OwnedDonateList from './owned-donate-list';
 import ManagedProjectList from './managed-project/managed-project-list';
 
-const UserTab = ({ role = USER_ROLES.USER }: { role: USER_ROLES }) => {
+const UserTab = ({
+  role = USER_ROLES.USER,
+  detail,
+}: {
+  role: USER_ROLES;
+  detail: TUser;
+}) => {
   const menuUser: {
     label: string;
     value: string;
@@ -51,12 +57,17 @@ const UserTab = ({ role = USER_ROLES.USER }: { role: USER_ROLES }) => {
   ];
 
   const renderUserRoleMenu = (roles: USER_ROLES) => {
+    console.log(agentUser[0].value);
+
     return (
       <div className='flex gap-8 w-full'>
         <Tabs
           defaultValue={
             roles === USER_ROLES.USER ? menuUser[0].value : agentUser[0].value
           }
+          // value={
+          //   roles === USER_ROLES.USER ? menuUser[0].value : agentUser[0].value
+          // }
           className='w-2/3 mt-6 '
         >
           <TabsList className='flex items-center gap-2 justify-start bg-white'>
@@ -94,7 +105,7 @@ const UserTab = ({ role = USER_ROLES.USER }: { role: USER_ROLES }) => {
               ))}
         </Tabs>
         <div className='w-1/3 mt-8'>
-          <SummaryInfo />
+          <SummaryInfo summaryInfo={detail} />
         </div>
       </div>
     );

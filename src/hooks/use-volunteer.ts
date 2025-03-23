@@ -1,5 +1,8 @@
-import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import { useMutation, useQuery, UseQueryResult } from '@tanstack/react-query';
 import { useAxiosAuth } from './use-axios-auth';
+import { useSession } from 'next-auth/react';
+import { toast } from 'sonner';
+import { queryClient } from '@/app/providers/client';
 
 const useVolunteerQuery = ({
   limit,
@@ -26,4 +29,34 @@ const useVolunteerQuery = ({
   });
 };
 
-export { useVolunteerQuery };
+const useRegisterVolunteerMutation = () => {
+  const session = useSession();
+  const apiAuth = useAxiosAuth();
+  return useMutation({
+    mutationKey: ['project_id'],
+    mutationFn: async (payload: TRegisterVolunteerForm) => {
+      try {
+        const res = await apiAuth.post('/volunteer', {
+          ...payload,
+          user_id: session?.data?.user?.id,
+        });
+        return res.data;
+      } catch (e: any) {
+        throw Error(e?.response?.data?.message);
+      }
+    },
+    onSuccess: (data) => {
+      toast('Thông báo', {
+        description: data.message,
+      });
+      queryClient.invalidateQueries();
+    },
+    onError: (data) => {
+      toast('Thông báo', {
+        description: data.message,
+      });
+    },
+  });
+};
+
+export { useVolunteerQuery, useRegisterVolunteerMutation };

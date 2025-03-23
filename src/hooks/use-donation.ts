@@ -1,5 +1,8 @@
-import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import { useMutation, useQuery, UseQueryResult } from '@tanstack/react-query';
 import { useAxiosAuth } from './use-axios-auth';
+import { toast } from 'sonner';
+import { queryClient } from '@/app/providers/client';
+import { useSession } from 'next-auth/react';
 
 const useDonationQuery = ({
   limit,
@@ -26,4 +29,34 @@ const useDonationQuery = ({
   });
 };
 
-export { useDonationQuery };
+const useDonateMutation = () => {
+  const session = useSession();
+  const apiAuth = useAxiosAuth();
+  return useMutation({
+    mutationKey: ['project_id'],
+    mutationFn: async (payload: TDonateForm) => {
+      try {
+        const res = await apiAuth.post('/donation', {
+          ...payload,
+          user_id: session?.data?.user?.id,
+        });
+        return res.data;
+      } catch (e: any) {
+        throw Error(e?.response?.data?.message);
+      }
+    },
+    onSuccess: (data) => {
+      toast('Thông báo', {
+        description: data.message,
+      });
+      queryClient.invalidateQueries();
+    },
+    onError: (data) => {
+      toast('Thông báo', {
+        description: data.message,
+      });
+    },
+  });
+};
+
+export { useDonationQuery, useDonateMutation };

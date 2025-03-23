@@ -266,20 +266,62 @@ type TRegister = {
 };
 
 type TUser = {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-  phone_number: string;
-  birth_of_date: string; // You can use Date type if you'll be parsing it
-  status: number;
-  status_label: string;
-  status_badge: string;
-  gender: string;
   address: string;
   avatar_url: string;
+  birth_of_date: string;
   description: string | null;
+  donations_count: number | null;
+  donations_sum_amount: number | null;
+  email: string;
   facebook: string | null;
-  youtube: string | null;
+  gender: string;
+  id: number;
+  name: string;
+  phone_number: string;
+  projects_count: number | null;
+  projects_donations_count: number;
+  projects_donations_sum_amount: number;
+  status: number;
+  status_badge: string;
+  status_label: string;
   tiktok: string | null;
+  type: string;
+  username: string;
+  volunteers_without_canceled_count: number | null;
+  youtube: string | null;
+};
+
+type TRegisterVolunteerForm = {
+  name: string;
+  email: string;
+  phone_number: string;
+  student_code: string;
+  class: string;
+  department_id: string;
+  project_id: number;
+};
+
+type TDonateForm = {
+  project_id: number;
+  account_number: string;
+  account_name: string;
+  code: string;
+  name: string;
+  email: string;
+  phone_number: string;
+  amount: number;
+  is_anonymous: boolean;
+  note?: string | null;
+  department_id: string;
+  class: string;
+  student_code: string;
+};
+
+type TDepartment = {
+  description: string;
+  id: number;
+  name: string;
+  status: number;
+  status_badge: string;
+  status_label: string;
 };

@@ -10,7 +10,6 @@ import {
   CardHeader,
   CardTitle,
 } from '../ui/card';
-import { Checkbox } from '../ui/checkbox';
 import {
   Form,
   FormControl,
@@ -20,49 +19,68 @@ import {
   FormMessage,
 } from '../ui/form';
 import { Input } from '../ui/input';
+import { useParams } from 'next/navigation';
+import { useRegisterVolunteerMutation } from '@/hooks/use-volunteer';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select';
+import { useDepartmentQuery } from '@/hooks/use-department';
 
 const RegisterVolunteerForm = () => {
+  const params = useParams();
+  const projectId = params?.id || 0;
+
+  const { mutate } = useRegisterVolunteerMutation();
+  const { data } = useDepartmentQuery();
+
   const formSchema = z.object({
-    supporter: z.string().min(1, {
+    name: z.string().min(1, {
       message: 'Thông tin không được trống',
     }),
     email: z.string().min(1, {
       message: 'Thông tin không được trống',
     }),
-    phone: z.string().min(1, {
+    phone_number: z.string().min(1, {
       message: 'Thông tin không được trống',
     }),
-    studentId: z.string().min(1, {
+    student_code: z.string().min(1, {
       message: 'Thông tin không được trống',
     }),
     class: z.string().min(1, {
       message: 'Thông tin không được trống',
     }),
-    department: z.string().min(1, {
+    department_id: z.string().min(1, {
       message: 'Thông tin không được trống',
     }),
-    incognito: z.boolean().optional(),
+    // incognito: z.boolean().optional(),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
-      supporter: '',
+      name: '',
       email: '',
-      phone: '',
-      studentId: '',
+      phone_number: '',
+      student_code: '',
       class: '',
-      department: '',
-      incognito: false,
+      department_id: '',
+      // incognito: false,
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
-  }
+    await mutate({ ...values, project_id: +projectId });
+  };
+
+  console.log(data);
 
   return (
     <Card className=''>
@@ -78,7 +96,7 @@ const RegisterVolunteerForm = () => {
           >
             <FormField
               control={form.control}
-              name='supporter'
+              name='name'
               render={({ field }) => (
                 <FormItem className='col-span-2'>
                   <FormLabel>Họ và tên</FormLabel>
@@ -104,7 +122,7 @@ const RegisterVolunteerForm = () => {
             />
             <FormField
               control={form.control}
-              name='phone'
+              name='phone_number'
               render={({ field }) => (
                 <FormItem className='col-span-1'>
                   <FormLabel>Số điện thoại</FormLabel>
@@ -123,7 +141,7 @@ const RegisterVolunteerForm = () => {
             </div>
             <FormField
               control={form.control}
-              name='studentId'
+              name='student_code'
               render={({ field }) => (
                 <FormItem className='col-span-2'>
                   <FormLabel>MSSV</FormLabel>
@@ -147,38 +165,40 @@ const RegisterVolunteerForm = () => {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
-              name='department'
+              name='department_id'
               render={({ field }) => (
                 <FormItem className='col-span-1'>
                   <FormLabel>Khoa</FormLabel>
-                  <FormControl>
-                    <Input type='text' placeholder='Khoa' {...field} />
-                  </FormControl>
-                  <FormMessage />
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value ?? ''}
+                    value={field.value ?? undefined}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder='Khoa' />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {data?.data.map((item: TDepartment) => (
+                        <SelectItem value={`${item.id}`} key={`${item.id}`}>
+                          {item.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name='incognito'
-              render={({ field }) => (
-                <FormItem className='flex flex-row items-start space-x-3 space-y-0 col-span-2'>
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                  <div className='space-y-1 leading-none'>
-                    <FormLabel>Ủng hộ ẩn danh</FormLabel>
-                    {/* <FormDescription>Ủng hộ ẩn danh</FormDescription> */}
-                  </div>
-                </FormItem>
-              )}
-            />
-            <Button type='submit' className='col-span-2'>
+
+            <Button
+              type='submit'
+              className='col-span-2'
+              disabled={!form.formState.isValid}
+            >
               Tham gia
             </Button>
           </form>
