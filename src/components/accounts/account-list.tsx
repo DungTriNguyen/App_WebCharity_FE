@@ -1,50 +1,15 @@
 import React from 'react';
 import AccountItem from './account-item';
 import { Button } from '../ui/button';
+import { useGetListUserProfileQuery } from '@/hooks/use-profile';
 
-const AccountList = () => {
-  const accounts = [
-    {
-      id: 1,
-      img_src: '',
-      name: 'Đội công tác xh',
-      hastag: 'hastag',
-      charity_number: '123456',
-      amount: 500000,
-      created_at: '2025/03/05',
-    },
-    {
-      id: 2,
-      img_src: '',
-      name: 'Đội công tác xh',
-      hastag: 'hastag',
-      charity_number: '123456',
-      amount: 500000,
-      created_at: '2025/03/05',
-    },
-    {
-      id: 3,
-      img_src: '',
-      name: 'Đội công tác xh',
-      hastag: 'hastag',
-      charity_number: '123456',
-      amount: 500000,
-      created_at: '2025/03/05',
-    },
-    {
-      id: 11,
-      img_src: '',
-      name: 'Đội công tác xh',
-      hastag: 'hastag',
-      charity_number: '123456',
-      amount: 500000,
-      created_at: '2025/03/05',
-    },
-  ];
+const AccountList = ({ type, search }: { type: string, search: string }) => {
+  const { data } = useGetListUserProfileQuery({ type, search })
+  
   return (
     <>
       <ul className='grid grid-cols-3 gap-8'>
-        {accounts.map((item) => (
+        {data?.data?.map((item: TUser) => (
           <AccountItem key={`${item.id}`} data={item} />
         ))}
       </ul>

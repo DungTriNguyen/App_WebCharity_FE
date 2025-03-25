@@ -1,11 +1,13 @@
 'use client';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import { Input } from '../ui/input';
 import { SearchIcon } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import AccountList from './account-list';
 
 const AccountFilter = () => {
+  const [search, setSearch] = useState('');
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -13,11 +15,11 @@ const AccountFilter = () => {
     () => [
       {
         label: 'Tổ chức',
-        value: 'organizations',
+        value: 'organization',
       },
       {
         label: 'Cá nhân',
-        value: 'individuals',
+        value: 'individual',
       },
     ],
     []
@@ -36,6 +38,7 @@ const AccountFilter = () => {
   };
 
   return (
+    <>
     <div className='flex'>
       <Tabs
         defaultValue={activeTab}
@@ -54,8 +57,7 @@ const AccountFilter = () => {
             </TabsTrigger>
           ))}
         </TabsList>
-        {/* <TabsContent value='account'>tab</TabsContent> */}
-        {/* <TabsContent value='password'>tab 2</TabsContent> */}
+
       </Tabs>
       <div className='ml-auto'>
         <div className='relative ml-auto'>
@@ -63,13 +65,15 @@ const AccountFilter = () => {
             type='search'
             placeholder='Tìm kiếm'
             className='w-[300px] ml-auto pr-10'
-            // {...field}
-            // onChange={field.onChange}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
           <SearchIcon className='absolute right-4 top-0 bottom-0 m-auto' />
         </div>
       </div>
     </div>
+    <AccountList type={activeTab} search={search} />
+    </>
   );
 };
 

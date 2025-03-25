@@ -18,6 +18,21 @@ const useGetUserProfileQuery = () => {
   });
 };
 
+const useGetListUserProfileQuery = ({ type, search }: { type?: string, search?: string }) => {
+  const apiAuth = useAxiosAuth();
+  return useQuery({
+    queryKey: ['user-profile-list', type, search],
+    queryFn: async () => {
+      try {
+        const res = await apiAuth.get('/user', { params: { type, keyword: search } });
+        return res.data;
+      } catch (e: any) {
+        throw Error(e);
+      }
+    },
+  });
+};
+
 const useUpdateUserProfileMutation = () => {
   const apiAuth = useAxiosAuth();
   return useMutation({
@@ -45,4 +60,4 @@ const useUpdateUserProfileMutation = () => {
   });
 };
 
-export { useGetUserProfileQuery, useUpdateUserProfileMutation };
+export { useGetUserProfileQuery, useUpdateUserProfileMutation, useGetListUserProfileQuery };

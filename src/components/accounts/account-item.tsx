@@ -4,36 +4,37 @@ import { Separator } from '../ui/separator';
 import { formatCurrencyToVND } from '@/lib/utils';
 import Link from 'next/link';
 import { ChevronRightIcon } from 'lucide-react';
+import { format } from "date-fns";
 
-const AccountItem = () => {
+const AccountItem = ({ data }: { data: TUser }) => {
   return (
     <li className='flex flex-col gap-2'>
       <div className='flex gap-2 items-center'>
         <Avatar>
-          <AvatarImage src='https://github.com/shadcn.png' alt='@shadcn' />
+          <AvatarImage src={data?.avatar_url} alt='@shadcn' />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <div className='block'>
-          <p className='font-bold'>Đội công tác</p>
-          <p className='text-gray-400'>hastag</p>
+          <p className='font-bold'>{data?.name}</p>
+          <p className='text-gray-400'>{data?.username}</p>
         </div>
       </div>
-      <Separator className='bg-orange-500' />
+      <Separator className='bg-primary' />
       <div>
         <p>
-          Tài khoản thiện nguyện số: <span className='font-bold'>123</span>
+          Tài khoản thiện nguyện số: <span className='font-bold'>{data?.id}</span>
         </p>
         <p>
           Số tiền gây quỹ:{' '}
-          <span className='font-bold'>{formatCurrencyToVND(123456789)}</span>
+          <span className='font-bold'>{formatCurrencyToVND(data?.projects_donations_sum_amount)}</span>
         </p>
         <p>
-          Tham gia từ: <span className='font-bold'>03/2025</span>
+          Tham gia từ: <span className='font-bold'>{format(new Date(data?.birth_of_date), 'MM/yyyy')}</span>
         </p>
       </div>
       <Link
         href={'#'}
-        className='font-bold text-orange-500 flex gap-1 hover:underline items-center'
+        className='font-bold text-primary flex gap-1 hover:underline items-center'
       >
         Xem chi tiết <ChevronRightIcon width={16} height={16} />
       </Link>
