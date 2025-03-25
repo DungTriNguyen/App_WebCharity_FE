@@ -8,24 +8,27 @@ const useDonationQuery = ({
   limit,
   page,
   projectId,
+  user_id,
 }: {
-  limit: number;
-  page: number;
-  projectId: number;
+  limit?: number;
+  page?: number;
+  projectId?: number;
+  user_id?: number;
 }): UseQueryResult<TApiResponse<TSDonationData>, Error> => {
   const apiAuth = useAxiosAuth();
   return useQuery<TApiResponse<TSDonationData>, Error>({
-    queryKey: ['get_donations', limit, page, projectId],
+    queryKey: ['get_donations', limit, page, projectId, user_id],
     queryFn: async () => {
       try {
         const res = await apiAuth.get('/donation', {
-          params: { limit, page, project_id: projectId },
+          params: { limit, page, project_id: projectId, user_id },
         });
         return res.data;
       } catch (e: any) {
         throw Error(e?.response?.data?.message);
       }
     },
+    enabled: !!(user_id || projectId),
   });
 };
 
