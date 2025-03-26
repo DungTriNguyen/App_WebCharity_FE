@@ -1,12 +1,11 @@
 'use client';
-import React, { use } from 'react';
 import RegisterVolunteerForm from '@/components/project-detail/register-volunteer-form';
 import ProjectItem from '@/components/project/project-item';
 import { Card } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import Image from 'next/image';
-import redCrossLogo from '../../../../../public/red-cross-logo.png';
 import { useGetProjectByID } from '@/hooks/use-project';
+import Image from 'next/image';
+import { use } from 'react';
 
 const RegisterVolunteer = (props: { params: Promise<{ id: number }> }) => {
   const params = use(props.params);
@@ -46,7 +45,7 @@ const RegisterVolunteer = (props: { params: Promise<{ id: number }> }) => {
         <Card className='flex flex-col'>
           <div className='flex gap-2 items-center p-4'>
             <Image
-              alt=''
+              alt='avatar'
               width={48}
               height={48}
               src={project?.user?.avatar_url}

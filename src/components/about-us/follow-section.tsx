@@ -29,7 +29,7 @@ const FollowSection = () => {
             nhân của bạn một cách an toàn như thế nào.
           </p>
         </div>
-        <Image width={600} height={500} alt='' src={peopleImg.src} />
+        <Image width={600} height={500} alt='news' src={peopleImg.src} />
       </div>
     </div>
   );

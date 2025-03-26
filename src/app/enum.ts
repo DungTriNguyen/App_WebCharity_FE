@@ -25,7 +25,7 @@ export enum CAMPAIGN_STATUS {
 
 export enum USER_ROLES {
   USER = 'user',
-  ORIGANIZATION = 'origanization',
+  ORIGANIZATION = 'organization',
   INDIVIDUAL = 'individual',
   ADMIN = 'admin',
 }

@@ -23,10 +23,12 @@ import {
   useGetUserProfileQuery,
   useUpdateUserProfileMutation,
 } from '@/hooks/use-profile';
+import { useDepartmentQuery } from '@/hooks/use-department';
 
 const EditProfileForm = () => {
   const { data: profile } = useGetUserProfileQuery();
   const { mutate, isPending } = useUpdateUserProfileMutation();
+  const { data } = useDepartmentQuery();
 
   const formSchema = z.object({
     name: z.string().min(1, {
@@ -210,7 +212,7 @@ const EditProfileForm = () => {
               <FormLabel>Ngày sinh</FormLabel>
               <FormControl>
                 <Input
-                  type='text'
+                  type='date'
                   placeholder='Ngày sinh'
                   {...field}
                   value={field.value ?? ''}
@@ -306,15 +308,31 @@ const EditProfileForm = () => {
           render={({ field }) => (
             <FormItem className='col-span-1'>
               <FormLabel>Khoa</FormLabel>
-              <FormControl>
-                <Input
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value ?? ''}
+                value={field.value ?? undefined}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder='Khoa' />
+                  </SelectTrigger>
+                  {/* <Input
                   type='text'
                   placeholder='Khoa'
                   {...field}
                   value={field.value ?? ''}
-                />
-              </FormControl>
-              <FormMessage />
+                /> */}
+                </FormControl>
+                <SelectContent>
+                  {data?.data.map((item: TDepartment) => (
+                    <SelectItem value={`${item.id}`} key={`${item.id}`}>
+                      {item.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+                <FormMessage />
+              </Select>
             </FormItem>
           )}
         />

@@ -95,7 +95,7 @@ const MemberSection = () => {
                 <Image
                   width={500}
                   height={600}
-                  src={item.image}
+                  src={item?.image}
                   alt={item.description}
                   className='mx-auto rounded-3xl'
                 />

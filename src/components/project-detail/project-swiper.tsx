@@ -14,7 +14,7 @@ import 'yet-another-react-lightbox/styles.css';
 
 // import required modules
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
-import { TCampaign } from '@/app/types';
+
 import Image from 'next/image';
 
 const ProjectSwiper = ({ project }: { project: TCampaign }) => {

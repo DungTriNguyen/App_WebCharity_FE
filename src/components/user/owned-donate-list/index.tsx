@@ -5,11 +5,14 @@ import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { useDonationQuery } from '@/hooks/use-donation';
 import { useSession } from 'next-auth/react';
-
+const userId = 7;
 const OwnedDonateList = () => {
-
   const session = useSession();
-  const { data: donations } = useDonationQuery({ user_id: session.data?.user?.detail?.id as number });
+  const { data: donations } = useDonationQuery({
+    // user_id: session.data?.user?.detail?.id as number,
+    user_id: userId,
+  });
+  console.log(donations, 'donations');
   return (
     <Card className='p-4 flex flex-col gap-4'>
       <Input placeholder='search here' type='search' />

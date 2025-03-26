@@ -20,7 +20,7 @@ const DonatePage = (props: { params: Promise<{ id: number }> }) => {
         <Card className='flex flex-col'>
           <div className='flex gap-2 items-center p-4'>
             <Image
-              alt=''
+              alt='avartar'
               width={48}
               height={48}
               src={project?.user?.avatar_url}

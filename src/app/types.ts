@@ -271,7 +271,7 @@ type TUser = {
   birth_of_date: string;
   description: string | null;
   donations_count: number | null;
-  donations_sum_amount: number | null;
+  donations_sum_amount: number;
   email: string;
   facebook: string | null;
   gender: string;

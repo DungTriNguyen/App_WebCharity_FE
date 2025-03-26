@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import AccountFilter from '@/components/accounts/account-filter';
 import AccountList from '@/components/accounts/account-list';
 import React from 'react';
