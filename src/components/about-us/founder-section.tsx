@@ -1,5 +1,3 @@
-import Image from 'next/image';
-import React from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
 const FounderSection = () => {

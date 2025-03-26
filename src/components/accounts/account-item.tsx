@@ -4,11 +4,11 @@ import { Separator } from '../ui/separator';
 import { formatCurrencyToVND } from '@/lib/utils';
 import Link from 'next/link';
 import { ChevronRightIcon } from 'lucide-react';
-import { format } from "date-fns";
+import { format } from 'date-fns';
 
 const AccountItem = ({ data }: { data: TUser }) => {
   return (
-    <li className='flex flex-col gap-2'>
+    <li className='flex flex-col gap-2 rounded-xl p-4 bg-white shadow-md'>
       <div className='flex gap-2 items-center'>
         <Avatar>
           <AvatarImage src={data?.avatar_url} alt='@shadcn' />
@@ -22,14 +22,20 @@ const AccountItem = ({ data }: { data: TUser }) => {
       <Separator className='bg-primary' />
       <div>
         <p>
-          Tài khoản thiện nguyện số: <span className='font-bold'>{data?.id}</span>
+          Tài khoản thiện nguyện số:{' '}
+          <span className='font-bold'>{data?.id}</span>
         </p>
         <p>
           Số tiền gây quỹ:{' '}
-          <span className='font-bold'>{formatCurrencyToVND(data?.projects_donations_sum_amount)}</span>
+          <span className='font-bold'>
+            {formatCurrencyToVND(data?.projects_donations_sum_amount)}
+          </span>
         </p>
         <p>
-          Tham gia từ: <span className='font-bold'>{format(new Date(data?.birth_of_date), 'MM/yyyy')}</span>
+          Tham gia từ:{' '}
+          <span className='font-bold'>
+            {format(new Date(data?.birth_of_date), 'MM/yyyy')}
+          </span>
         </p>
       </div>
       <Link

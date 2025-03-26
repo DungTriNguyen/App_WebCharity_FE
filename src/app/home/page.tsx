@@ -10,10 +10,9 @@ import Image from 'next/image';
 
 // phần em chỉnh
 import CategoriesProjectsList from '@/components/home-page/categories-projects-list';
-import OrganizationProjectSection from '@/components/home-page/organization-project-section';
 import IndividualProjectSection from '@/components/home-page/individual-project-section';
+import OrganizationProjectSection from '@/components/home-page/organization-project-section';
 import TypeProjects from '@/components/home-page/type-projects';
-import React from 'react';
 
 const HomePage = () => {
   const { data } = useSession();
