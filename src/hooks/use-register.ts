@@ -43,4 +43,48 @@ const usePostRegisterMutation = () => {
   });
 };
 
-export { usePostRegisterMutation };
+const usePostRegisterIndividualMutation = () => {
+  const apiAuth = useAxiosAuth();
+  return useMutation<TApiResponse, Error, TRegister>({
+    mutationFn: async (registerFormData) => {
+      const res = await apiAuth.post<TApiResponse>('/account-request/individual', registerFormData);
+      return res.data;
+    },
+    onSuccess: (data) => {
+      toast.success('Thành công', {
+        description: 'Đăng ký tài khoản thành công',
+        duration: 5000,
+      });
+    },
+    onError: (error) => {
+      toast.error('Lỗi', {
+        description: error.message,
+        duration: 5000,
+      });
+    },
+  });
+};
+
+const usePostRegisterOrganizationMutation = () => {
+  const apiAuth = useAxiosAuth();
+  return useMutation<TApiResponse, Error, TRegister>({
+    mutationFn: async (registerFormData) => {
+      const res = await apiAuth.post<TApiResponse>('/account-request/organization', registerFormData);  
+      return res.data;
+    },
+    onSuccess: (data) => {
+      toast.success('Thành công', {
+        description: 'Đăng ký tài khoản thành công',
+        duration: 5000,
+      });
+    },
+    onError: (error) => {
+      toast.error('Lỗi', {
+        description: error.message,
+        duration: 5000,
+      });
+    },
+  });
+};
+
+export { usePostRegisterMutation, usePostRegisterIndividualMutation, usePostRegisterOrganizationMutation };
