@@ -45,9 +45,12 @@ const usePostRegisterMutation = () => {
 
 const usePostRegisterIndividualMutation = () => {
   const apiAuth = useAxiosAuth();
-  return useMutation<TApiResponse, Error, TRegister>({
+  return useMutation<TApiResponse, Error, TRegisterIndividualForm>({
     mutationFn: async (registerFormData) => {
-      const res = await apiAuth.post<TApiResponse>('/account-request/individual', registerFormData);
+      const res = await apiAuth.post<TApiResponse>(
+        '/account-request/individual',
+        registerFormData
+      );
       return res.data;
     },
     onSuccess: (data) => {
@@ -69,7 +72,10 @@ const usePostRegisterOrganizationMutation = () => {
   const apiAuth = useAxiosAuth();
   return useMutation<TApiResponse, Error, TRegister>({
     mutationFn: async (registerFormData) => {
-      const res = await apiAuth.post<TApiResponse>('/account-request/organization', registerFormData);  
+      const res = await apiAuth.post<TApiResponse>(
+        '/account-request/organization',
+        registerFormData
+      );
       return res.data;
     },
     onSuccess: (data) => {
@@ -87,4 +93,8 @@ const usePostRegisterOrganizationMutation = () => {
   });
 };
 
-export { usePostRegisterMutation, usePostRegisterIndividualMutation, usePostRegisterOrganizationMutation };
+export {
+  usePostRegisterMutation,
+  usePostRegisterIndividualMutation,
+  usePostRegisterOrganizationMutation,
+};
