@@ -55,7 +55,7 @@ const usePostRegisterIndividualMutation = () => {
     },
     onSuccess: (data) => {
       toast.success('Thành công', {
-        description: 'Đăng ký tài khoản thành công',
+        description: data.message,
         duration: 5000,
       });
     },
@@ -70,7 +70,7 @@ const usePostRegisterIndividualMutation = () => {
 
 const usePostRegisterOrganizationMutation = () => {
   const apiAuth = useAxiosAuth();
-  return useMutation<TApiResponse, Error, TRegister>({
+  return useMutation<TApiResponse, Error, TRegisterOrganizationForm>({
     mutationFn: async (registerFormData) => {
       const res = await apiAuth.post<TApiResponse>(
         '/account-request/organization',
@@ -80,7 +80,7 @@ const usePostRegisterOrganizationMutation = () => {
     },
     onSuccess: (data) => {
       toast.success('Thành công', {
-        description: 'Đăng ký tài khoản thành công',
+        description: data.message,
         duration: 5000,
       });
     },

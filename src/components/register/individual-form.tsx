@@ -34,13 +34,13 @@ const formSchema = z.object({
     .min(1, {
       message: 'Thông tin không được trống',
     })
-    .email(),
+    .email({ message: 'Không đúng định dạng email' }),
   phone_number: z
     .string()
     .min(1, {
       message: 'Thông tin không được trống',
     })
-    .max(11, {
+    .max(10, {
       message: 'Số điện thoại không được quá 11 ký tự',
     })
     .regex(
@@ -82,7 +82,7 @@ const formSchema = z.object({
 });
 
 const IndividualForm = () => {
-  const { mutate } = usePostRegisterIndividualMutation();
+  const { mutate, isPending } = usePostRegisterIndividualMutation();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
@@ -270,7 +270,9 @@ const IndividualForm = () => {
         />
 
         <div className='col-span-2 flex justify-center'>
-          <Button type='submit'>Gửi</Button>
+          <Button type='submit' disabled={!form.formState.isValid || isPending}>
+            Gửi
+          </Button>
         </div>
       </form>
     </Form>
