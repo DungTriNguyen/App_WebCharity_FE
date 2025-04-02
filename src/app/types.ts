@@ -276,6 +276,20 @@ type TRegisterIndividualForm = {
   related_images: string[] | null;
 };
 
+type TRegisterOrganizationForm = {
+  name: string;
+  birth: Date | string;
+  website: string;
+  field: string;
+  address: string;
+  username: string;
+  information: string;
+  representative_name: string;
+  representative_phone_number: string;
+  representative_email: string;
+  related_images: string[] | null;
+};
+
 type TUser = {
   address: string;
   avatar_url: string;

@@ -14,18 +14,34 @@ import {
 } from '../ui/form';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
+import { usePostRegisterOrganizationMutation } from '@/hooks/use-register';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { cn } from '@/lib/utils';
+import { CalendarIcon } from 'lucide-react';
+import { format } from 'date-fns';
+import { Calendar } from '../ui/calendar';
 
 const formSchema = z.object({
   name: z.string().min(1, {
     message: 'Thông tin không được trống',
   }),
 
-  birth: z.string().min(1, {
+  birth: z.date().refine((date) => !isNaN(date.getTime()), {
     message: 'Thông tin không được trống',
   }),
-  website: z.string().min(1, {
-    message: 'Thông tin không được trống',
-  }),
+  website: z
+    .string()
+    .min(1, {
+      message: 'Thông tin không được trống',
+    })
+    .regex(
+      new RegExp(
+        /^(https?:\/\/)?(([a-zA-Z0-9.-]+)\.([a-zA-Z]{2,})|(\d{1,3}(\.\d{1,3}){3})|(\[[a-fA-F0-9:]+\]))(:\d{1,5})?(\/.*)?$/
+      ),
+      {
+        message: 'Không đúng định dạng website',
+      }
+    ),
   field: z.string().min(1, {
     message: 'Thông tin không được trống',
   }),
@@ -41,22 +57,37 @@ const formSchema = z.object({
   representative_name: z.string().min(1, {
     message: 'Thông tin không được trống',
   }),
-  representative_phone_number: z.string().min(1, {
-    message: 'Thông tin không được trống',
-  }),
-  representative_email: z.string().min(1, {
-    message: 'Thông tin không được trống',
-  }),
+  representative_phone_number: z
+    .string()
+    .min(1, {
+      message: 'Thông tin không được trống',
+    })
+    .max(10, {
+      message: 'Số điện thoại không được quá 11 ký tự',
+    })
+    .regex(
+      new RegExp(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/),
+      {
+        message: 'Không đúng định dạng số điện thoại',
+      }
+    ),
+  representative_email: z
+    .string()
+    .min(1, {
+      message: 'Thông tin không được trống',
+    })
+    .email({ message: 'Không đúng định dạng email' }),
   related_images: z.array(z.string()).optional().nullable(),
 });
 
 const OrganizationForm = () => {
+  const { mutate, isPending } = usePostRegisterOrganizationMutation();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
       name: '',
-      birth: '',
+      birth: new Date(),
       website: '',
       field: '',
       address: '',
@@ -70,6 +101,7 @@ const OrganizationForm = () => {
   });
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     console.log(data);
+    mutate(data as TRegisterOrganizationForm);
   };
   return (
     <Form {...form}>
@@ -95,9 +127,34 @@ const OrganizationForm = () => {
           name='birth'
           render={({ field }) => (
             <FormItem className='col-span-1'>
-              <FormLabel>Ngày thành lập</FormLabel>
+              <FormLabel className='block'>Ngày thành lập</FormLabel>
               <FormControl>
-                <Input {...field} placeholder='Ngày thành lập' />
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant={'outline'}
+                      className={cn(
+                        'w-[240px] justify-start text-left font-normal',
+                        !field.value && 'text-muted-foreground'
+                      )}
+                    >
+                      <CalendarIcon />
+                      {field.value ? (
+                        format(field.value, 'PPP')
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className='w-auto p-0' align='start'>
+                    <Calendar
+                      mode='single'
+                      selected={field.value}
+                      onSelect={field.onChange}
+                      toDate={new Date()}
+                    />
+                  </PopoverContent>
+                </Popover>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -208,7 +265,9 @@ const OrganizationForm = () => {
           )}
         />
         <div className='col-span-2 flex justify-center'>
-          <Button type='submit'>Gửi</Button>
+          <Button type='submit' disabled={isPending || !form.formState.isValid}>
+            Gửi
+          </Button>
         </div>
       </form>
     </Form>
