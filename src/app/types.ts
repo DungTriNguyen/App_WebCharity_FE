@@ -265,6 +265,17 @@ type TRegister = {
   password_confirmation: string;
 };
 
+type TRegisterIndividualForm = {
+  name: string;
+  birth: Date | string;
+  website: string;
+  field: string;
+  address: string;
+  username: string;
+  information: string;
+  related_images: string[] | null;
+};
+
 type TUser = {
   address: string;
   avatar_url: string;

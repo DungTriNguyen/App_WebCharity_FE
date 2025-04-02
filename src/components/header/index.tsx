@@ -40,6 +40,10 @@ const Header = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { register, watch, setValue } = useForm();
   const searchKeyword = watch('keyword');
+
+
+
+  
   const debouncedSearch = useDebounce(searchKeyword, 300);
 
   const { data: searchResults, isLoading } = useGetProjectQuery({

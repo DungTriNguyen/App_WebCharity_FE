@@ -1572,7 +1572,11 @@ chalk@^4.0.0:
     "@tanstack/react-query" "^5.66.0"
     "@tanstack/react-table" "^8.21.2"
     axios "^1.7.9"
+<<<<<<< HEAD
     charity-web-app "file:C:/Users/ADMIN/AppData/Local/Yarn/Cache/v6/npm-charity-web-app-0.1.0-16ad5e18-952e-483f-b8a7-05db17f2ba40-1743590229775/node_modules/charity-web-app"
+=======
+    charity-web-app "file:C:/Users/Admin/AppData/Local/Yarn/Cache/v6/npm-charity-web-app-0.1.0-ed8a3f32-55d1-43d6-9320-82c8c9ba1e6f-1743530788361/node_modules/charity-web-app"
+>>>>>>> 7f49cb3e7746a3f6a24a75d463d9a97138e02fb7
     class-variance-authority "^0.7.1"
     clsx "^2.1.1"
     cmdk "^1.0.0"
@@ -1740,7 +1744,7 @@ data-view-byte-offset@^1.0.1:
 
 date-fns@^4.1.0:
   version "4.1.0"
-  resolved "https://registry.npmjs.org/date-fns/-/date-fns-4.1.0.tgz"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-4.1.0.tgz#64b3d83fff5aa80438f5b1a633c2e83b8a1c2d14"
   integrity sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==
 
 debug@^3.2.7:
