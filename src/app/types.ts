@@ -265,6 +265,11 @@ type TRegister = {
   password_confirmation: string;
 };
 
+type TUploadImage = {
+  name: string;
+  base64: string;
+};
+
 type TRegisterIndividualForm = {
   name: string;
   birth: Date | string;
@@ -273,7 +278,7 @@ type TRegisterIndividualForm = {
   address: string;
   username: string;
   information: string;
-  related_images: string[] | null;
+  related_images: TUploadImage[] | null;
 };
 
 type TRegisterOrganizationForm = {
@@ -287,7 +292,7 @@ type TRegisterOrganizationForm = {
   representative_name: string;
   representative_phone_number: string;
   representative_email: string;
-  related_images: string[] | null;
+  related_images: TUploadImage[] | null;
 };
 
 type TUser = {

@@ -20,6 +20,7 @@ import { cn } from '@/lib/utils';
 import { CalendarIcon } from 'lucide-react';
 import { format } from 'date-fns';
 import { Calendar } from '../ui/calendar';
+import DropzoneForm from '@/app/dropzone-form';
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -77,7 +78,11 @@ const formSchema = z.object({
       message: 'Thông tin không được trống',
     })
     .email({ message: 'Không đúng định dạng email' }),
-  related_images: z.array(z.string()).optional().nullable(),
+  related_images: z.array(
+    z.object({
+      name: z.string(),
+      base64: z.string()
+    })).optional().nullable(),
 });
 
 const OrganizationForm = () => {
@@ -264,6 +269,32 @@ const OrganizationForm = () => {
             </FormItem>
           )}
         />
+
+        <div className='col-span-2'>
+          <FormField
+            control={form.control}
+            name="related_images"
+            render={({ field, formState }) => (
+              <FormItem className="col-span-2">
+                <FormLabel className="">
+                  Hình ảnh
+                </FormLabel>
+                <FormControl className="">
+                  <div className="w-full">
+                    <DropzoneForm
+                      defaultValue={field.value as TUploadImage[]}
+                      onChange={e => field.onChange(e as TUploadImage[])}
+                      isError={!!formState?.errors?.related_images?.message}
+                    />
+                  </div>
+                </FormControl>
+                <div className="hidden md:block col-span-1" />
+                <FormMessage className="col-span-2"></FormMessage>
+              </FormItem>
+            )}
+          />
+        </div>
+
         <div className='col-span-2 flex justify-center'>
           <Button type='submit' disabled={isPending || !form.formState.isValid}>
             Gửi

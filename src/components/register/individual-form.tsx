@@ -20,6 +20,7 @@ import { CalendarIcon } from 'lucide-react';
 import { format } from 'date-fns';
 import { Calendar } from '../ui/calendar';
 import { usePostRegisterIndividualMutation } from '@/hooks/use-register';
+import DropzoneForm from '@/app/dropzone-form';
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -78,7 +79,11 @@ const formSchema = z.object({
     message: 'Thông tin không được trống',
   }),
 
-  related_images: z.array(z.string()).optional().nullable(),
+  related_images: z.array(
+    z.object({
+      name: z.string(),
+      base64: z.string()
+    })).optional().nullable(),
 });
 
 const IndividualForm = () => {
@@ -104,6 +109,9 @@ const IndividualForm = () => {
     console.log(data);
     mutate(data as TRegisterIndividualForm);
   };
+
+  console.log(form.formState.errors);
+
 
   return (
     <Form {...form}>
@@ -268,6 +276,31 @@ const IndividualForm = () => {
             </FormItem>
           )}
         />
+
+        <div className='col-span-2'>
+          <FormField
+            control={form.control}
+            name="related_images"
+            render={({ field, formState }) => (
+              <FormItem className="col-span-2">
+                <FormLabel className="">
+                  Hình ảnh
+                </FormLabel>
+                <FormControl className="">
+                  <div className="w-full">
+                    <DropzoneForm
+                      defaultValue={field.value as TUploadImage[]}
+                      onChange={e => field.onChange(e as TUploadImage[])}
+                      isError={!!formState?.errors?.related_images?.message}
+                    />
+                  </div>
+                </FormControl>
+                <div className="hidden md:block col-span-1" />
+                <FormMessage className="col-span-2"></FormMessage>
+              </FormItem>
+            )}
+          />
+        </div>
 
         <div className='col-span-2 flex justify-center'>
           <Button type='submit' disabled={!form.formState.isValid || isPending}>
