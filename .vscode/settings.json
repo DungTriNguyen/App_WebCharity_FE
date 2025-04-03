@@ -15,5 +15,8 @@
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
   "prettier.jsxSingleQuote": true,
-  "prettier.singleQuote": true
+  "prettier.singleQuote": true,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  }
 }
