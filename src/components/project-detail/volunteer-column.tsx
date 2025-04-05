@@ -3,6 +3,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { DataTableColumnHeader } from '@/components/table/data-table-column-header';
 import { formatCurrencyToVND } from '@/lib/utils';
+import { format } from 'date-fns';
 
 export const volunteerColumn: ColumnDef<TSVolunteer>[] = [
   {
@@ -59,7 +60,7 @@ export const volunteerColumn: ColumnDef<TSVolunteer>[] = [
     ),
     cell: ({ row }) => (
       <div className='min-w-[200px] max-w-[300px] text-center'>
-        {row.getValue('created_at')}
+        {format(row.getValue('created_at'), 'dd/MM/yyyy HH:mm:ss')}
       </div>
     ),
     enableSorting: false,

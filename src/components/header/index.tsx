@@ -6,13 +6,12 @@ import {
   ChevronDownIcon,
   LogInIcon,
   LogOutIcon,
-  SearchIcon,
 } from 'lucide-react';
 import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import logo from '../../../public/sgu-logo.png';
 import { Button } from '../ui/button';
 import {
@@ -22,44 +21,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
-import { Input } from '../ui/input';
 import { CAMPAIGN_TYPE } from '@/app/enum';
-import { useGetProjectQuery } from '@/hooks/use-project';
-import { useForm } from 'react-hook-form';
-import { useDebounce } from '@/hooks/use-debounce';
 
-interface Project {
-  id: number;
-  title: string;
-  description?: string;
-}
+import { AvatarFallback, AvatarImage } from '../ui/avatar';
+import QuickSearchProjectDropdown from './quick-search-project-dropdown';
 
 const Header = () => {
   const { data: session } = useSession();
   const router = useRouter();
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const { register, watch, setValue } = useForm();
-  const searchKeyword = watch('keyword');
-  const debouncedSearch = useDebounce(searchKeyword, 300);
-
-  const { data: searchResults, isLoading } = useGetProjectQuery({
-    keyword: debouncedSearch,
-    front_status: 'active',
-    enabled: !!debouncedSearch,
-  });
-
-  useEffect(() => {
-    if (isSearchOpen) {
-      setValue('keyword', '');
-    }
-  }, [isSearchOpen, setValue]);
-
-  const handleSearch = (keyword: string) => {
-    if (keyword) {
-      router.push(`/projects?keyword=${encodeURIComponent(keyword)}`);
-      setIsSearchOpen(false);
-    }
-  };
 
   const ACTIVITIES_ITEMS = [
     {
@@ -205,78 +174,21 @@ const Header = () => {
               </Button>
             </Link>
           </div>
-          <DropdownMenu open={isSearchOpen} onOpenChange={setIsSearchOpen}>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant='ghost'
-                size='icon'
-                className='hover:bg-primary/10'
-              >
-                <SearchIcon className='h-6 w-6' />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className='w-96 p-2' align='end'>
-              <div className='relative'>
-                <Input
-                  {...register('keyword')}
-                  type='text'
-                  placeholder='Tìm kiếm dự án thiện nguyện...'
-                  className='w-full pl-4 pr-10 py-2'
-                  autoFocus
-                />
-                <SearchIcon className='absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400' />
-              </div>
 
-              {isLoading ? (
-                <div className='mt-2 text-center py-2 text-gray-500'>
-                  Đang tìm kiếm...
-                </div>
-              ) : debouncedSearch && searchResults?.data ? (
-                <div className='mt-2'>
-                  <div className='max-h-[300px] overflow-y-auto'>
-                    {searchResults.data.slice(0, 5).map((project: Project) => (
-                      <DropdownMenuItem
-                        key={project.id}
-                        className='py-2 px-3 cursor-pointer hover:bg-primary/10'
-                        onClick={() => {
-                          router.push(`/projects/${project.id}`);
-                          setIsSearchOpen(false);
-                        }}
-                      >
-                        <div className='flex flex-col'>
-                          <span className='font-medium'>{project.title}</span>
-                          <span className='text-sm text-gray-500'>
-                            {project.description?.slice(0, 100)}...
-                          </span>
-                        </div>
-                      </DropdownMenuItem>
-                    ))}
-                  </div>
-                  {searchResults.data.length > 5 && (
-                    <Button
-                      variant='ghost'
-                      className='w-full mt-2 text-primary hover:bg-primary/10'
-                      onClick={() => handleSearch(debouncedSearch)}
-                    >
-                      Xem thêm {searchResults.data.length - 5} kết quả
-                    </Button>
-                  )}
-                </div>
-              ) : debouncedSearch ? (
-                <div className='mt-2 text-center py-2 text-gray-500'>
-                  Không tìm thấy kết quả
-                </div>
-              ) : null}
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <QuickSearchProjectDropdown />
 
           <Button variant='ghost' size='icon' className='hover:bg-primary/10'>
             <BellIcon className='h-6 w-6' />
           </Button>
 
           {session ? (
-            <div className='flex'>
-              <Avatar>{/* <AvatarImage src={'/sgu-logo.png'} /> */}</Avatar>
+            <div className='flex items-center gap-2'>
+              <Avatar
+                className='w-8 h-8 mx-auto rounded-full overflow-hidden'
+              >
+                <AvatarImage src={session?.user?.detail?.avatar_url} alt='@shadcn' />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
               {renderMenu(INFORMATION_USER_ITEMS, '')}
               <Button
                 variant='ghost'

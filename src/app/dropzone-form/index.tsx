@@ -51,7 +51,6 @@ const DropzoneForm = (props: IDropzonePreview) => {
     )
   });
 
-
   return (
     <section className="container border p-4 rounded-md">
       <div {...getRootProps({ className: 'dropzone hover:bg-gray-100 cursor-pointer' })}>
