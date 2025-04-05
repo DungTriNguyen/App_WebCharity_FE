@@ -8,7 +8,7 @@ const useGetProjectQuery = ({
   front_status,
   type,
   category,
-  user_id
+  user_id,
 }: {
   type?: CAMPAIGN_TYPE;
   role?: CAMPAIGN_ROLE;
@@ -19,7 +19,15 @@ const useGetProjectQuery = ({
 }) => {
   const apiAuth = useAxiosAuth();
   return useQuery({
-    queryKey: ['project_list', role, keyword, type, front_status, category, user_id],
+    queryKey: [
+      'project_list',
+      role,
+      keyword,
+      type,
+      front_status,
+      category,
+      user_id,
+    ],
     queryFn: async () => {
       try {
         const res = await apiAuth.get('/project', {

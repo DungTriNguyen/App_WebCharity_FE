@@ -1,6 +1,6 @@
 'use client';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { useGetUserProfileQuery } from '@/hooks/use-profile';
+import { useGetUserProfileQuery, useUpdateUserAvatarMutation } from '@/hooks/use-profile';
 import { usePathname } from 'next/navigation';
 import React, { useRef } from 'react';
 
@@ -13,17 +13,36 @@ const UserLayout = ({
   // console.log(pathname);
 
   const { data: profile } = useGetUserProfileQuery();
+  const { mutate } = useUpdateUserAvatarMutation()
   const fileInputRef = useRef<HTMLInputElement>(null);
   const handleAvatarClick = () => {
     fileInputRef.current?.click();
   };
 
+  const toBase64 = (file: File) => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+  });
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       // Handle the file upload logic here
-      console.log('Selected file:', file);
+      // console.log('Selected file:', file);
       // You can use a function to upload the file and update the avatar URL
+      const payload = new Promise(async (resolve, reject) => {
+        const base64 = await toBase64(file);
+        resolve({
+          name: file.name,
+          base64
+        })
+      }).then((res) => {
+        mutate(res as TUploadImage)
+        return 1;
+      })
+      return payload;
     }
   };
 
