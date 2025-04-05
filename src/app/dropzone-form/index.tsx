@@ -7,7 +7,7 @@ import { useDropzone } from 'react-dropzone';
 interface IDropzonePreview {
   defaultValue: TUploadImage[] | [];
   isError: boolean;
-  // eslint-disable-next-line no-unused-vars
+
   onChange: (e: TUploadImage[] | undefined) => void;
 }
 
@@ -56,7 +56,7 @@ const DropzoneForm = (props: IDropzonePreview) => {
     <section className="container border p-4 rounded-md">
       <div {...getRootProps({ className: 'dropzone hover:bg-gray-100 cursor-pointer' })}>
         <input {...getInputProps()} multiple={true} />
-        <p>Drag 'n' drop some files here, or click to select files</p>
+        <p>Drag &apos;n&apos; drop some files here, or click to select files</p>
       </div>
       <aside>
         <h4>Files</h4>

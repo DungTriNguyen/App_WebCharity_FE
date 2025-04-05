@@ -21,6 +21,7 @@ import { format } from 'date-fns';
 import { Calendar } from '../ui/calendar';
 import { usePostRegisterIndividualMutation } from '@/hooks/use-register';
 import DropzoneForm from '@/app/dropzone-form';
+import { Textarea } from '../ui/textarea';
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -124,9 +125,9 @@ const IndividualForm = () => {
           name='name'
           render={({ field }) => (
             <FormItem className='col-span-1'>
-              <FormLabel>Tên tổ chức</FormLabel>
+              <FormLabel>Tên cá nhân</FormLabel>
               <FormControl>
-                <Input {...field} placeholder='Tên tổ chức' />
+                <Input {...field} placeholder='Tên cá nhân' />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -137,7 +138,7 @@ const IndividualForm = () => {
           name='birth'
           render={({ field }) => (
             <FormItem className='col-span-1'>
-              <FormLabel className='block'>Ngày thành lập</FormLabel>
+              <FormLabel className='block'>Ngày sinh</FormLabel>
               <FormControl>
                 <Popover>
                   <PopoverTrigger asChild>
@@ -216,9 +217,9 @@ const IndividualForm = () => {
           name='information'
           render={({ field }) => (
             <FormItem className='col-span-1'>
-              <FormLabel>Thông tin</FormLabel>
+              <FormLabel>Thông tin cá nhân</FormLabel>
               <FormControl>
-                <Input {...field} placeholder='Thông tin' />
+                <Textarea {...field} placeholder='Thông tin cá nhân' />
               </FormControl>
               <FormMessage />
             </FormItem>
