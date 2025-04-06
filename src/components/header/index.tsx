@@ -7,7 +7,7 @@ import {
   LogInIcon,
   LogOutIcon,
 } from 'lucide-react';
-import { signOut, useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -25,9 +25,11 @@ import { CAMPAIGN_TYPE } from '@/app/enum';
 
 import { AvatarFallback, AvatarImage } from '../ui/avatar';
 import QuickSearchProjectDropdown from './quick-search-project-dropdown';
+import { useGetUserProfileQuery } from '@/hooks/use-profile';
 
 const Header = () => {
-  const { data: session } = useSession();
+  const { data: session } = useGetUserProfileQuery();
+
   const router = useRouter();
 
   const ACTIVITIES_ITEMS = [
@@ -186,7 +188,7 @@ const Header = () => {
               <Avatar
                 className='w-8 h-8 mx-auto rounded-full overflow-hidden'
               >
-                <AvatarImage src={session?.user?.detail?.avatar_url} alt='@shadcn' />
+                <AvatarImage src={session?.data?.avatar_url} alt='@shadcn' />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
               {renderMenu(INFORMATION_USER_ITEMS, '')}

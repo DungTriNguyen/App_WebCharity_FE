@@ -6,7 +6,6 @@ import React, { useMemo } from 'react';
 
 const ProfilePage = () => {
   const session = useSession();
-  console.log(session);
 
   // mock user role
   // const userRole: USER_ROLES = USER_ROLES.USER as USER_ROLES;
