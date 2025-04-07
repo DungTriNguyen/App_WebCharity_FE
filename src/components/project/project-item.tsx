@@ -43,7 +43,7 @@ const ProjectItem = ({ project }: { project: TCampaign }) => {
                   <span>
                     {Math.floor(
                       (Number(project?.donations_sum_amount) * 100 || 0) /
-                        Number(project?.donation_target || 0)
+                      Number(project?.donation_target || 0)
                     )}
                     %
                   </span>
@@ -61,7 +61,7 @@ const ProjectItem = ({ project }: { project: TCampaign }) => {
                   <span>
                     {Math.floor(
                       (project?.volunteers_without_canceled_count * 100 || 0) /
-                        project?.volunteer_quantity || 0
+                      project?.volunteer_quantity || 0
                     )}
                     %
                   </span>
@@ -75,7 +75,7 @@ const ProjectItem = ({ project }: { project: TCampaign }) => {
                   <div className='flex justify-between'>
                     <span>
                       {formatCurrencyToVND(
-                        Number(project?.donations_sum_amount || 0)
+                        Number(project?.donations_with_paid_sum_amount || 0)
                       )}
                       /
                       {formatCurrencyToVND(
@@ -84,8 +84,7 @@ const ProjectItem = ({ project }: { project: TCampaign }) => {
                     </span>
                     <span>
                       {Math.floor(
-                        (Number(project?.donations_sum_amount) * 100 || 0) /
-                          Number(project?.donation_target || 0)
+                        project?.donation_percent
                       )}
                       %
                     </span>
