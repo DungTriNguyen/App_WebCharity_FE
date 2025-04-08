@@ -18,15 +18,15 @@ export const donatedColumn: ColumnDef<TSDonationData>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'account_name',
+    accessorKey: 'name',
     header: ({ column }) => (
       <DataTableColumnHeader column={column}>
         Người ủng hộ
       </DataTableColumnHeader>
     ),
-    cell: ({ row }) => (
+    cell: ({ row, renderValue }) => (
       <div className='min-w-[70px] max-w-[300px] w-full'>
-        {row.getValue('account_name')}
+        {renderValue() as string}
       </div>
     ),
     enableSorting: false,
