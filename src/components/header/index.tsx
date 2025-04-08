@@ -2,8 +2,8 @@
 
 import { CAMPAIGN_TYPE } from '@/app/enum';
 import { Avatar } from '@radix-ui/react-avatar';
-import { BellIcon, ChevronDownIcon, LogInIcon, LogOutIcon } from 'lucide-react';
-import { signOut, useSession } from 'next-auth/react';
+import { ChevronDownIcon, LogInIcon, LogOutIcon } from 'lucide-react';
+import { signOut } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -22,7 +22,6 @@ import { AvatarFallback, AvatarImage } from '../ui/avatar';
 import QuickSearchProjectDropdown from './quick-search-project-dropdown';
 import { useGetUserProfileQuery } from '@/hooks/use-profile';
 const Header = () => {
-  const { data: session } = useSession();
   const router = useRouter();
   const { data: userProfile } = useGetUserProfileQuery();
 
@@ -182,7 +181,7 @@ const Header = () => {
             <BellIcon className='h-6 w-6' />
           </Button> */}
 
-          {session ? (
+          {userProfile ? (
             <div className='flex items-center gap-2'>
               <Avatar className='w-8 h-8 mx-auto rounded-full overflow-hidden'>
                 <AvatarImage

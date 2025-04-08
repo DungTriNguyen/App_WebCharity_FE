@@ -2,7 +2,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useGetUserProfileQuery, useUpdateUserAvatarMutation } from '@/hooks/use-profile';
 import { usePathname } from 'next/navigation';
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 
 const UserLayout = ({
   children,
@@ -10,7 +10,7 @@ const UserLayout = ({
   children: React.ReactNode;
 }>) => {
   const pathname = usePathname();
-  // console.log(pathname);
+  // console.log();
 
   const { data: profile } = useGetUserProfileQuery();
   const { mutate } = useUpdateUserAvatarMutation()
@@ -18,6 +18,21 @@ const UserLayout = ({
   const handleAvatarClick = () => {
     fileInputRef.current?.click();
   };
+
+  const getTitlePage = useMemo(() => {
+    switch (pathname) {
+      case '/user/profile':
+        return 'Trang cá nhân';
+      case '/user/edit-profile':
+        return 'Thông tin cá nhân';
+      // case '/user/donation':
+      //   return 'Quyên góp của tôi';
+      // case '/user/volunteer':
+      //   return 'Tình nguyện viên của tôi';
+      default:
+        return '';
+    }
+  }, [pathname])
 
   const toBase64 = (file: File) => new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -50,7 +65,7 @@ const UserLayout = ({
       <div className=''>
         <div className='bg-user-profile h-[350px] w-full bg-cover flex items-center justify-center text-white text-6xl font-bold relative'>
           <div className='absolute top-0 left-0 bottom-0 right-0 bg-black bg-opacity-35'></div>
-          <div className='absolute'>Trang cá nhân</div>
+          <div className='absolute'>{getTitlePage}</div>
         </div>
         <div className='container 2xl:max-w-[1200px] mx-auto my-2 relative pt-12 '>
           <div className='absolute top-[-84px] left-1/2 transform -translate-x-1/2 flex flex-col items-center'>
