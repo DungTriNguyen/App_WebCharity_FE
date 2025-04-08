@@ -45,25 +45,27 @@ const useUpdateUserProfileMutation = () => {
   const apiAuth = useAxiosAuth();
   return useMutation({
     mutationKey: ['user-profile'],
-    mutationFn: async (payload: TUser) => {
+    mutationFn: async (payload: TUserUpdate) => {
       try {
         const res = await apiAuth.put('/user/profile', payload);
         return res.data;
-      } catch (e: any) {
-        throw Error(e);
+      } catch (error) {
+        console.error('Update profile error:', error);
+        throw error;
       }
     },
     onSuccess: (data) => {
       toast('Thông báo', {
         description: data.message,
       });
-      queryClient.invalidateQueries();
+      // Chỉ invalidate query user-profile
+      queryClient.invalidateQueries({ queryKey: ['user-profile'] });
     },
-    onError: (data) => {
+    onError: (error: any) => {
+      console.error('Mutation error:', error);
       toast('Thông báo', {
-        description: data.message,
+        description: error.response?.data?.message || 'Có lỗi xảy ra',
       });
-      queryClient.invalidateQueries();
     },
   });
 };

@@ -29,3 +29,26 @@ export enum USER_ROLES {
   INDIVIDUAL = 'individual',
   ADMIN = 'admin',
 }
+
+export enum USER_GENDER {
+  MALE = 'Nam',
+  FEMALE = 'Nữ',
+  OTHER = 'Khác',
+}
+
+// export enum PAYMENT_METHOD {
+//   VNPAY = 'Thanh toán qua VNPay',
+//   BANK_TRANSFER = 'Chuyển khoản qua ngân hàng',
+//   MOMO = 'Thanh toán qua MoMo',
+// }
+export enum PAYMENT_METHOD {
+  VNPAY = '1',
+  MOMO = '2',
+  BANK_TRANSFER = '3',
+}
+
+export enum PAYMENT_METHOD_CODE {
+  VNPAY = 'vnpay',
+  MOMO = 'momo',
+  BANK_TRANSFER = 'bank_transfer',
+}

@@ -33,7 +33,6 @@ const useDonationQuery = ({
 };
 
 const useDonateMutation = () => {
-  const session = useSession();
   const apiAuth = useAxiosAuth();
   return useMutation({
     mutationKey: ['project_id'],
@@ -41,7 +40,6 @@ const useDonateMutation = () => {
       try {
         const res = await apiAuth.post('/donation', {
           ...payload,
-          user_id: session?.data?.user?.id,
         });
         return res.data;
       } catch (e: any) {

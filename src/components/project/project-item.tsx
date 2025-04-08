@@ -35,15 +35,15 @@ const ProjectItem = ({ project }: { project: TCampaign }) => {
                 <div className='flex justify-between'>
                   <span>
                     {formatCurrencyToVND(
-                      Number(project?.donations_sum_amount || 0)
+                      Number(project?.donations_with_paid_sum_amount || 0)
                     )}
                     /
                     {formatCurrencyToVND(Number(project?.donation_target || 0))}
                   </span>
                   <span>
                     {Math.floor(
-                      (Number(project?.donations_sum_amount) * 100 || 0) /
-                        Number(project?.donation_target || 0)
+                      (Number(project?.donations_with_paid_sum_amount) * 100 ||
+                        0) / Number(project?.donation_target || 0)
                     )}
                     %
                   </span>
@@ -75,7 +75,7 @@ const ProjectItem = ({ project }: { project: TCampaign }) => {
                   <div className='flex justify-between'>
                     <span>
                       {formatCurrencyToVND(
-                        Number(project?.donations_sum_amount || 0)
+                        Number(project?.donations_with_paid_sum_amount || 0)
                       )}
                       /
                       {formatCurrencyToVND(
@@ -84,8 +84,8 @@ const ProjectItem = ({ project }: { project: TCampaign }) => {
                     </span>
                     <span>
                       {Math.floor(
-                        (Number(project?.donations_sum_amount) * 100 || 0) /
-                          Number(project?.donation_target || 0)
+                        (Number(project?.donations_with_paid_sum_amount) *
+                          100 || 0) / Number(project?.donation_target || 0)
                       )}
                       %
                     </span>
@@ -128,7 +128,7 @@ const ProjectItem = ({ project }: { project: TCampaign }) => {
           <HandHeartIcon strokeWidth={1} />
           <div className=''>
             {project?.type === CAMPAIGN_TYPE.DONATE && (
-              <p>{project?.donations_count} lượt ủng hộ</p>
+              <p>{project?.donations_with_paid_count} lượt ủng hộ</p>
             )}
             {project?.type === CAMPAIGN_TYPE.VOLUNTEER && (
               <p>
@@ -138,7 +138,7 @@ const ProjectItem = ({ project }: { project: TCampaign }) => {
             )}
             {project?.type === CAMPAIGN_TYPE.MULTIPLE && (
               <div>
-                <p>{project?.donations_count} lượt ủng hộ</p>
+                <p>{project?.donations_with_paid_count} lượt ủng hộ</p>
                 <p>
                   {project?.volunteers_without_canceled_count} lượt tham gia
                   tình nguyện
@@ -150,7 +150,6 @@ const ProjectItem = ({ project }: { project: TCampaign }) => {
         <span className='flex gap-1 items-center'>
           <CalendarFoldIcon strokeWidth={1} />
           {project?.diff_date}
-          {/* {project?.front_status_label} */}
         </span>
       </div>
     </div>

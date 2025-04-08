@@ -6,8 +6,6 @@ const ProjectDetailPage = (props: { params: Promise<{ id: number }> }) => {
 
   const { id } = params;
 
-  console.log(id, 'project id');
-
   return <ProjectDetail project_id={id} />;
 };
 

@@ -45,7 +45,6 @@ const UserLayout = ({
       return payload;
     }
   };
-
   return (
     <>
       <div className=''>
@@ -55,7 +54,6 @@ const UserLayout = ({
         </div>
         <div className='container 2xl:max-w-[1200px] mx-auto my-2 relative pt-12 '>
           <div className='absolute top-[-84px] left-1/2 transform -translate-x-1/2 flex flex-col items-center'>
-            {/* <div className=' '> */}
             <Avatar
               className='w-40 h-40  mx-auto rounded-full '
               onClick={handleAvatarClick}
@@ -69,8 +67,6 @@ const UserLayout = ({
               style={{ display: 'none' }}
               onChange={handleFileChange}
             />
-            {/* <Upload /> */}
-            {/* </div */}
             <div className='text-center font-bold'>{profile?.data?.name}</div>
             <div className='text-center'>@{profile?.data?.username}</div>
           </div>

@@ -1,17 +1,13 @@
 'use client';
 
+import { CAMPAIGN_TYPE } from '@/app/enum';
 import { Avatar } from '@radix-ui/react-avatar';
-import {
-  BellIcon,
-  ChevronDownIcon,
-  LogInIcon,
-  LogOutIcon,
-} from 'lucide-react';
+import { BellIcon, ChevronDownIcon, LogInIcon, LogOutIcon } from 'lucide-react';
 import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import logo from '../../../public/sgu-logo.png';
 import { Button } from '../ui/button';
 import {
@@ -21,44 +17,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
-import { CAMPAIGN_TYPE } from '@/app/enum';
 
 import { AvatarFallback, AvatarImage } from '../ui/avatar';
 import QuickSearchProjectDropdown from './quick-search-project-dropdown';
-import { useForm } from 'react-hook-form';
-import { useGetProjectQuery } from '@/hooks/use-project';
-import { useDebounce } from '@/hooks/use-debounce';
-
+import { useGetUserProfileQuery } from '@/hooks/use-profile';
 const Header = () => {
   const { data: session } = useSession();
   const router = useRouter();
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const { register, watch, setValue } = useForm();
-  const searchKeyword = watch('keyword');
-
-
-
-
-  const debouncedSearch = useDebounce(searchKeyword, 300);
-
-  const { data: searchResults, isLoading } = useGetProjectQuery({
-    keyword: debouncedSearch,
-    front_status: 'active',
-    enabled: !!debouncedSearch,
-  });
-
-  useEffect(() => {
-    if (isSearchOpen) {
-      setValue('keyword', '');
-    }
-  }, [isSearchOpen, setValue]);
-
-  const handleSearch = (keyword: string) => {
-    if (keyword) {
-      router.push(`/projects?keyword=${encodeURIComponent(keyword)}`);
-      setIsSearchOpen(false);
-    }
-  };
+  const { data: userProfile } = useGetUserProfileQuery();
 
   const ACTIVITIES_ITEMS = [
     {
@@ -129,6 +95,11 @@ const Header = () => {
       label: 'Chỉnh sửa thông tin cá nhân',
       href: '/user/edit-profile',
       icon: '📖',
+    },
+    {
+      label: 'Đổi mật khẩu',
+      href: '/user/change-password',
+      icon: '🔒',
     },
     {
       label: 'Lịch sử ủng hộ/ ĐK TNV',
@@ -207,16 +178,17 @@ const Header = () => {
 
           <QuickSearchProjectDropdown />
 
-          <Button variant='ghost' size='icon' className='hover:bg-primary/10'>
+          {/* <Button variant='ghost' size='icon' className='hover:bg-primary/10'>
             <BellIcon className='h-6 w-6' />
-          </Button>
+          </Button> */}
 
           {session ? (
             <div className='flex items-center gap-2'>
-              <Avatar
-                className='w-8 h-8 mx-auto rounded-full overflow-hidden'
-              >
-                <AvatarImage src={session?.user?.detail?.avatar_url} alt='@shadcn' />
+              <Avatar className='w-8 h-8 mx-auto rounded-full overflow-hidden'>
+                <AvatarImage
+                  src={userProfile?.data?.avatar_url}
+                  alt='@shadcn'
+                />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
               {renderMenu(INFORMATION_USER_ITEMS, '')}

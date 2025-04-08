@@ -1,5 +1,20 @@
 'use client';
-import React from 'react';
+import { PAYMENT_METHOD_CODE } from '@/app/enum';
+import { useDepartmentQuery } from '@/hooks/use-department';
+import { useDonateMutation } from '@/hooks/use-donation';
+import {
+  useCreateMomoPaymentMutation,
+  useCreateVNPayPaymentMutation,
+  usePaymentQuery,
+} from '@/hooks/use-payment';
+import { formatCurrencyToVND } from '@/lib/utils';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useSession } from 'next-auth/react';
+import Image from 'next/image';
+import { useParams } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { Button } from '../ui/button';
 import {
   Card,
   CardContent,
@@ -7,9 +22,7 @@ import {
   CardHeader,
   CardTitle,
 } from '../ui/card';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { Checkbox } from '../ui/checkbox';
 import {
   Form,
   FormControl,
@@ -19,10 +32,6 @@ import {
   FormMessage,
 } from '../ui/form';
 import { Input } from '../ui/input';
-import { Button } from '../ui/button';
-import { Checkbox } from '../ui/checkbox';
-import { useParams } from 'next/navigation';
-import { useDepartmentQuery } from '@/hooks/use-department';
 import {
   Select,
   SelectContent,
@@ -30,14 +39,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select';
-import { useDonateMutation } from '@/hooks/use-donation';
-import { Textarea } from '../ui/textarea';
+
+const paymentMethodTransfer = {
+  id: 1,
+  name: 'Ngân hàng Vietcombank',
+  icon: '/transfer_payment.png',
+  account_number: '1234567890',
+  account_name: 'Nguyễn Văn A',
+  code: '1234567890',
+};
 
 const DonateForm = () => {
   const params = useParams();
   const projectId = params?.id || 0;
   const { data } = useDepartmentQuery();
-  const { mutate } = useDonateMutation();
+  const { mutate: donateMutate } = useDonateMutation();
+  const { mutate: createMomoPaymentMutate } = useCreateMomoPaymentMutation();
+  const { mutate: createVNPayPaymentMutate } = useCreateVNPayPaymentMutation();
+  const { data: paymentData } = usePaymentQuery();
+  const { data: session } = useSession();
 
   const formSchema = z.object({
     amount: z.string().min(1, {
@@ -46,33 +66,25 @@ const DonateForm = () => {
     name: z.string().min(1, {
       message: 'Thông tin không được trống',
     }),
-    email: z.string().min(1, {
-      message: 'Thông tin không được trống',
+    email: z.string().nullable().optional(),
+    phone_number: z.string().nullable().optional(),
+    student_code: z.string().nullable().optional(),
+    class: z.string().nullable().optional(),
+    department_id: z.string().nullable().optional(),
+    is_anonymous: z.boolean().nullable().optional(),
+    payment_method_code: z.string().min(1, {
+      message: 'Vui lòng chọn phương thức thanh toán',
     }),
-    phone_number: z.string().min(1, {
-      message: 'Thông tin không được trống',
-    }),
-    student_code: z.string().min(1, {
-      message: 'Thông tin không được trống',
-    }),
-    class: z.string().min(1, {
-      message: 'Thông tin không được trống',
-    }),
-    department_id: z.string().min(1, {
-      message: 'Thông tin không được trống',
-    }),
-    is_anonymous: z.boolean(),
-
-    account_number: z.string().min(1, {
-      message: 'Thông tin không được trống',
-    }),
-    account_name: z.string().min(1, {
-      message: 'Thông tin không được trống',
-    }),
-    code: z.string().min(1, {
-      message: 'Thông tin không được trống',
-    }),
-    note: z.string().nullable().optional(),
+    // account_number: z.string().min(1, {
+    //   message: 'Thông tin không được trống',
+    // }),
+    // account_name: z.string().min(1, {
+    //   message: 'Thông tin không được trống',
+    // }),
+    // code: z.string().min(1, {
+    //   message: 'Thông tin không được trống',
+    // }),
+    // note: z.string().nullable().optional(),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -87,28 +99,78 @@ const DonateForm = () => {
       class: '',
       department_id: '',
       is_anonymous: false,
-      account_number: '',
-      account_name: '',
-      code: '',
-      note: '',
+      payment_method_code: '',
+      // account_number: '',
+      // account_name: '',
+      // code: '',
+      // note: '',
     },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     console.log(values);
-    await mutate({
-      ...values,
-      project_id: +projectId,
-      amount: +values.amount,
-    });
+
+    // Gọi API tạo donation
+    donateMutate(
+      {
+        ...values,
+        user_id: session?.user.detail?.id || null,
+        project_id: +projectId,
+        amount: +values.amount,
+        payment_method_code: values.payment_method_code,
+        email: values.email || null,
+        phone_number: values.phone_number || null,
+        student_code: values.student_code || null,
+        class: values.class || null,
+        department_id: values.department_id || null,
+        is_anonymous: values.is_anonymous || false,
+      },
+      {
+        onSuccess: (data) => {
+          if (data?.data?.id) {
+            if (values.payment_method_code === PAYMENT_METHOD_CODE.VNPAY) {
+              createVNPayPaymentMutate(
+                {
+                  donation_id: data.data.id,
+                },
+                {
+                  onSuccess: (paymentData) => {
+                    if (paymentData?.data?.payment_url) {
+                      window.location.href = paymentData.data.payment_url;
+                    }
+                  },
+                }
+              );
+            } else if (
+              values.payment_method_code === PAYMENT_METHOD_CODE.MOMO
+            ) {
+              createMomoPaymentMutate(
+                {
+                  donation_id: data.data.id,
+                },
+                {
+                  onSuccess: (paymentData) => {
+                    if (paymentData?.data?.payUrl) {
+                      window.location.href = paymentData.data.payUrl;
+                    }
+                  },
+                }
+              );
+            }
+          }
+        },
+      }
+    );
   };
+  // const selectedPaymentMethod = paymentData?.data.find(
+  //   (item: TPaymentMethod) =>
+  //     item.id.toString() === form.watch('payment_method_id')
+  // );
 
   return (
     <Card className=''>
       <CardHeader>
-        <CardTitle>Thông tin ủng hộ</CardTitle>
+        <CardTitle>Thông tin ủng hộ </CardTitle>
         <CardDescription></CardDescription>
       </CardHeader>
       <CardContent>
@@ -122,7 +184,9 @@ const DonateForm = () => {
               name='amount'
               render={({ field }) => (
                 <FormItem className='col-span-2'>
-                  <FormLabel>Nhập số tiền ủng hộ</FormLabel>
+                  <FormLabel>
+                    Nhập số tiền ủng hộ <span className='text-red-500'>*</span>
+                  </FormLabel>
                   <FormControl>
                     <div className='relative'>
                       <Input
@@ -130,6 +194,20 @@ const DonateForm = () => {
                         className='text-2xl text-primary font-bold pr-16'
                         placeholder='1.000.000'
                         {...field}
+                        value={
+                          field.value
+                            ? formatCurrencyToVND(Number(field.value))
+                            : ''
+                        }
+                        onChange={(e) => {
+                          // Loại bỏ tất cả ký tự không phải số
+                          const numericValue = e.target.value.replace(
+                            /[^\d]/g,
+                            ''
+                          );
+                          // Cập nhật giá trị cho form
+                          field.onChange(numericValue);
+                        }}
                       />
                       <div className='absolute right-4 top-1 bottom-0 m-auto font-bold text-lg text-primary'>
                         VND
@@ -145,7 +223,9 @@ const DonateForm = () => {
               name='name'
               render={({ field }) => (
                 <FormItem className='col-span-2'>
-                  <FormLabel>Họ và tên</FormLabel>
+                  <FormLabel>
+                    Họ và tên <span className='text-red-500'>*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input type='text' placeholder='Họ và tên' {...field} />
                   </FormControl>
@@ -160,7 +240,12 @@ const DonateForm = () => {
                 <FormItem className='col-span-1'>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input type='text' placeholder='Email' {...field} />
+                    <Input
+                      type='text'
+                      placeholder='Email'
+                      {...field}
+                      value={field.value ?? ''}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -173,7 +258,12 @@ const DonateForm = () => {
                 <FormItem className='col-span-1'>
                   <FormLabel>Số điện thoại</FormLabel>
                   <FormControl>
-                    <Input type='text' placeholder='Điện thoại' {...field} />
+                    <Input
+                      type='number'
+                      placeholder='Điện thoại'
+                      {...field}
+                      value={field.value ?? ''}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -192,7 +282,12 @@ const DonateForm = () => {
                 <FormItem className='col-span-2'>
                   <FormLabel>MSSV</FormLabel>
                   <FormControl>
-                    <Input type='text' placeholder='MSSV' {...field} />
+                    <Input
+                      type='text'
+                      placeholder='MSSV'
+                      {...field}
+                      value={field.value ?? ''}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -205,7 +300,12 @@ const DonateForm = () => {
                 <FormItem className='col-span-1'>
                   <FormLabel>Lớp</FormLabel>
                   <FormControl>
-                    <Input type='text' placeholder='Lớp' {...field} />
+                    <Input
+                      type='text'
+                      placeholder='Lớp'
+                      {...field}
+                      value={field.value ?? ''}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -245,7 +345,7 @@ const DonateForm = () => {
                 <FormItem className='flex flex-row items-start space-x-3 space-y-0 col-span-2'>
                   <FormControl>
                     <Checkbox
-                      checked={field.value}
+                      checked={field.value ?? false}
                       onCheckedChange={field.onChange}
                     />
                   </FormControl>
@@ -258,10 +358,67 @@ const DonateForm = () => {
             />
 
             <div className='col-span-2'>
-              <p className='font-bold'>Thông tin tài khoản</p>
+              <p className='font-bold'>Phương thức thanh toán</p>
             </div>
 
             <FormField
+              control={form.control}
+              name='payment_method_code'
+              render={({ field }) => (
+                <FormItem className='col-span-2'>
+                  <FormLabel>
+                    Chọn phương thức thanh toán{' '}
+                    <span className='text-red-500'>*</span>
+                  </FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder='Chọn phương thức thanh toán' />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {paymentData?.data.map((item: TPaymentMethod) => (
+                        <SelectItem key={item.id} value={item.code}>
+                          <div className='flex items-center gap-2'>
+                            <Image
+                              src={item.icon || ''}
+                              alt={item.name || ''}
+                              width={24}
+                              height={24}
+                            />
+                            <span>{item.name}</span>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {PAYMENT_METHOD_CODE.BANK_TRANSFER ===
+              form.watch('payment_method_code') && (
+              <div className='flex flex-col col-span-2  items-center justify-center'>
+                <div className='flex flex-col gap-2 items-center justify-center'>
+                  <p className='font-bold mt-4'>Thông tin chuyển khoản</p>
+                  <div className='w-full h-full flex'>
+                    <Image
+                      src={paymentMethodTransfer?.icon || ''}
+                      alt={paymentMethodTransfer?.name || ''}
+                      width={400}
+                      height={100}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* <FormField
               control={form.control}
               name='account_name'
               render={({ field }) => (
@@ -316,10 +473,10 @@ const DonateForm = () => {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            />*/}
             <Button
               type='submit'
-              className='col-span-2'
+              className='col-span-2 mt-4'
               disabled={!form.formState.isValid}
             >
               Ủng hộ
