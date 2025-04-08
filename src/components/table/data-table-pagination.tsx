@@ -23,7 +23,6 @@ export function DataTablePagination({
 
   return (
     <div className='flex items-center justify-between text-center text-sm'>
-      <span className={cn({ invisible: !total })}></span>
       <div className={cn(!total ? 'invisible' : 'flex items-center gap-2')}>
         <Button
           variant={'outline'}
