@@ -11,52 +11,43 @@ import { donatedColumn } from './donated-column';
 import { useVolunteerQuery } from '@/hooks/use-volunteer';
 import { volunteerColumn } from './volunteer-column';
 import VolunteerTable from './volunteer-table';
+import { Input } from '../ui/input';
+import { useForm } from 'react-hook-form';
+import { useDebounce } from '@/hooks/use-debounce';
+import { usePagination } from '@/hooks/use-pagination';
 
 const VolunteerList = ({ project }: { project: TCampaign }) => {
+  const { register, watch } = useForm();
+  const searchKeyword = watch('keyword');
+  const debouncedSearch = useDebounce(searchKeyword, 300);
   const projectId = project?.id;
+
+  const { currentPage, setCurrentPage, setItemsPerPage } = usePagination({});
+
   const { data: volunteerData, isLoading } = useVolunteerQuery({
     limit: 10,
     page: 1,
     projectId,
+    keyword: debouncedSearch ? debouncedSearch : null,
   });
 
-  // const volunteerData: TSVolunteer[] = [
-  //   // {
-  //   //   id: '123',
-  //   //   supporter: 'Nguyen Van A',
-  //   //   amount: '100000',
-  //   //   updatedAt: '2025/01/02',
-  //   // },
-  //   // {
-  //   //   id: '1',
-  //   //   supporter: 'Nguyen Van A',
-  //   //   amount: '100000',
-  //   //   updatedAt: '2025/01/02',
-  //   // },
-  //   // {
-  //   //   id: '2',
-  //   //   supporter: 'Nguyen Van A',
-  //   //   amount: '100000',
-  //   //   updatedAt: '2025/01/02',
-  //   // },
-  //   // {
-  //   //   id: '3',
-  //   //   supporter: 'Nguyen Van A',
-  //   //   amount: '100000',
-  //   //   updatedAt: '2025/01/02',
-  //   // },
-  // ];
   return (
     <Card>
       <CardHeader>
         <CardTitle>Danh sách Tham gia TNV</CardTitle>
         <CardDescription />
       </CardHeader>
-      <CardContent>
+      <CardContent className='flex flex-col gap-4'>
+        <Input placeholder='Tìm' type='search' {...register('keyword')} />
         <VolunteerTable
           columns={volunteerColumn}
           data={volunteerData?.data || []}
           loading={isLoading}
+          page={currentPage || 1}
+          total={volunteerData?.pagination?.total || 0}
+          totalPages={volunteerData?.pagination?.last_page || 1}
+          changePage={setCurrentPage}
+          changeItemsPerPage={setItemsPerPage}
         />
       </CardContent>
     </Card>

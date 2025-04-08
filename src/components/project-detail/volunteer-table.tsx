@@ -20,14 +20,29 @@ import {
 } from '@tanstack/react-table';
 import EmptyRow from '../table/empty-row';
 import { Skeleton } from '../ui/skeleton';
+import { DataTablePagination } from '../table/data-table-pagination';
 
 interface IVolunteerList {
   data: TSVolunteer[];
   columns: ColumnDef<TSVolunteer>[];
   loading: boolean;
+  page: number;
+  total: number;
+  totalPages: number;
+  changePage: React.Dispatch<React.SetStateAction<number>>;
+  changeItemsPerPage: React.Dispatch<React.SetStateAction<string>>;
 }
 const VolunteerTable = (props: IVolunteerList) => {
-  const { data, columns, loading = false } = props;
+  const {
+    data,
+    columns,
+    loading = false,
+    page,
+    total,
+    totalPages,
+    changePage,
+    changeItemsPerPage,
+  } = props;
 
   const tableData = React.useMemo(
     () => (loading ? Array(5).fill({}) : data),
@@ -109,7 +124,15 @@ const VolunteerTable = (props: IVolunteerList) => {
           </TableBody>
         </Table>
       </div>
-      {/* <DataTablePagination table={table} /> */}
+      {!loading && (
+        <DataTablePagination
+          currentPage={page}
+          totalPages={totalPages}
+          total={total}
+          changePage={changePage}
+          changeItemsPerPage={changeItemsPerPage}
+        />
+      )}
     </div>
   );
 };
