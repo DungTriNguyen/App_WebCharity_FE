@@ -1,5 +1,8 @@
 'use client';
+import { useDepartmentQuery } from '@/hooks/use-department';
+import { useRegisterVolunteerMutation } from '@/hooks/use-volunteer';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from '../ui/button';
@@ -19,8 +22,6 @@ import {
   FormMessage,
 } from '../ui/form';
 import { Input } from '../ui/input';
-import { useParams } from 'next/navigation';
-import { useRegisterVolunteerMutation } from '@/hooks/use-volunteer';
 import {
   Select,
   SelectContent,
@@ -28,14 +29,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select';
-import { useDepartmentQuery } from '@/hooks/use-department';
+import { useGetUserProfileQuery } from '@/hooks/use-profile';
+import { useSession } from 'next-auth/react';
 
 const RegisterVolunteerForm = () => {
   const params = useParams();
   const projectId = params?.id || 0;
-
-  const { mutate } = useRegisterVolunteerMutation();
-  const { data } = useDepartmentQuery();
+  const { mutate, isPending } = useRegisterVolunteerMutation();
+  const { data: departments } = useDepartmentQuery();
+  const { data: userProfile, isLoading: isLoadingProfile } =
+    useGetUserProfileQuery();
+  const { data: session } = useSession();
 
   const formSchema = z.object({
     name: z.string().min(1, {
@@ -56,36 +60,46 @@ const RegisterVolunteerForm = () => {
     department_id: z.string().min(1, {
       message: 'Thông tin không được trống',
     }),
-    // incognito: z.boolean().optional(),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
-      name: '',
-      email: '',
-      phone_number: '',
-      student_code: '',
-      class: '',
-      department_id: '',
-      // incognito: false,
+      name: userProfile?.data?.name || '',
+      email: userProfile?.data?.email || '',
+      phone_number: userProfile?.data?.phone_number || '',
+      student_code: userProfile?.data?.student_code || '',
+      class: userProfile?.data?.class || '',
+      department_id: userProfile?.data?.department_id?.toString() || '',
     },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-    await mutate({ ...values, project_id: +projectId });
+    if (!session?.user?.detail?.id) {
+      console.error('User ID not found in session');
+      return;
+    }
+
+    try {
+      await mutate({
+        ...values,
+        project_id: +projectId,
+        user_id: session.user.detail.id,
+      });
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
   };
 
-  console.log(data);
+  if (isLoadingProfile) {
+    return <div>Loading profile...</div>;
+  }
 
   return (
     <Card className=''>
       <CardHeader>
-        <CardTitle>Thông tin ủng hộ</CardTitle>
+        <CardTitle>Thông tin tham gia tình nguyện</CardTitle>
         <CardDescription></CardDescription>
       </CardHeader>
       <CardContent>
@@ -99,7 +113,9 @@ const RegisterVolunteerForm = () => {
               name='name'
               render={({ field }) => (
                 <FormItem className='col-span-2'>
-                  <FormLabel>Họ và tên</FormLabel>
+                  <FormLabel>
+                    Họ và tên <span className='text-red-500'>*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input type='text' placeholder='Họ và tên' {...field} />
                   </FormControl>
@@ -112,7 +128,9 @@ const RegisterVolunteerForm = () => {
               name='email'
               render={({ field }) => (
                 <FormItem className='col-span-1'>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>
+                    Email <span className='text-red-500'>*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input type='text' placeholder='Email' {...field} />
                   </FormControl>
@@ -125,9 +143,11 @@ const RegisterVolunteerForm = () => {
               name='phone_number'
               render={({ field }) => (
                 <FormItem className='col-span-1'>
-                  <FormLabel>Số điện thoại</FormLabel>
+                  <FormLabel>
+                    Số điện thoại <span className='text-red-500'>*</span>
+                  </FormLabel>
                   <FormControl>
-                    <Input type='text' placeholder='Điện thoại' {...field} />
+                    <Input type='number' placeholder='Điện thoại' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -136,7 +156,7 @@ const RegisterVolunteerForm = () => {
             <div className='col-span-2'>
               <p className='font-bold'>Thông tin của bạn</p>
               <p className='italic'>
-                Nếu bạn là sinh viên của trường đại học Sài Gòn
+                Vui lòng điền thông tin sinh viên để được tham gia vào dự án
               </p>
             </div>
             <FormField
@@ -144,7 +164,9 @@ const RegisterVolunteerForm = () => {
               name='student_code'
               render={({ field }) => (
                 <FormItem className='col-span-2'>
-                  <FormLabel>MSSV</FormLabel>
+                  <FormLabel>
+                    MSSV <span className='text-red-500'>*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input type='text' placeholder='MSSV' {...field} />
                   </FormControl>
@@ -157,7 +179,9 @@ const RegisterVolunteerForm = () => {
               name='class'
               render={({ field }) => (
                 <FormItem className='col-span-1'>
-                  <FormLabel>Lớp</FormLabel>
+                  <FormLabel>
+                    Lớp <span className='text-red-500'>*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input type='text' placeholder='Lớp' {...field} />
                   </FormControl>
@@ -171,11 +195,13 @@ const RegisterVolunteerForm = () => {
               name='department_id'
               render={({ field }) => (
                 <FormItem className='col-span-1'>
-                  <FormLabel>Khoa</FormLabel>
+                  <FormLabel>
+                    Khoa <span className='text-red-500'>*</span>
+                  </FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value ?? ''}
-                    value={field.value ?? undefined}
+                    value={field.value ?? ''}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -183,7 +209,7 @@ const RegisterVolunteerForm = () => {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {data?.data.map((item: TDepartment) => (
+                      {departments?.data.map((item: TDepartment) => (
                         <SelectItem value={`${item.id}`} key={`${item.id}`}>
                           {item.name}
                         </SelectItem>
@@ -197,9 +223,9 @@ const RegisterVolunteerForm = () => {
             <Button
               type='submit'
               className='col-span-2'
-              disabled={!form.formState.isValid}
+              disabled={!form.formState.isValid || isPending}
             >
-              Tham gia
+              {isPending ? 'Đang xử lý...' : 'Tham gia'}
             </Button>
           </form>
         </Form>

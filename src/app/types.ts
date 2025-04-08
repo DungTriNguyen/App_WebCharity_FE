@@ -40,15 +40,16 @@ type TCampaign = {
     tiktok: string | null;
   };
   name: string | null; // "Nhóm 1"
+  slug: string; // "nhom-1"
   type: string; // "Quyên góp và tình nguyện"
   background_image: string; // URL
   related_images: string[]; // URL
   content: string | null;
   donation_percent: number | null;
-  donations_sum_amount: number;
+  donations_with_paid_sum_amount: number;
   donations_sum_amount_formatted: number; // "0đ"
   donation_target: number | 0; // "100000000.0000"
-  donations_count: string;
+  donations_with_paid_count: number;
   volunteer_percent: number | null;
   volunteers_without_canceled_count: number;
   volunteer_quantity: number | 0;
@@ -74,7 +75,7 @@ type TContactFormData = {
 
 type TApiResponse<T = any> = {
   message: string;
-  data?: any[];
+  data?: T[];
   errors?: Record<string, string[]>;
 };
 
@@ -278,6 +279,9 @@ type TRegisterIndividualForm = {
   address: string;
   username: string;
   information: string;
+  phone_number: string;
+  email: string;
+  club_name: string;
   related_images: TUploadImage[] | null;
 };
 
@@ -311,17 +315,26 @@ type TUser = {
   projects_count: number | null;
   projects_donations_count: number;
   projects_donations_sum_amount: number;
+  projects_volunteers_count: number;
+  student_code: string | null;
+  class: string | null;
+  department_id: string | null;
   status: number;
   status_badge: string;
   status_label: string;
   tiktok: string | null;
   type: string;
   username: string;
+  donations_with_paid_count: number;
+  donations_with_paid_sum_amount: number;
   volunteers_without_canceled_count: number | null;
   youtube: string | null;
 };
+// Thêm type cho partial update
+type TUserUpdate = Partial<TUser>;
 
 type TRegisterVolunteerForm = {
+  user_id: number;
   name: string;
   email: string;
   phone_number: string;
@@ -332,19 +345,17 @@ type TRegisterVolunteerForm = {
 };
 
 type TDonateForm = {
+  user_id: number | null;
   project_id: number;
-  account_number: string;
-  account_name: string;
-  code: string;
   name: string;
-  email: string;
-  phone_number: string;
+  email: string | null;
+  phone_number: string | null;
   amount: number;
   is_anonymous: boolean;
-  note?: string | null;
-  department_id: string;
-  class: string;
-  student_code: string;
+  department_id: string | null;
+  class: string | null;
+  student_code: string | null;
+  payment_method_code: string;
 };
 
 type TDepartment = {
@@ -354,4 +365,41 @@ type TDepartment = {
   status: number;
   status_badge: string;
   status_label: string;
+};
+
+type TPaymentMethod = {
+  id: number;
+  name: string;
+  code: string;
+  icon: string;
+  sort_order: number;
+  status: number; //0 and 1
+};
+
+type TMomoPaymentResponse = {
+  success: boolean;
+  payment_url: string;
+  data: {
+    partnerCode: string;
+    orderId: string;
+    requestId: string;
+    amount: number;
+    responseTime: number;
+    message: string;
+    resultCode: number;
+    payUrl: string;
+    deeplink: string;
+    qrCodeUrl: string;
+    applink: string;
+    deeplinkMiniApp: string;
+    signature: string;
+  };
+};
+
+type TVNPayPaymentResponse = {
+  message: string;
+  data: {
+    success: boolean;
+    payment_url: string;
+  };
 };

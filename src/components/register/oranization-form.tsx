@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import {
@@ -21,41 +21,25 @@ import { CalendarIcon } from 'lucide-react';
 import { format } from 'date-fns';
 import { Calendar } from '../ui/calendar';
 import DropzoneForm from '@/app/dropzone-form';
+import { Textarea } from '../ui/textarea';
 
 const formSchema = z.object({
-  name: z.string().min(1, {
+  username: z.string().min(1, {
     message: 'Thông tin không được trống',
   }),
-
   birth: z.date().refine((date) => !isNaN(date.getTime()), {
     message: 'Thông tin không được trống',
   }),
-  website: z
+  name: z.string().min(1, {
+    message: 'Thông tin không được trống',
+  }),
+  representative_email: z
     .string()
     .min(1, {
       message: 'Thông tin không được trống',
     })
-    .regex(
-      new RegExp(
-        /^(https?:\/\/)?(([a-zA-Z0-9.-]+)\.([a-zA-Z]{2,})|(\d{1,3}(\.\d{1,3}){3})|(\[[a-fA-F0-9:]+\]))(:\d{1,5})?(\/.*)?$/
-      ),
-      {
-        message: 'Không đúng định dạng website',
-      }
-    ),
-  field: z.string().min(1, {
-    message: 'Thông tin không được trống',
-  }),
+    .email({ message: 'Không đúng định dạng email' }),
   address: z.string().min(1, {
-    message: 'Thông tin không được trống',
-  }),
-  username: z.string().min(1, {
-    message: 'Thông tin không được trống',
-  }),
-  information: z.string().min(1, {
-    message: 'Thông tin không được trống',
-  }),
-  representative_name: z.string().min(1, {
     message: 'Thông tin không được trống',
   }),
   representative_phone_number: z
@@ -72,21 +56,44 @@ const formSchema = z.object({
         message: 'Không đúng định dạng số điện thoại',
       }
     ),
-  representative_email: z
+  representative_name: z.string().min(1, {
+    message: 'Thông tin không được trống',
+  }),
+  field: z.string().min(1, {
+    message: 'Thông tin không được trống',
+  }),
+
+  website: z
     .string()
     .min(1, {
       message: 'Thông tin không được trống',
     })
-    .email({ message: 'Không đúng định dạng email' }),
-  related_images: z.array(
-    z.object({
-      name: z.string(),
-      base64: z.string()
-    })).optional().nullable(),
+    .regex(
+      new RegExp(
+        /^(https?:\/\/)?(([a-zA-Z0-9.-]+)\.([a-zA-Z]{2,})|(\d{1,3}(\.\d{1,3}){3})|(\[[a-fA-F0-9:]+\]))(:\d{1,5})?(\/.*)?$/
+      ),
+      {
+        message: 'Không đúng định dạng website',
+      }
+    ),
+
+  related_images: z
+    .array(
+      z.object({
+        name: z.string(),
+        base64: z.string(),
+      })
+    )
+    .optional()
+    .nullable(),
+  information: z.string().min(1, {
+    message: 'Thông tin không được trống',
+  }),
 });
 
 const OrganizationForm = () => {
   const { mutate, isPending } = usePostRegisterOrganizationMutation();
+  const [dropzoneKey, setDropzoneKey] = useState(0);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
@@ -104,10 +111,30 @@ const OrganizationForm = () => {
       related_images: [],
     },
   });
+
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log(data);
-    mutate(data as TRegisterOrganizationForm);
+    mutate(data as TRegisterOrganizationForm, {
+      onSuccess: () => {
+        // Reset form after successful submission
+        form.reset({
+          name: '',
+          birth: new Date(),
+          website: '',
+          field: '',
+          address: '',
+          username: '',
+          information: '',
+          representative_name: '',
+          representative_phone_number: '',
+          representative_email: '',
+          related_images: [],
+        });
+        // Force re-render of DropzoneForm
+        setDropzoneKey((prev) => prev + 1);
+      },
+    });
   };
+
   return (
     <Form {...form}>
       <form
@@ -116,23 +143,28 @@ const OrganizationForm = () => {
       >
         <FormField
           control={form.control}
-          name='name'
+          name='username'
           render={({ field }) => (
             <FormItem className='col-span-1'>
-              <FormLabel>Tên tổ chức</FormLabel>
+              <FormLabel>
+                Tên đăng nhập <span style={{ color: 'red' }}>*</span>
+              </FormLabel>
               <FormControl>
-                <Input {...field} placeholder='Tên tổ chức' />
+                <Input {...field} placeholder='Tên đăng nhập' />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name='birth'
           render={({ field }) => (
-            <FormItem className='col-span-1'>
-              <FormLabel className='block'>Ngày thành lập</FormLabel>
+            <FormItem className='col-span-1 space-y-5'>
+              <FormLabel className='block'>
+                Ngày thành lập <span style={{ color: 'red' }}>*</span>
+              </FormLabel>
               <FormControl>
                 <Popover>
                   <PopoverTrigger asChild>
@@ -167,90 +199,14 @@ const OrganizationForm = () => {
         />
         <FormField
           control={form.control}
-          name='website'
+          name='name'
           render={({ field }) => (
             <FormItem className='col-span-1'>
-              <FormLabel>Website</FormLabel>
+              <FormLabel>
+                Tên tổ chức <span style={{ color: 'red' }}>*</span>
+              </FormLabel>
               <FormControl>
-                <Input {...field} placeholder='Website' />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name='field'
-          render={({ field }) => (
-            <FormItem className='col-span-1'>
-              <FormLabel>Lĩnh vực</FormLabel>
-              <FormControl>
-                <Input {...field} placeholder='Lĩnh vực' />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name='username'
-          render={({ field }) => (
-            <FormItem className='col-span-1'>
-              <FormLabel>Tên tài khoản</FormLabel>
-              <FormControl>
-                <Input {...field} placeholder='Tên tài khoản' />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name='information'
-          render={({ field }) => (
-            <FormItem className='col-span-1'>
-              <FormLabel>Thông tin</FormLabel>
-              <FormControl>
-                <Input {...field} placeholder='Thông tin' />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name='address'
-          render={({ field }) => (
-            <FormItem className='col-span-1'>
-              <FormLabel>Địa chỉ</FormLabel>
-              <FormControl>
-                <Input {...field} placeholder='Địa chỉ' />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name='representative_name'
-          render={({ field }) => (
-            <FormItem className='col-span-1'>
-              <FormLabel>Tên đại diện</FormLabel>
-              <FormControl>
-                <Input {...field} placeholder='Tên đại diện' />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name='representative_phone_number'
-          render={({ field }) => (
-            <FormItem className='col-span-1'>
-              <FormLabel>Số điện thoại</FormLabel>
-              <FormControl>
-                <Input {...field} placeholder='Số điện thoại' />
+                <Input {...field} placeholder='Tên tổ chức' />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -261,7 +217,9 @@ const OrganizationForm = () => {
           name='representative_email'
           render={({ field }) => (
             <FormItem className='col-span-1'>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>
+                Email người đại diện <span style={{ color: 'red' }}>*</span>
+              </FormLabel>
               <FormControl>
                 <Input {...field} placeholder='Email' />
               </FormControl>
@@ -270,30 +228,123 @@ const OrganizationForm = () => {
           )}
         />
 
-        <div className='col-span-2'>
+        <FormField
+          control={form.control}
+          name='address'
+          render={({ field }) => (
+            <FormItem className='col-span-1'>
+              <FormLabel>
+                Địa chỉ <span style={{ color: 'red' }}>*</span>
+              </FormLabel>
+              <FormControl>
+                <Input {...field} placeholder='Địa chỉ' />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name='representative_phone_number'
+          render={({ field }) => (
+            <FormItem className='col-span-1'>
+              <FormLabel>
+                Số điện thoại người đại diện{' '}
+                <span style={{ color: 'red' }}>*</span>
+              </FormLabel>
+              <FormControl>
+                <Input type='number' {...field} placeholder='Số điện thoại' />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='representative_name'
+          render={({ field }) => (
+            <FormItem className='col-span-1'>
+              <FormLabel>
+                Tên người đại diện <span style={{ color: 'red' }}>*</span>
+              </FormLabel>
+              <FormControl>
+                <Input {...field} placeholder='Tên người đại diện' />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name='field'
+          render={({ field }) => (
+            <FormItem className='col-span-1'>
+              <FormLabel>
+                Lĩnh vực <span style={{ color: 'red' }}>*</span>
+              </FormLabel>
+              <FormControl>
+                <Input {...field} placeholder='Lĩnh vực' />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='website'
+          render={({ field }) => (
+            <FormItem className='col-span-2'>
+              <FormLabel>
+                Link website <span style={{ color: 'red' }}>*</span>
+              </FormLabel>
+              <FormControl>
+                <Input {...field} placeholder='Website' />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <div className='col-span-1'>
           <FormField
             control={form.control}
-            name="related_images"
+            name='related_images'
             render={({ field, formState }) => (
-              <FormItem className="col-span-2">
-                <FormLabel className="">
-                  Hình ảnh
-                </FormLabel>
-                <FormControl className="">
-                  <div className="w-full">
+              <FormItem className='col-span-2'>
+                <FormLabel className=''>Hình ảnh</FormLabel>
+                <FormControl className=''>
+                  <div className='w-full'>
                     <DropzoneForm
+                      key={dropzoneKey}
                       defaultValue={field.value as TUploadImage[]}
-                      onChange={e => field.onChange(e as TUploadImage[])}
+                      onChange={(e) => field.onChange(e as TUploadImage[])}
                       isError={!!formState?.errors?.related_images?.message}
                     />
                   </div>
                 </FormControl>
-                <div className="hidden md:block col-span-1" />
-                <FormMessage className="col-span-2"></FormMessage>
+                <div className='hidden md:block col-span-1' />
+                <FormMessage className='col-span-2'></FormMessage>
               </FormItem>
             )}
           />
         </div>
+        <FormField
+          control={form.control}
+          name='information'
+          render={({ field }) => (
+            <FormItem className='col-span-1'>
+              <FormLabel>
+                Thông tin tổ chức <span style={{ color: 'red' }}>*</span>
+              </FormLabel>
+              <FormControl>
+                <Textarea {...field} placeholder='Thông tin tổ chức' />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <div className='col-span-2 flex justify-center'>
           <Button type='submit' disabled={isPending || !form.formState.isValid}>

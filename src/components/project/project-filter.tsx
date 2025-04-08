@@ -17,11 +17,12 @@ import { CAMPAIGN_STATUS, CAMPAIGN_TYPE } from '@/app/enum';
 import { useGetCategoryQuery } from '@/hooks/use-categories';
 import { Button } from '../ui/button';
 import { CloseIcon } from 'yet-another-react-lightbox';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const ProjectFilter = () => {
   const form = useFormContext<z.infer<typeof formSchema>>();
   const searchParams = useSearchParams();
+  const router = useRouter();
   const { data: categories } = useGetCategoryQuery();
 
   const defaultValues = {
@@ -43,6 +44,7 @@ const ProjectFilter = () => {
   }, [searchParams, form]);
 
   const resetForm = () => {
+    router.push('/projects');
     form.reset(defaultValues);
   };
 
@@ -58,7 +60,8 @@ const ProjectFilter = () => {
               <FormItem>
                 <Select
                   onValueChange={field.onChange}
-                  value={field.value || ''}
+                  value={field.value}
+                  defaultValue=''
                 >
                   <FormControl>
                     <SelectTrigger className='w-[180px]'>
@@ -90,7 +93,8 @@ const ProjectFilter = () => {
               <FormItem>
                 <Select
                   onValueChange={field.onChange}
-                  value={field.value || ''}
+                  value={field.value}
+                  defaultValue=''
                 >
                   <FormControl>
                     <SelectTrigger className='w-[250px]'>

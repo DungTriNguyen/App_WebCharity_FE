@@ -10,15 +10,14 @@ import { useGetProjectByID } from '@/hooks/use-project';
 
 const ProjectDetail = ({ project_id }: { project_id: number }) => {
   const { data: projectById } = useGetProjectByID({ project_id });
-  // console.log('get project by id', projectById);
-  // console.log('name content: ', projectById?.content);
+
   const project = projectById?.data?.[0];
 
   return project ? (
     <div className='flex-col 2xl:max-w-[1200px] mx-auto'>
       <div className='container 2xl:max-w-[1200px] mx-auto flex gap-8 my-8'>
         <div className='w-3/5'>
-          <h3 className='font-bold text-2xl mb-4'>{project?.name}</h3>
+          <h3 className='font-bold text-2xl mb-4'>{project.name}</h3>
           <ProjectSwiper project={project} />
           <ProjectTab project={project} />
         </div>

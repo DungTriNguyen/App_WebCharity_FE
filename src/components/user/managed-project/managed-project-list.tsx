@@ -5,7 +5,7 @@ import { useGetProjectQuery } from '@/hooks/use-project';
 import { useSession } from 'next-auth/react';
 const ManagedProjectList = () => {
   const session = useSession();
-  
+
   const { data: project } = useGetProjectQuery({ user_id: session.data?.user?.detail?.id as number });
 
   return (

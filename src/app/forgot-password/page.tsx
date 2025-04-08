@@ -1,6 +1,4 @@
 'use client';
-import FacebookIcon from '@/components/icons/facebook-icon';
-import GmailIcon from '@/components/icons/gmail-icon';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -21,34 +19,18 @@ import { Input } from '@/components/ui/input';
 import { useLoginMutation } from '@/hooks/use-login';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-const LoginPage = () => {
+const ForgotPasswordPage = () => {
   const searchParams = useSearchParams();
   const error = searchParams.get('error');
-  const socialInfo = [
-    {
-      key: 'facebook',
-      href: 'https://www.facebook.com/TruongDaihocSaiGon.SGU',
-      icon: <FacebookIcon />,
-    },
-    {
-      key: 'gmail',
-      href: 'https://www.sgu.edu.vn/',
-      icon: <GmailIcon />,
-    },
-  ];
-  const router = useRouter();
 
   const formSchema = z.object({
-    email: z.string().min(1, {
-      message: 'Email không được để trống',
-    }),
-    password: z.string().min(1, {
-      message: 'Mật khẩu không được để trống',
+    email: z.string().email({
+      message: 'Email không hợp lệ',
     }),
   });
 
@@ -59,16 +41,13 @@ const LoginPage = () => {
     mode: 'onChange',
     defaultValues: {
       email: '',
-      password: '',
     },
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    // console.log(values);
-    const { email, password } = values;
-    loginAction({ email, password });
+    const { email } = values;
+    // Add empty password to satisfy type requirements
+    loginAction({ email, password: '' });
   };
 
   useEffect(() => {
@@ -79,7 +58,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (error) {
-      form.setError('password', {
+      form.setError('email', {
         message: error,
       });
     }
@@ -90,7 +69,7 @@ const LoginPage = () => {
       <Card className='w-[480px]'>
         <CardHeader>
           <CardTitle className='text-center font-bold text-2xl'>
-            <Link href='/'>
+            <Link href='/login'>
               <svg
                 width='20'
                 height='20'
@@ -103,12 +82,15 @@ const LoginPage = () => {
                   fill='currentColor'
                   fillRule='evenodd'
                   clipRule='evenodd'
-                ></path>
+                />
               </svg>
             </Link>
-            Đăng Nhập
+            Quên mật khẩu
           </CardTitle>
-          <CardDescription></CardDescription>
+          <CardDescription>
+            Hãy nhập địa chỉ email của bạn. Chúng tôi sẽ gửi cho bạn mã xác thực
+            để truy cập lại vào tài khoản
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -129,69 +111,19 @@ const LoginPage = () => {
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name='password'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Mật khẩu</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder='Mật khẩu'
-                        type='password'
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+
               <Button
                 type='submit'
                 disabled={!form.formState.isValid || isPending}
               >
-                Đăng Nhập
+                Tiếp tục
               </Button>
             </form>
           </Form>
-          <div className='flex justify-between'>
-            <div className='flex items-center gap-1'>
-              Bạn chưa có tài khoản?{' '}
-              <Button
-                type='button'
-                variant={'link'}
-                className='p-0'
-                onClick={() => router.push('/sign-up')}
-              >
-                Đăng ký ngay
-              </Button>
-            </div>
-            <Button
-              variant={'link'}
-              className='p-0'
-              type='button'
-              onClick={() => router.push('/forgot-password')}
-            >
-              Quên mật khẩu
-            </Button>
-          </div>
-          <p className='text-center mb-2'>Hoặc</p>
-          <div className='flex gap-4 justify-center '>
-            {socialInfo.map((item) => (
-              <Link
-                href={item.href}
-                key={item.key}
-                className='flex flex-col items-center h-12 w-12 '
-                target='_blank'
-              >
-                {item.icon}
-              </Link>
-            ))}
-          </div>
         </CardContent>
       </Card>
     </div>
   );
 };
 
-export default LoginPage;
+export default ForgotPasswordPage;

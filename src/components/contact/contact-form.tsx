@@ -104,7 +104,9 @@ const ContactForm = () => {
                 name='name'
                 render={({ field }) => (
                   <FormItem className='col-span-1'>
-                    <FormLabel>Họ và tên</FormLabel>
+                    <FormLabel>
+                      Họ và tên <span style={{ color: 'red' }}>*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input
                         type='text'
@@ -122,7 +124,9 @@ const ContactForm = () => {
                 name='email'
                 render={({ field }) => (
                   <FormItem className='col-span-1'>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>
+                      Email <span style={{ color: 'red' }}>*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input type='text' placeholder='Email' {...field} />
                     </FormControl>
@@ -135,8 +139,10 @@ const ContactForm = () => {
                 name='phone_number'
                 render={({ field }) => (
                   <FormItem className='col-span-1'>
-                    <FormLabel>Điện thoại</FormLabel>
-                    <Input type='text' placeholder='Điện thoại' {...field} />
+                    <FormLabel>
+                      Điện thoại <span style={{ color: 'red' }}>*</span>
+                    </FormLabel>
+                    <Input type='number' placeholder='Điện thoại' {...field} />
                     <FormMessage />
                   </FormItem>
                 )}
@@ -146,7 +152,9 @@ const ContactForm = () => {
                 name='subject'
                 render={({ field }) => (
                   <FormItem className='col-span-1'>
-                    <FormLabel>Chủ đề</FormLabel>
+                    <FormLabel>
+                      Chủ đề <span style={{ color: 'red' }}>*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input type='text' placeholder='facebook' {...field} />
                     </FormControl>
@@ -160,7 +168,9 @@ const ContactForm = () => {
                 name='content'
                 render={({ field }) => (
                   <FormItem className='col-span-1'>
-                    <FormLabel>Nội dung</FormLabel>
+                    <FormLabel>
+                      Nội dung <span style={{ color: 'red' }}>*</span>
+                    </FormLabel>
                     <FormControl>
                       <Textarea placeholder='Nội dung' {...field} />
                     </FormControl>
@@ -174,7 +184,7 @@ const ContactForm = () => {
                   type='submit'
                   disabled={isPending || !form.formState.isValid}
                 >
-                  Cập nhật
+                  Gửi liên hệ
                 </Button>
               </div>
             </form>

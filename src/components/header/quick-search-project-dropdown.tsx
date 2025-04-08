@@ -1,7 +1,12 @@
-'use client'
+'use client';
 
-import React, { useEffect, useMemo, useState } from 'react'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
+import React, { useEffect, useMemo, useState } from 'react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '../ui/dropdown-menu';
 import { Button } from '../ui/button';
 import { SearchIcon } from 'lucide-react';
 import { Input } from '../ui/input';
@@ -10,6 +15,7 @@ import { useForm } from 'react-hook-form';
 import { useGetProjectQuery } from '@/hooks/use-project';
 import { useDebounce } from '@/hooks/use-debounce';
 import { CAMPAIGN_STATUS } from '@/app/enum';
+import Image from 'next/image';
 
 const QuickSearchProjectDropdown = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -22,12 +28,15 @@ const QuickSearchProjectDropdown = () => {
     keyword: debouncedSearch,
     front_status: CAMPAIGN_STATUS.IN_PROGRESS,
   });
-  const handleSearch = React.useCallback((keyword: string) => {
-    if (keyword) {
-      router.push(`/projects?keyword=${encodeURIComponent(keyword)}`);
-      setIsSearchOpen(false);
-    }
-  }, [router]);
+  const handleSearch = React.useCallback(
+    (keyword: string) => {
+      if (keyword) {
+        router.push(`/projects?keyword=${encodeURIComponent(keyword)}`);
+        setIsSearchOpen(false);
+      }
+    },
+    [router]
+  );
 
   useEffect(() => {
     if (isSearchOpen) {
@@ -36,14 +45,16 @@ const QuickSearchProjectDropdown = () => {
   }, [isSearchOpen, setValue]);
 
   const isDisplayResult = useMemo(() => {
-    return !!debouncedSearch
-  }, [debouncedSearch])
+    return !!debouncedSearch;
+  }, [debouncedSearch]);
 
   const renderResult = useMemo(() => {
     if (isLoading) {
-      return (<div className='mt-2 text-center py-2 text-gray-500'>
-        Đang tìm kiếm...
-      </div>)
+      return (
+        <div className='mt-2 text-center py-2 text-gray-500'>
+          Đang tìm kiếm...
+        </div>
+      );
     } else if (searchResults?.length) {
       return (
         <div className='mt-2'>
@@ -51,16 +62,29 @@ const QuickSearchProjectDropdown = () => {
             {searchResults?.slice(0, 5).map((project: TCampaign) => (
               <DropdownMenuItem
                 key={project.id}
-                className='py-2 px-3 cursor-pointer hover:bg-primary/10'
+                className='py-2 px-3 cursor-pointer hover:bg-primary/50'
                 onClick={() => {
                   router.push(`/projects/${project.id}`);
                   setIsSearchOpen(false);
                 }}
               >
-                <div className='flex flex-col'>
-                  <span className='font-medium'>{project.name}</span>
-                  <span className='text-sm text-gray-500' dangerouslySetInnerHTML={{ __html: project.content || '' }}>
-                  </span>
+                <div className='flex gap-5'>
+                  <Image
+                    src={project.background_image}
+                    alt={project.name || 'image search'}
+                    width={100}
+                    height={100}
+                    className='w-24 h-24 rounded-md'
+                  />
+                  <div className='flex flex-col  items-center justify-center'>
+                    <span className='font-bold text-lg'>{project.name}</span>
+                    <span
+                      className='text-sm text-gray-500'
+                      dangerouslySetInnerHTML={{
+                        __html: project.content || '',
+                      }}
+                    ></span>
+                  </div>
                 </div>
               </DropdownMenuItem>
             ))}
@@ -75,23 +99,20 @@ const QuickSearchProjectDropdown = () => {
             </Button>
           )}
         </div>
-      )
+      );
     } else {
-      return (<div className='mt-2 text-center py-2 text-gray-500'>
-        Không tìm thấy kết quả
-      </div>)
+      return (
+        <div className='mt-2 text-center py-2 text-gray-500'>
+          Không tìm thấy kết quả
+        </div>
+      );
     }
-
-  }, [debouncedSearch, handleSearch, isLoading, router, searchResults])
+  }, [debouncedSearch, handleSearch, isLoading, router, searchResults]);
 
   return (
     <DropdownMenu open={isSearchOpen} onOpenChange={setIsSearchOpen}>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant='ghost'
-          size='icon'
-          className='hover:bg-primary/10'
-        >
+        <Button variant='ghost' size='icon' className='hover:bg-primary/10'>
           <SearchIcon className='h-6 w-6' />
         </Button>
       </DropdownMenuTrigger>
@@ -107,14 +128,16 @@ const QuickSearchProjectDropdown = () => {
           <SearchIcon className='absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400' />
         </div>
 
-        {isDisplayResult ? renderResult :
+        {isDisplayResult ? (
+          renderResult
+        ) : (
           <div className='mt-2 text-center py-2 text-gray-500'>
             Không tìm thấy kết quả
           </div>
-        }
+        )}
       </DropdownMenuContent>
-    </DropdownMenu >
-  )
-}
+    </DropdownMenu>
+  );
+};
 
-export default QuickSearchProjectDropdown
+export default QuickSearchProjectDropdown;

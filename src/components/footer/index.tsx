@@ -1,24 +1,53 @@
 // ** import image
+import { CAMPAIGN_TYPE } from '@/app/enum';
 import Image from 'next/image';
-import logo from '../../../public/sgu-logo.png';
 import Link from 'next/link';
+import logo from '../../../public/sgu-logo.png';
+import { label } from 'yet-another-react-lightbox';
 
 const PROGRAMS_ITEMS = [
-  'Quyên góp tiền',
-  'Đăng ký tình nguyện',
-  'Quyên góp & ĐKTN',
-  'Tuyển dụng',
+  {
+    label: 'Tất cả chiến dịch',
+    href: '/projects',
+  },
+  {
+    label: 'Quyên góp tiền',
+    href: `/projects?type=${CAMPAIGN_TYPE.DONATE}`,
+  },
+  {
+    label: 'Đăng ký tình nguyện',
+    href: `/projects?type=${CAMPAIGN_TYPE.VOLUNTEER}`,
+  },
+  {
+    label: 'Quyên góp & ĐKTN',
+    href: `/projects?type=${CAMPAIGN_TYPE.MULTIPLE}`,
+  },
 ];
 
 const ABOUT_ITEMS = [
-  'Chính sách bảo mật',
-  'Hướng dẫn quyên góp',
-  'Thống kê quyên góp',
+  {
+    label: 'Chính sách bảo mật',
+    href: '/policy',
+  },
+  {
+    label: 'Điều khoản',
+    href: '/terms',
+  },
+  {
+    label: 'Thống kê quyên góp',
+    href: '/about-us',
+  },
 ];
 
 const CONTACT_ITEMS = [
-  'Gửi yêu cầu liên hệ',
-  'Gửi yêu cầu đăng ký chương trình',
+  {
+    label: 'Liên hệ',
+    href: '/contact',
+  },
+  {
+    label: 'Đăng ký chương trình',
+    href: '/create-account',
+  },
 ];
 
 const Footer = () => {
@@ -40,19 +69,19 @@ const Footer = () => {
 
           <div>
             <p className='text-sm font-semibold tracking-widest text-gray-400 uppercase'>
-              Chương trình
+              Chiến dịch
             </p>
 
             <ul className='mt-6 space-y-4'>
               {PROGRAMS_ITEMS.map((item, index) => (
                 <li key={index}>
                   <Link
-                    href='#'
+                    href={typeof item === 'string' ? item : item.href}
                     title=''
                     className='flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600'
                   >
                     {' '}
-                    {item}{' '}
+                    {typeof item === 'string' ? item : item.label}{' '}
                   </Link>
                 </li>
               ))}
@@ -68,12 +97,12 @@ const Footer = () => {
               {ABOUT_ITEMS.map((item, index) => (
                 <li key={index}>
                   <Link
-                    href='#'
+                    href={typeof item === 'string' ? item : item.href}
                     title=''
                     className='flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600'
                   >
                     {' '}
-                    {item}{' '}
+                    {typeof item === 'string' ? item : item.label}{' '}
                   </Link>
                 </li>
               ))}
@@ -93,33 +122,16 @@ const Footer = () => {
               {CONTACT_ITEMS.map((item, index) => (
                 <li key={index}>
                   <Link
-                    href='#'
+                    href={typeof item === 'string' ? item : item.href}
                     title=''
                     className='flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600'
                   >
                     {' '}
-                    {item}{' '}
+                    {typeof item === 'string' ? item : item.label}{' '}
                   </Link>
                 </li>
               ))}
-
-              {/* <li>
-                        <a href="#" title="" className="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> Terms & Conditions </a>
-                    </li>
-
-                    <li>
-                        <a href="#" title="" className="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> Privacy Policy </a>
-                    </li> */}
             </ul>
-
-            {/* <form action="#" method="POST" className="mt-6">
-                    <div>
-                        <label htmlFor="email" className="sr-only">Email</label>
-                        <input type="email" name="email" id="email" placeholder="Enter your email" className="block w-full p-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600" />
-                    </div>
-
-                    <button type="submit" className="inline-flex items-center justify-center px-6 py-4 mt-3 font-semibold text-white transition-all duration-200 bg-blue-600 rounded-md hover:bg-blue-700 focus:bg-blue-700">Subscribe</button>
-                </form> */}
           </div>
         </div>
 

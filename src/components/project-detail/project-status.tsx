@@ -77,7 +77,7 @@ const ProjectStatus = ({ project }: { project: TCampaign }) => {
               đã đạt được{' '}
               <span className='font-bold'>
                 {formatCurrencyToVND(
-                  Number(project?.donations_sum_amount || 0)
+                  Number(project?.donations_with_paid_sum_amount || 0)
                 )}
                 /{formatCurrencyToVND(Number(project?.donation_target) || 0)}
               </span>
@@ -113,7 +113,7 @@ const ProjectStatus = ({ project }: { project: TCampaign }) => {
                 đã đạt được{' '}
                 <span className='font-bold'>
                   {formatCurrencyToVND(
-                    Number(project?.donations_sum_amount || 0)
+                    Number(project?.donations_with_paid_sum_amount || 0)
                   )}
                   /{formatCurrencyToVND(Number(project?.donation_target) || 0)}
                 </span>

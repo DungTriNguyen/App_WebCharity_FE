@@ -23,7 +23,7 @@ const DonatePage = (props: { params: Promise<{ id: number }> }) => {
               alt='avartar'
               width={48}
               height={48}
-              src={project?.user?.avatar_url}
+              src={project?.user?.avatar_url || '/images/avatar.png'}
               className='rounded-full'
             />
             <div className=''>

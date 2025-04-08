@@ -1,3 +1,4 @@
+'use client';
 import { useMutation, useQuery, UseQueryResult } from '@tanstack/react-query';
 import { useAxiosAuth } from './use-axios-auth';
 import { useSession } from 'next-auth/react';
@@ -38,8 +39,8 @@ const useRegisterVolunteerMutation = () => {
       try {
         const res = await apiAuth.post('/volunteer', {
           ...payload,
-          user_id: session?.data?.user?.id,
         });
+        console.log(res.data, 'res.data');
         return res.data;
       } catch (e: any) {
         throw Error(e?.response?.data?.message);

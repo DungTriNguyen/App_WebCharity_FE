@@ -1,12 +1,8 @@
 'use client';
 
+import { CAMPAIGN_TYPE } from '@/app/enum';
 import { Avatar } from '@radix-ui/react-avatar';
-import {
-  BellIcon,
-  ChevronDownIcon,
-  LogInIcon,
-  LogOutIcon,
-} from 'lucide-react';
+import { ChevronDownIcon, LogInIcon, LogOutIcon } from 'lucide-react';
 import { signOut } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -21,16 +17,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
-import { CAMPAIGN_TYPE } from '@/app/enum';
 
 import { AvatarFallback, AvatarImage } from '../ui/avatar';
 import QuickSearchProjectDropdown from './quick-search-project-dropdown';
 import { useGetUserProfileQuery } from '@/hooks/use-profile';
-
 const Header = () => {
-  const { data: session } = useGetUserProfileQuery();
-
   const router = useRouter();
+  const { data: userProfile } = useGetUserProfileQuery();
 
   const ACTIVITIES_ITEMS = [
     {
@@ -101,6 +94,11 @@ const Header = () => {
       label: 'Chỉnh sửa thông tin cá nhân',
       href: '/user/edit-profile',
       icon: '📖',
+    },
+    {
+      label: 'Đổi mật khẩu',
+      href: '/user/change-password',
+      icon: '🔒',
     },
     {
       label: 'Lịch sử ủng hộ/ ĐK TNV',
@@ -179,16 +177,17 @@ const Header = () => {
 
           <QuickSearchProjectDropdown />
 
-          <Button variant='ghost' size='icon' className='hover:bg-primary/10'>
+          {/* <Button variant='ghost' size='icon' className='hover:bg-primary/10'>
             <BellIcon className='h-6 w-6' />
-          </Button>
+          </Button> */}
 
-          {session ? (
+          {userProfile ? (
             <div className='flex items-center gap-2'>
-              <Avatar
-                className='w-8 h-8 mx-auto rounded-full overflow-hidden'
-              >
-                <AvatarImage src={session?.data?.avatar_url} alt='@shadcn' />
+              <Avatar className='w-8 h-8 mx-auto rounded-full overflow-hidden'>
+                <AvatarImage
+                  src={userProfile?.data?.avatar_url}
+                  alt='@shadcn'
+                />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
               {renderMenu(INFORMATION_USER_ITEMS, '')}
