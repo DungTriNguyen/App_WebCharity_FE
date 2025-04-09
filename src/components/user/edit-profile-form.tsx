@@ -28,10 +28,20 @@ import {
 import { useDepartmentQuery } from '@/hooks/use-department';
 import { useEffect } from 'react';
 import { USER_GENDER } from '@/app/enum';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { cn } from '@/lib/utils';
+import { CalendarIcon } from 'lucide-react';
+import { format } from 'date-fns';
+import { Calendar } from '../ui/calendar';
 
 const formSchema = z.object({
   gender: z.string().min(1, { message: 'Thông tin không được trống' }),
-  birth_of_date: z.string().min(1, { message: 'Thông tin không được trống' }),
+  birth_of_date: z
+    .date()
+    .refine((date) => !isNaN(date.getTime()), {
+      message: 'Thông tin không được trống',
+    })
+    .nullable(),
   tiktok: z.string().optional().nullable(),
   name: z.string().min(1, { message: 'Thông tin không được trống' }),
   facebook: z.string().optional().nullable(),
@@ -46,14 +56,17 @@ const formSchema = z.object({
 const EditProfileForm = () => {
   const { data: profile, isLoading } = useGetUserProfileQuery();
   const { mutate, isPending } = useUpdateUserProfileMutation();
+
   const { data: departments } = useDepartmentQuery();
+
+  // console.log(Object.values(USER_GENDER), profile?.data);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
       gender: '',
-      birth_of_date: '',
+      birth_of_date: null,
       tiktok: '',
       name: '',
       facebook: '',
@@ -64,29 +77,33 @@ const EditProfileForm = () => {
       class: '',
       department_id: '',
     },
+    values: profile?.data,
   });
 
-  useEffect(() => {
-    if (profile?.data) {
-      form.reset({
-        gender: profile?.data.gender || '',
-        birth_of_date: profile.data.birth_of_date
-          ? new Date(profile.data.birth_of_date).toISOString().split('T')[0]
-          : '',
-        tiktok: profile.data.tiktok || '',
-        name: profile.data.name || '',
-        facebook: profile.data.facebook || '',
-        phone_number: profile.data.phone_number || '',
-        youtube: profile.data.youtube || '',
-        address: profile.data.address || '',
-        student_code: profile.data.student_code || '',
-        class: profile.data.class || '',
-        department_id: profile.data.department_id || '',
-      });
-      // console.log('gioi tinh:', profile.data.gender);
-      // console.log(form.getValues());
-    }
-  }, [profile, form]);
+  console.log(form.getValues('gender'), 'form');
+  console.log(profile?.data?.gender, 'profile?.data');
+
+  // useEffect(() => {
+  //   if (profile?.data) {
+  //     form.reset({
+  //       gender: profile?.data.gender || '',
+  //       birth_of_date: profile.data.birth_of_date
+  //         ? new Date(profile.data.birth_of_date).toISOString().split('T')[0]
+  //         : '',
+  //       tiktok: profile.data.tiktok || '',
+  //       name: profile.data.name || '',
+  //       facebook: profile.data.facebook || '',
+  //       phone_number: profile.data.phone_number || '',
+  //       youtube: profile.data.youtube || '',
+  //       address: profile.data.address || '',
+  //       student_code: profile.data.student_code || '',
+  //       class: profile.data.class || '',
+  //       department_id: profile.data.department_id || '',
+  //     });
+  //     // console.log('gioi tinh:', profile.data.gender);
+  //     // console.log(form.getValues());
+  //   }
+  // }, [profile, form]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const updateData: TUserUpdate = {
@@ -108,9 +125,10 @@ const EditProfileForm = () => {
     mutate(updateData);
   }
 
-  if (isLoading) {
-    return <div>Đang tải dữ liệu...</div>;
-  }
+  // comment this to other components
+  // if (isLoading) {
+  //   return <div>Đang tải dữ liệu...</div>;
+  // }
 
   return (
     <Form {...form}>
@@ -142,14 +160,16 @@ const EditProfileForm = () => {
                     Giới tính <span className='text-red-500'>*</span>
                   </FormLabel>
                   <Select
-                    {...field}
                     onValueChange={field.onChange}
-                    defaultValue={field.value ?? ''}
-                    value={field.value ?? undefined}
+                    // defaultValue={field.value ?? ''}
+                    value={field.value}
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder='Giới tính' />
+                        <SelectValue
+                          placeholder='Giới tính'
+                          defaultValue={field.value ?? ''}
+                        />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -167,17 +187,41 @@ const EditProfileForm = () => {
               control={form.control}
               name='birth_of_date'
               render={({ field }) => (
-                <FormItem className='w-[50%]'>
-                  <FormLabel>
-                    Ngày sinh <span className='text-red-500'>*</span>
+                <FormItem className='col-span-1 space-y-5'>
+                  <FormLabel className='block'>
+                    Ngày sinh <span style={{ color: 'red' }}>*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      type='date'
-                      placeholder='Ngày sinh'
-                      {...field}
-                      value={field.value ?? ''}
-                    />
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant={'outline'}
+                          className={cn(
+                            'w-[240px] justify-start text-left font-normal',
+                            !field.value && 'text-muted-foreground'
+                          )}
+                        >
+                          <CalendarIcon />
+                          {field.value ? (
+                            format(field.value, 'PPP')
+                          ) : (
+                            <span>Pick a date</span>
+                          )}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className='w-auto p-0' align='start'>
+                        <Calendar
+                          mode='single'
+                          selected={
+                            typeof field.value === 'string'
+                              ? new Date(field.value)
+                              : field.value || new Date()
+                          }
+                          onSelect={field.onChange}
+                          toDate={new Date('2009-04-10')}
+                        />
+                      </PopoverContent>
+                    </Popover>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
