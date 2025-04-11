@@ -10,19 +10,21 @@ const useVolunteerQuery = ({
   page,
   projectId,
   keyword,
+  user_id,
 }: {
   limit: number;
   page: number;
-  projectId: number;
+  projectId: number | null;
   keyword?: string | null;
+  user_id?: number;
 }): UseQueryResult<TApiResponse<TSVolunteer>, Error> => {
   const apiAuth = useAxiosAuth();
   return useQuery<TApiResponse<TSVolunteer>, Error>({
-    queryKey: ['get_volunteer', limit, page, projectId, keyword],
+    queryKey: ['get_volunteer', limit, page, projectId, keyword, user_id],
     queryFn: async () => {
       try {
         const res = await apiAuth.get('/volunteer', {
-          params: { limit, page, project_id: projectId, keyword },
+          params: { limit, page, project_id: projectId, keyword, user_id },
         });
         return res.data;
       } catch (e: any) {
