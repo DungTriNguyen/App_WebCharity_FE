@@ -235,7 +235,7 @@ const EditProfileForm = () => {
           </div>
         </div>
 
-        <FormField
+        {/* <FormField
           control={form.control}
           name='gender'
           render={({ field }) => (
@@ -264,7 +264,7 @@ const EditProfileForm = () => {
               </Select>
             </FormItem>
           )}
-        />
+        /> */}
         <FormItem className='col-span-1'>
           <FormLabel>
             Email <span className='text-red-500'>*</span>
@@ -278,7 +278,7 @@ const EditProfileForm = () => {
             />
           </FormControl>
         </FormItem>
-        <FormField
+        {/* <FormField
           control={form.control}
           name='birth_of_date'
           render={({ field }) => (
@@ -301,7 +301,7 @@ const EditProfileForm = () => {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
 
         <FormField
           control={form.control}
