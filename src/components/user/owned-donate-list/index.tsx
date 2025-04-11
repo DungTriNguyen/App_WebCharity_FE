@@ -15,7 +15,7 @@ const OwnedDonateList = () => {
   console.log(donations, 'donations');
   return (
     <Card className='p-4 flex flex-col gap-4'>
-      <Input placeholder='search here' type='search' />
+      <Input placeholder='Nhập thông tin tìm kiếm...' type='search' />
       <OwnedDonateTable
         columns={donatedColumn}
         data={donations?.data || []}

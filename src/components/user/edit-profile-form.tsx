@@ -28,19 +28,21 @@ import {
 import { useDepartmentQuery } from '@/hooks/use-department';
 import { useEffect } from 'react';
 import { USER_GENDER } from '@/app/enum';
+import { Textarea } from '../ui/textarea';
 
 const formSchema = z.object({
   gender: z.string().min(1, { message: 'Thông tin không được trống' }),
   birth_of_date: z.string().min(1, { message: 'Thông tin không được trống' }),
-  tiktok: z.string().optional().nullable(),
   name: z.string().min(1, { message: 'Thông tin không được trống' }),
-  facebook: z.string().optional().nullable(),
+  tiktok: z.string().optional().nullable(),
   phone_number: z.string().min(1, { message: 'Thông tin không được trống' }),
-  youtube: z.string().optional().nullable(),
+  facebook: z.string().optional().nullable(),
   address: z.string().min(1, { message: 'Thông tin không được trống' }),
+  youtube: z.string().optional().nullable(),
   student_code: z.string().optional().nullable(),
   class: z.string().optional().nullable(),
   department_id: z.string().optional().nullable(),
+  description: z.string().optional().nullable(),
 });
 
 const EditProfileForm = () => {
@@ -63,6 +65,7 @@ const EditProfileForm = () => {
       student_code: '',
       class: '',
       department_id: '',
+      description: '',
     },
   });
 
@@ -82,6 +85,7 @@ const EditProfileForm = () => {
         student_code: profile.data.student_code || '',
         class: profile.data.class || '',
         department_id: profile.data.department_id || '',
+        description: profile.data.description || '',
       });
       // console.log('gioi tinh:', profile.data.gender);
       // console.log(form.getValues());
@@ -101,6 +105,7 @@ const EditProfileForm = () => {
       student_code: values.student_code,
       class: values.class,
       department_id: values.department_id,
+      description: values.description,
     };
 
     // console.log('Submitting update data:', updateData);
@@ -131,61 +136,37 @@ const EditProfileForm = () => {
             />
           </FormControl>
         </FormItem>
-        <div className='col-span-1'>
-          <div className='flex gap-2'>
-            <FormField
-              control={form.control}
-              name='gender'
-              render={({ field }) => (
-                <FormItem className='w-[50%]'>
-                  <FormLabel>
-                    Giới tính <span className='text-red-500'>*</span>
-                  </FormLabel>
-                  <Select
-                    {...field}
-                    onValueChange={field.onChange}
-                    defaultValue={field.value ?? ''}
-                    value={field.value ?? undefined}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder='Giới tính' />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {Object.values(USER_GENDER).map((item) => (
-                        <SelectItem value={item} key={item}>
-                          {item}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='birth_of_date'
-              render={({ field }) => (
-                <FormItem className='w-[50%]'>
-                  <FormLabel>
-                    Ngày sinh <span className='text-red-500'>*</span>
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      type='date'
-                      placeholder='Ngày sinh'
-                      {...field}
-                      value={field.value ?? ''}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-        </div>
 
+        <FormField
+          control={form.control}
+          name='gender'
+          render={({ field }) => (
+            <FormItem className='col-span-1'>
+              <FormLabel>
+                Giới tính <span className='text-red-500'>*</span>
+              </FormLabel>
+              <Select
+                {...field}
+                onValueChange={field.onChange}
+                defaultValue={field.value ?? ''}
+                value={field.value ?? undefined}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder='Giới tính' />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {Object.values(USER_GENDER).map((item) => (
+                    <SelectItem value={item} key={item}>
+                      {item}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </FormItem>
+          )}
+        />
         <FormItem className='col-span-1'>
           <FormLabel>
             Email <span className='text-red-500'>*</span>
@@ -201,14 +182,16 @@ const EditProfileForm = () => {
         </FormItem>
         <FormField
           control={form.control}
-          name='tiktok'
+          name='birth_of_date'
           render={({ field }) => (
             <FormItem className='col-span-1'>
-              <FormLabel>Tiktok</FormLabel>
+              <FormLabel>
+                Ngày sinh <span className='text-red-500'>*</span>
+              </FormLabel>
               <FormControl>
                 <Input
-                  type='text'
-                  placeholder='Tiktok'
+                  type='date'
+                  placeholder='Ngày sinh'
                   {...field}
                   value={field.value ?? ''}
                 />
@@ -235,14 +218,14 @@ const EditProfileForm = () => {
         />
         <FormField
           control={form.control}
-          name='facebook'
+          name='tiktok'
           render={({ field }) => (
             <FormItem className='col-span-1'>
-              <FormLabel>Facebook</FormLabel>
+              <FormLabel>Tiktok</FormLabel>
               <FormControl>
                 <Input
                   type='text'
-                  placeholder='Facebook'
+                  placeholder='Tiktok'
                   {...field}
                   value={field.value ?? ''}
                 />
@@ -267,17 +250,16 @@ const EditProfileForm = () => {
             </FormItem>
           )}
         />
-
         <FormField
           control={form.control}
-          name='youtube'
+          name='facebook'
           render={({ field }) => (
             <FormItem className='col-span-1'>
-              <FormLabel>Youtube</FormLabel>
+              <FormLabel>Facebook</FormLabel>
               <FormControl>
                 <Input
                   type='text'
-                  placeholder='Youtube'
+                  placeholder='Facebook'
                   {...field}
                   value={field.value ?? ''}
                 />
@@ -299,6 +281,42 @@ const EditProfileForm = () => {
                 <Input
                   type='text'
                   placeholder='Địa chỉ'
+                  {...field}
+                  value={field.value ?? ''}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='youtube'
+          render={({ field }) => (
+            <FormItem className='col-span-1'>
+              <FormLabel>Youtube</FormLabel>
+              <FormControl>
+                <Input
+                  type='text'
+                  placeholder='Youtube'
+                  {...field}
+                  value={field.value ?? ''}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name='description'
+          render={({ field }) => (
+            <FormItem className='col-span-2'>
+              <FormLabel>Thông tin của bạn</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder='Nhập thông tin của bạn...'
                   {...field}
                   value={field.value ?? ''}
                 />

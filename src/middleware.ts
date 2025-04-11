@@ -8,6 +8,7 @@ export const config = {
     '/forgot-password',
     // "/reset-password",
     '/projects/:id*/register-volunteer',
+    '/user/edit-profile',
     '/user(.*)',
     '/',
   ],

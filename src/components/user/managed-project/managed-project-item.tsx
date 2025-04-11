@@ -48,7 +48,7 @@ const ManagedProjectItem = ({ project }: { project: TCampaign }) => {
           </div>
         </>
       ) : (
-        <div>Không có dự án</div>
+        <div className='text-center text-muted-foreground'>Không có dự án</div>
       )}
     </Card>
   );

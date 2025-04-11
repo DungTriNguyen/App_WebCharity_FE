@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import SummaryInfo from './summary-info';
 import OwnedDonateList from './owned-donate-list';
 import ManagedProjectList from './managed-project/managed-project-list';
+import Introduce from './Introduce';
 
 const UserTab = ({
   role = USER_ROLES.USER,
@@ -17,6 +18,11 @@ const UserTab = ({
     value: string;
     component: React.ReactNode;
   }[] = [
+    {
+      label: 'giới thiệu',
+      value: 'introduce',
+      component: <Introduce />,
+    },
     {
       label: 'Ủng hộ',
       value: 'donate',
@@ -34,6 +40,11 @@ const UserTab = ({
     value: string;
     component: React.ReactNode;
   }[] = [
+    {
+      label: 'giới thiệu',
+      value: 'introduce',
+      component: <Introduce />,
+    },
     {
       label: 'Chiến dịch',
       value: 'campaign',
@@ -65,9 +76,6 @@ const UserTab = ({
           defaultValue={
             roles === USER_ROLES.USER ? menuUser[0].value : agentUser[0].value
           }
-          // value={
-          //   roles === USER_ROLES.USER ? menuUser[0].value : agentUser[0].value
-          // }
           className='w-2/3 mt-6 '
         >
           <TabsList className='flex items-center gap-2 justify-start bg-white'>

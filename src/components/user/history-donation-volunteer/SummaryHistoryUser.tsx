@@ -1,5 +1,5 @@
-import React from 'react';
-import Image from 'next/image';
+'use client';
+import { useGetUserProfileQuery } from '@/hooks/use-profile';
 import {
   CircleDollarSignIcon,
   HandHeartIcon,
@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 
 const SummaryHistoryUser = () => {
+  const { data: userProfile } = useGetUserProfileQuery();
   return (
     <div className='w-full max-w-7xl mx-auto m-6'>
       <div className='w-full bg-[#0089dfcc] rounded-2xl backdrop-blur-[2px] backdrop-brightness-[100%] p-6'>
@@ -21,7 +22,7 @@ const SummaryHistoryUser = () => {
               </div>
               <div className='ml-4'>
                 <div className='text-[#00a7ef] text-2xl md:text-3xl font-bold'>
-                  100.000.000
+                  {userProfile?.data.donations_with_paid_sum_amount || '0 vnđ'}
                 </div>
                 <p className='text-[#8d8d8d] text-sm'>
                   Tổng số tiền đã ủng hộ thành công
@@ -40,7 +41,7 @@ const SummaryHistoryUser = () => {
               </div>
               <div className='ml-4'>
                 <div className='text-[#00a7ef] text-2xl md:text-3xl font-bold'>
-                  150
+                  {userProfile?.data.donations_with_paid_count || 0}
                 </div>
                 <p className='text-[#8d8d8d] text-sm'>
                   Tổng số lươt ủng hộ thành công
@@ -59,7 +60,7 @@ const SummaryHistoryUser = () => {
               </div>
               <div className='ml-4'>
                 <div className='text-[#00a7ef] text-2xl md:text-3xl font-bold'>
-                  100
+                  {userProfile?.data.volunteers_without_canceled_count || 0}
                 </div>
                 <p className='text-[#8d8d8d] text-sm'>
                   Tổng số lượt tham gia tình nguyện
