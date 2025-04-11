@@ -20,14 +20,29 @@ import {
 } from '@tanstack/react-table';
 import { Skeleton } from '@/components/ui/skeleton';
 import EmptyRow from '@/components/table/empty-row';
+import { DataTablePagination } from '@/components/table/data-table-pagination';
 
 interface IDonatedList {
   data: TDonatedData[];
   columns: ColumnDef<TDonatedData>[];
   loading: boolean;
+  page: number;
+  total: number;
+  totalPages: number;
+  changePage: React.Dispatch<React.SetStateAction<number>>;
+  changeItemsPerPage: React.Dispatch<React.SetStateAction<string>>;
 }
 const OwnedDonateTable = (props: IDonatedList) => {
-  const { data, columns, loading = false } = props;
+  const {
+    data,
+    columns,
+    loading = false,
+    page,
+    total,
+    totalPages,
+    changePage,
+    changeItemsPerPage,
+  } = props;
 
   const tableData = React.useMemo(
     () => (loading ? Array(5).fill({}) : data),
@@ -109,7 +124,15 @@ const OwnedDonateTable = (props: IDonatedList) => {
           </TableBody>
         </Table>
       </div>
-      {/* <DataTablePagination table={table} /> */}
+      {!loading && (
+        <DataTablePagination
+          currentPage={page}
+          totalPages={totalPages}
+          total={total}
+          changePage={changePage}
+          changeItemsPerPage={changeItemsPerPage}
+        />
+      )}
     </div>
   );
 };

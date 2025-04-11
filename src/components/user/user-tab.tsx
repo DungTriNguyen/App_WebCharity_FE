@@ -5,6 +5,7 @@ import SummaryInfo from './summary-info';
 import OwnedDonateList from './owned-donate-list';
 import ManagedProjectList from './managed-project/managed-project-list';
 import Introduce from './Introduce';
+import OwnedParticipantList from './owned-participant-list';
 
 const UserTab = ({
   role = USER_ROLES.USER,
@@ -26,12 +27,12 @@ const UserTab = ({
     {
       label: 'Ủng hộ',
       value: 'donate',
-      component: <OwnedDonateList />,
+      component: <OwnedDonateList type='donate' />,
     },
     {
       label: 'Tham gia',
       value: 'participate',
-      component: <OwnedDonateList />, // need to be separate component
+      component: <OwnedParticipantList />, // need to be separate component
     },
   ];
 
@@ -53,17 +54,17 @@ const UserTab = ({
     {
       label: 'Người tham gia',
       value: 'participate',
-      component: <OwnedDonateList />,
+      component: <OwnedParticipantList />,
     },
     {
       label: 'Người ủng hộ',
       value: 'supporter',
-      component: <OwnedDonateList />,
+      component: <OwnedDonateList type='donate' />,
     },
     {
       label: 'Sao kê',
       value: 'report',
-      component: <OwnedDonateList />,
+      component: <OwnedDonateList type='receive' />,
     },
   ];
 
