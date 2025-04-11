@@ -5,8 +5,10 @@ import Link from 'next/link';
 import { Button } from '../ui/button';
 import { Label } from '../ui/label';
 import { Progress } from '../ui/progress';
+import { useRouter } from 'next/navigation';
 
 const ProjectItem = ({ project }: { project: TCampaign }) => {
+  const router = useRouter();
   function formatCurrencyToVND(value: number): string {
     return (
       value
@@ -26,6 +28,9 @@ const ProjectItem = ({ project }: { project: TCampaign }) => {
           'rounded-xl overflow-hidden h-[300px] bg-opacity-10 bg-cover mb-2 flex flex-col p-2 relative'
         )}
         style={{ backgroundImage: `url(${project?.background_image})` }}
+        onClick={() => {
+          router.push(`/projects/${project?.id}`);
+        }}
       >
         <div className='absolute top-0 left-0 right-0 bottom-0 bg-white bg-opacity-20'></div>
         <div className='bg-black text-accent bg-opacity-50 mt-auto rounded-full py-4 px-6 flex gap-2 items-center z-10'>

@@ -5,8 +5,10 @@ import { formatCurrencyToVND } from '@/lib/utils';
 import Link from 'next/link';
 import { ChevronRightIcon } from 'lucide-react';
 import { format } from 'date-fns';
+import { useRouter } from 'next/navigation';
 
 const AccountItem = ({ data }: { data: TUser }) => {
+  const router = useRouter();
   return (
     <li className='flex flex-col gap-2 rounded-xl p-4 bg-white shadow-md'>
       <div className='flex gap-2 items-center'>
@@ -39,7 +41,7 @@ const AccountItem = ({ data }: { data: TUser }) => {
         </p>
       </div>
       <Link
-        href={'#'}
+        href={`/accounts/${data?.id}`}
         className='font-bold text-primary flex gap-1 hover:underline items-center'
       >
         Xem chi tiết <ChevronRightIcon width={16} height={16} />

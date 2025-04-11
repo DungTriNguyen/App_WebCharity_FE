@@ -88,7 +88,7 @@ const Header = () => {
     {
       label: 'Xem trang cá nhân',
       href: '/user/profile',
-      icon: 'ℹ️',
+      icon: '👤',
     },
     {
       label: 'Chỉnh sửa thông tin cá nhân',
@@ -103,7 +103,7 @@ const Header = () => {
     {
       label: 'Lịch sử ủng hộ/ ĐK TNV',
       href: '/user/donated-history',
-      icon: '🔒',
+      icon: '❤️',
     },
   ];
 

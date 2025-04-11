@@ -77,10 +77,12 @@ const OfficeInfo = () => {
         tôi, thảo luận về mối quan hệ hợp tác hoặc đơn giản là ghé thăm để nói
         lời chào.
       </p>
-      <Button variant={'link'} className='p-0'>
-        Cập nhật thông tin của bạn ở đây
-        <MoveRightIcon />
-      </Button>
+      <Link href='/user/edit-profile'>
+        <Button variant={'link'} className='p-0'>
+          Cập nhật thông tin của bạn ở đây
+          <MoveRightIcon />
+        </Button>
+      </Link>
       <Separator className='my-4' />
       <h4 className='font-bold text-xl'>Bản đồ</h4>
       <div className='rounded-xl overflow-hidden h-[300px]'>

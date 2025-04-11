@@ -38,7 +38,11 @@ const VolunteerList = ({ project }: { project: TCampaign }) => {
         <CardDescription />
       </CardHeader>
       <CardContent className='flex flex-col gap-4'>
-        <Input placeholder='Tìm' type='search' {...register('keyword')} />
+        <Input
+          placeholder='Nhập thông tin tìm kiếm...'
+          type='search'
+          {...register('keyword')}
+        />
         <VolunteerTable
           columns={volunteerColumn}
           data={volunteerData?.data || []}
