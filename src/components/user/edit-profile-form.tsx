@@ -235,36 +235,6 @@ const EditProfileForm = () => {
           </div>
         </div>
 
-        {/* <FormField
-          control={form.control}
-          name='gender'
-          render={({ field }) => (
-            <FormItem className='col-span-1'>
-              <FormLabel>
-                Giới tính <span className='text-red-500'>*</span>
-              </FormLabel>
-              <Select
-                {...field}
-                onValueChange={field.onChange}
-                defaultValue={field.value ?? ''}
-                value={field.value ?? undefined}
-              >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder='Giới tính' />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {Object.values(USER_GENDER).map((item) => (
-                    <SelectItem value={item} key={item}>
-                      {item}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </FormItem>
-          )}
-        /> */}
         <FormItem className='col-span-1'>
           <FormLabel>
             Email <span className='text-red-500'>*</span>
@@ -278,30 +248,6 @@ const EditProfileForm = () => {
             />
           </FormControl>
         </FormItem>
-        {/* <FormField
-          control={form.control}
-          name='birth_of_date'
-          render={({ field }) => (
-            <FormItem className='col-span-1'>
-              <FormLabel>
-                Ngày sinh <span className='text-red-500'>*</span>
-              </FormLabel>
-              <FormControl>
-                <Input
-                  type='date'
-                  placeholder='Ngày sinh'
-                  {...field}
-                  value={
-                    field.value
-                      ? new Date(field.value).toISOString().split('T')[0]
-                      : new Date().toISOString().split('T')[0]
-                  }
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
 
         <FormField
           control={form.control}
