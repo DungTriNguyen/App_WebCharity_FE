@@ -30,7 +30,7 @@ const ProjectContact = ({ project }: { project: TCampaign }) => {
           width={48}
           height={48}
           src={project?.user?.avatar_url}
-          className='rounded-full'
+          className='rounded-full aspect-square'
         />
         <div>
           <p>{project?.user?.name}</p>

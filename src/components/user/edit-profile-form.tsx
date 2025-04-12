@@ -26,13 +26,13 @@ import {
   useUpdateUserProfileMutation,
 } from '@/hooks/use-profile';
 import { useDepartmentQuery } from '@/hooks/use-department';
-import { useEffect } from 'react';
 import { USER_GENDER } from '@/app/enum';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { cn } from '@/lib/utils';
 import { CalendarIcon } from 'lucide-react';
 import { format } from 'date-fns';
 import { Calendar } from '../ui/calendar';
+import { Textarea } from '../ui/textarea';
 
 const formSchema = z.object({
   gender: z.string().min(1, { message: 'Thông tin không được trống' }),
@@ -44,19 +44,18 @@ const formSchema = z.object({
     .nullable(),
   tiktok: z.string().optional().nullable(),
   name: z.string().min(1, { message: 'Thông tin không được trống' }),
-  tiktok: z.string().optional().nullable(),
-  phone_number: z.string().min(1, { message: 'Thông tin không được trống' }),
   facebook: z.string().optional().nullable(),
-  address: z.string().min(1, { message: 'Thông tin không được trống' }),
+  phone_number: z.string().min(1, { message: 'Thông tin không được trống' }),
   youtube: z.string().optional().nullable(),
+  address: z.string().min(1, { message: 'Thông tin không được trống' }),
+  description: z.string().optional().nullable(),
   student_code: z.string().optional().nullable(),
   class: z.string().optional().nullable(),
   department_id: z.string().optional().nullable(),
-  description: z.string().optional().nullable(),
 });
 
 const EditProfileForm = () => {
-  const { data: profile, isLoading } = useGetUserProfileQuery();
+  const { data: profile } = useGetUserProfileQuery();
   const { mutate, isPending } = useUpdateUserProfileMutation();
 
   const { data: departments } = useDepartmentQuery();
@@ -111,7 +110,9 @@ const EditProfileForm = () => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     const updateData: TUserUpdate = {
       gender: values.gender,
-      birth_of_date: values.birth_of_date,
+      birth_of_date: values.birth_of_date
+        ? values.birth_of_date.toISOString()
+        : undefined,
       tiktok: values.tiktok,
       name: values.name,
       facebook: values.facebook,
@@ -234,36 +235,6 @@ const EditProfileForm = () => {
           </div>
         </div>
 
-        <FormField
-          control={form.control}
-          name='gender'
-          render={({ field }) => (
-            <FormItem className='col-span-1'>
-              <FormLabel>
-                Giới tính <span className='text-red-500'>*</span>
-              </FormLabel>
-              <Select
-                {...field}
-                onValueChange={field.onChange}
-                defaultValue={field.value ?? ''}
-                value={field.value ?? undefined}
-              >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder='Giới tính' />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {Object.values(USER_GENDER).map((item) => (
-                    <SelectItem value={item} key={item}>
-                      {item}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </FormItem>
-          )}
-        />
         <FormItem className='col-span-1'>
           <FormLabel>
             Email <span className='text-red-500'>*</span>
@@ -277,42 +248,7 @@ const EditProfileForm = () => {
             />
           </FormControl>
         </FormItem>
-        <FormField
-          control={form.control}
-          name='birth_of_date'
-          render={({ field }) => (
-            <FormItem className='col-span-1'>
-              <FormLabel>
-                Ngày sinh <span className='text-red-500'>*</span>
-              </FormLabel>
-              <FormControl>
-                <Input
-                  type='date'
-                  placeholder='Ngày sinh'
-                  {...field}
-                  value={field.value ?? ''}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
 
-        <FormField
-          control={form.control}
-          name='name'
-          render={({ field }) => (
-            <FormItem className='col-span-1'>
-              <FormLabel>
-                Tên người dùng <span className='text-red-500'>*</span>
-              </FormLabel>
-              <FormControl>
-                <Input type='text' placeholder='Tên người dùng' {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <FormField
           control={form.control}
           name='tiktok'
@@ -331,22 +267,22 @@ const EditProfileForm = () => {
             </FormItem>
           )}
         />
-
         <FormField
           control={form.control}
-          name='phone_number'
+          name='name'
           render={({ field }) => (
             <FormItem className='col-span-1'>
               <FormLabel>
-                Số điện thoại <span className='text-red-500'>*</span>
+                Tên người dùng <span className='text-red-500'>*</span>
               </FormLabel>
               <FormControl>
-                <Input type='number' placeholder='Số điện thoại' {...field} />
+                <Input type='text' placeholder='Tên người dùng' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name='facebook'
@@ -365,7 +301,40 @@ const EditProfileForm = () => {
             </FormItem>
           )}
         />
+        <FormField
+          control={form.control}
+          name='phone_number'
+          render={({ field }) => (
+            <FormItem className='col-span-1'>
+              <FormLabel>
+                Số điện thoại <span className='text-red-500'>*</span>
+              </FormLabel>
+              <FormControl>
+                <Input type='number' placeholder='Số điện thoại' {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
+        <FormField
+          control={form.control}
+          name='youtube'
+          render={({ field }) => (
+            <FormItem className='col-span-1'>
+              <FormLabel>Youtube</FormLabel>
+              <FormControl>
+                <Input
+                  type='text'
+                  placeholder='Youtube'
+                  {...field}
+                  value={field.value ?? ''}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name='address'
@@ -378,24 +347,6 @@ const EditProfileForm = () => {
                 <Input
                   type='text'
                   placeholder='Địa chỉ'
-                  {...field}
-                  value={field.value ?? ''}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name='youtube'
-          render={({ field }) => (
-            <FormItem className='col-span-1'>
-              <FormLabel>Youtube</FormLabel>
-              <FormControl>
-                <Input
-                  type='text'
-                  placeholder='Youtube'
                   {...field}
                   value={field.value ?? ''}
                 />

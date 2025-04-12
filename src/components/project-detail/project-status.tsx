@@ -27,7 +27,7 @@ const ProjectStatus = ({ project }: { project: TCampaign }) => {
             width={48}
             height={48}
             src={project?.user?.avatar_url}
-            className='rounded-full'
+            className='rounded-full aspect-square'
           />
           <p>{project?.user?.name}</p>
         </div>

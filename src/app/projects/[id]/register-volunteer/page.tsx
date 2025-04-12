@@ -23,7 +23,7 @@ const RegisterVolunteer = (props: { params: Promise<{ id: number }> }) => {
               width={48}
               height={48}
               src={project?.user?.avatar_url || 'avatar not found'}
-              className='rounded-full'
+              className='rounded-full aspect-square'
             />
             <div className=''>
               <p>Tình nguyện cho chiến dịch của tổ chức/ cá nhân:</p>
