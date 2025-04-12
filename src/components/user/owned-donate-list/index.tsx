@@ -30,7 +30,11 @@ const OwnedDonateList = ({
   });
   return (
     <Card className='p-4 flex flex-col gap-4'>
-      <Input placeholder='Tìm' type='search' {...register('keyword')} />
+      <Input
+        placeholder='Nhập thông tin tìm kiếm...'
+        type='search'
+        {...register('keyword')}
+      />
       <OwnedDonateTable
         columns={type === 'donate' ? donatedColumn : statisticColumn}
         data={donations?.data || []}
