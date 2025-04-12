@@ -24,7 +24,7 @@ const DonatePage = (props: { params: Promise<{ id: number }> }) => {
               width={48}
               height={48}
               src={project?.user?.avatar_url || '/images/avatar.png'}
-              className='rounded-full'
+              className='rounded-full aspect-square'
             />
             <div className=''>
               <p>Tiền ủng hộ được chuyển đến</p>
