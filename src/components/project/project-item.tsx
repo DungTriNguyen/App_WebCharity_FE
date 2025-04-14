@@ -21,6 +21,8 @@ const ProjectItem = ({ project }: { project: TCampaign }) => {
         .trim() + ' ₫'
     );
   }
+  console.log(project?.slug);
+
   return (
     <div className='min-w-[350px]'>
       <div
@@ -29,7 +31,7 @@ const ProjectItem = ({ project }: { project: TCampaign }) => {
         )}
         style={{ backgroundImage: `url(${project?.background_image})` }}
         onClick={() => {
-          router.push(`/projects/${project?.id}`);
+          router.push(`/projects/${project?.slug}`);
         }}
       >
         <div className='absolute top-0 left-0 right-0 bottom-0 bg-white bg-opacity-20'></div>
@@ -126,7 +128,7 @@ const ProjectItem = ({ project }: { project: TCampaign }) => {
         </div>
       </div>
       <Label className='font-bold text-lg mt-2'>
-        <Link href={`/projects/${project?.id}`}>{project?.name}</Link>
+        <Link href={`/projects/${project?.slug}`}>{project?.name}</Link>
       </Label>
       <div className='flex justify-between text-gray-400'>
         <span className='flex gap-1 items-center'>

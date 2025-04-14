@@ -8,8 +8,8 @@ import ProjectContact from './project-contact';
 import ProjectProcessing from './project-processing';
 import { useGetProjectByID } from '@/hooks/use-project';
 
-const ProjectDetail = ({ project_id }: { project_id: number }) => {
-  const { data: projectById } = useGetProjectByID({ project_id });
+const ProjectDetail = ({ project_id }: { project_id: string }) => {
+  const { data: projectById } = useGetProjectByID({ slug: project_id });
 
   const project = projectById?.data?.[0];
 

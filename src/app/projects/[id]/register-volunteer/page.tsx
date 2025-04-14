@@ -7,10 +7,10 @@ import { useGetProjectByID } from '@/hooks/use-project';
 import Image from 'next/image';
 import { use } from 'react';
 
-const RegisterVolunteer = (props: { params: Promise<{ id: number }> }) => {
+const RegisterVolunteer = (props: { params: Promise<{ id: string }> }) => {
   const params = use(props.params);
   const { id } = params;
-  const { data: projectById } = useGetProjectByID({ project_id: id });
+  const { data: projectById } = useGetProjectByID({ slug: id });
   const project = projectById?.data?.[0];
 
   return (
@@ -37,7 +37,7 @@ const RegisterVolunteer = (props: { params: Promise<{ id: number }> }) => {
         </Card>
       </div>
       <div className='w-3/5'>
-        <RegisterVolunteerForm />
+        {project?.id && <RegisterVolunteerForm projectId={project?.id} />}
       </div>
     </div>
   );

@@ -2,7 +2,7 @@
 import { useDepartmentQuery } from '@/hooks/use-department';
 import { useRegisterVolunteerMutation } from '@/hooks/use-volunteer';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useParams } from 'next/navigation';
+// import { useParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from '../ui/button';
@@ -32,9 +32,9 @@ import {
 import { useGetUserProfileQuery } from '@/hooks/use-profile';
 import { useSession } from 'next-auth/react';
 
-const RegisterVolunteerForm = () => {
-  const params = useParams();
-  const projectId = params?.id || 0;
+const RegisterVolunteerForm = ({ projectId }: { projectId: number }) => {
+  // const params = useParams();
+  // const projectId = params?.id || 0;
   const { mutate, isPending } = useRegisterVolunteerMutation();
   const { data: departments } = useDepartmentQuery();
   const { data: userProfile, isLoading: isLoadingProfile } =

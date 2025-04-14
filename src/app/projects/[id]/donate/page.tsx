@@ -7,10 +7,10 @@ import { Separator } from '@/components/ui/separator';
 import DonateForm from '@/components/project-detail/donate-form';
 import { useGetProjectByID } from '@/hooks/use-project';
 
-const DonatePage = (props: { params: Promise<{ id: number }> }) => {
+const DonatePage = (props: { params: Promise<{ id: string }> }) => {
   const params = use(props.params);
   const { id } = params;
-  const { data: projectById } = useGetProjectByID({ project_id: id });
+  const { data: projectById } = useGetProjectByID({ slug: id });
   const project = projectById?.data?.[0];
   console.log('donation project token', project);
 
@@ -38,7 +38,7 @@ const DonatePage = (props: { params: Promise<{ id: number }> }) => {
         </Card>
       </div>
       <div className='w-3/5'>
-        <DonateForm />
+        {project?.id && <DonateForm projectId={project?.id} />}
       </div>
     </div>
   );

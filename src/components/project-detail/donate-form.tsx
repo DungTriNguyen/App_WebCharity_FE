@@ -49,9 +49,9 @@ const paymentMethodTransfer = {
   code: '1234567890',
 };
 
-const DonateForm = () => {
-  const params = useParams();
-  const projectId = params?.id || 0;
+const DonateForm = ({ projectId }: { projectId: number }) => {
+  // const params = useParams();
+  // const projectId = params?.id || 0;
   const { data } = useDepartmentQuery();
   const { mutate: donateMutate } = useDonateMutation();
   const { mutate: createMomoPaymentMutate } = useCreateMomoPaymentMutation();

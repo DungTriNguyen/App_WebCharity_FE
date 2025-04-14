@@ -54,13 +54,13 @@ const useGetProjectQuery = ({
   });
 };
 
-const useGetProjectByID = ({ project_id }: { project_id: number }) => {
+const useGetProjectByID = ({ slug }: { slug: string }) => {
   const apiAuth = useAxiosAuth();
   return useQuery<TApiResponse<TCampaign>, Error>({
-    queryKey: ['get-detail-project', project_id],
+    queryKey: ['get-detail-project', slug],
     queryFn: async () => {
       try {
-        const res = await apiAuth.get(`/project?project_id=${project_id}`);
+        const res = await apiAuth.get(`/project?project_slug=${slug}`);
         return res.data;
       } catch (e: any) {
         throw Error(e?.response?.data?.message);
