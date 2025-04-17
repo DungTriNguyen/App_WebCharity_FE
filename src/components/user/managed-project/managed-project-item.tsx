@@ -5,7 +5,6 @@ import { formatCurrencyToVND } from '@/lib/utils';
 import React from 'react';
 
 const ManagedProjectItem = ({ project }: { project: TCampaign }) => {
-  console.log('project:', project);
   return (
     <Card className='p-4 flex gap-6 items-center'>
       {project !== null ? (
