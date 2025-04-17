@@ -4,7 +4,7 @@ import { Progress } from '@/components/ui/progress';
 import { formatCurrencyToVND } from '@/lib/utils';
 import React from 'react';
 
-const Test = ({ project }: { project: TCampaign }) => {
+const ManagedProjectItem = ({ project }: { project: TCampaign }) => {
   console.log('project:', project);
   return (
     <Card className='p-4 flex gap-6 items-center'>
@@ -45,7 +45,14 @@ const Test = ({ project }: { project: TCampaign }) => {
                     </span>
                   </span>
                 </p>
-                <Progress value={60} className='mt-0' />
+                <Progress
+                  value={
+                    (Number(project?.donations_with_paid_sum_amount || 0) /
+                      Number(project?.donation_target || 1)) *
+                    100
+                  }
+                  className='mt-0'
+                />
               </>
             )}
             {CAMPAIGN_TYPE.VOLUNTEER === project.type && (
@@ -59,7 +66,14 @@ const Test = ({ project }: { project: TCampaign }) => {
                     </span>
                   </span>
                 </p>
-                <Progress value={60} className='mt-0' />
+                <Progress
+                  value={
+                    (Number(project?.volunteers_without_canceled_count || 0) /
+                      Number(project?.volunteer_quantity || 1)) *
+                    100
+                  }
+                  className='mt-0'
+                />
               </>
             )}
             {CAMPAIGN_TYPE.MULTIPLE === project.type && (
@@ -78,7 +92,14 @@ const Test = ({ project }: { project: TCampaign }) => {
                     </span>
                   </span>
                 </p>
-                <Progress value={60} className='mt-0' />
+                <Progress
+                  value={
+                    (Number(project?.donations_with_paid_sum_amount || 0) /
+                      Number(project?.donation_target || 1)) *
+                    100
+                  }
+                  className='mt-0'
+                />
                 <p className='flex justify-between mt-4'>
                   <span>
                     Số TNV đã đăng ký{' '}
@@ -88,7 +109,14 @@ const Test = ({ project }: { project: TCampaign }) => {
                     </span>
                   </span>
                 </p>
-                <Progress value={60} className='mt-0' />
+                <Progress
+                  value={
+                    (Number(project?.volunteers_without_canceled_count || 0) /
+                      Number(project?.volunteer_quantity || 1)) *
+                    100
+                  }
+                  className='mt-0'
+                />
               </>
             )}
 
@@ -119,4 +147,4 @@ const Test = ({ project }: { project: TCampaign }) => {
   );
 };
 
-export default Test;
+export default ManagedProjectItem;
