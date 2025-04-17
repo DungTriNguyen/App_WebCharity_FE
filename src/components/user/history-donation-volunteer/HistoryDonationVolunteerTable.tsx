@@ -7,19 +7,19 @@ const tabList = [
   {
     label: 'Ủng hộ',
     value: 'donate',
-    component: <OwnedDonateList />,
+    component: <OwnedDonateList type='donate' />,
   },
   {
     label: 'Tham gia',
     value: 'participate',
-    component: <OwnedDonateList />,
+    component: <OwnedDonateList type='receive' />,
   },
 ];
 const HistoryDonationVolunteerTable = () => {
   return (
-    <div className='flex gap-8 w-full'>
-      <Tabs className='w-full mt-2 ' defaultValue={tabList[0].value}>
-        <TabsList className='flex items-center gap-2 justify-start bg-white'>
+    <div className='flex flex-col gap-4 w-full'>
+      <Tabs className='w-full mt-2' defaultValue={tabList[0].value}>
+        <TabsList className='flex items-center gap-2 justify-start bg-white flex-wrap'>
           {tabList.map((tab) => (
             <TabsTrigger
               key={tab.value}

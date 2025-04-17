@@ -139,10 +139,10 @@ const EditProfileForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className='grid grid-cols-2 gap-6'
+        className='grid grid-cols-1 md:grid-cols-2 gap-6 p-2 md:p-4'
       >
         <FormItem className='col-span-1'>
-          <FormLabel>
+          <FormLabel className='text-sm md:text-base font-medium text-gray-700'>
             Tên đăng nhập <span className='text-red-500'>*</span>
           </FormLabel>
           <FormControl>
@@ -161,14 +161,10 @@ const EditProfileForm = () => {
               name='gender'
               render={({ field }) => (
                 <FormItem className='w-[50%]'>
-                  <FormLabel>
+                  <FormLabel className='text-sm md:text-base font-medium text-gray-700'>
                     Giới tính <span className='text-red-500'>*</span>
                   </FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    // defaultValue={field.value ?? ''}
-                    value={field.value}
-                  >
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue
@@ -193,8 +189,8 @@ const EditProfileForm = () => {
               name='birth_of_date'
               render={({ field }) => (
                 <FormItem className='col-span-1 space-y-5'>
-                  <FormLabel className='block'>
-                    Ngày sinh <span style={{ color: 'red' }}>*</span>
+                  <FormLabel className='block text-sm md:text-base font-medium text-gray-700'>
+                    Ngày sinh <span className='text-red-500'>*</span>
                   </FormLabel>
                   <FormControl>
                     <Popover>
@@ -202,11 +198,11 @@ const EditProfileForm = () => {
                         <Button
                           variant={'outline'}
                           className={cn(
-                            'w-[240px] justify-start text-left font-normal',
+                            'w-full md:w-[240px] justify-start text-left font-normal transition-colors duration-300 hover:bg-primary/5',
                             !field.value && 'text-muted-foreground'
                           )}
                         >
-                          <CalendarIcon />
+                          <CalendarIcon className='mr-2 h-4 w-4 text-primary' />
                           {field.value ? (
                             format(field.value, 'PPP')
                           ) : (
@@ -224,6 +220,7 @@ const EditProfileForm = () => {
                           }
                           onSelect={field.onChange}
                           toDate={new Date('2009-04-10')}
+                          className='rounded-md border shadow-md'
                         />
                       </PopoverContent>
                     </Popover>
@@ -427,8 +424,8 @@ const EditProfileForm = () => {
               <FormLabel>Khoa</FormLabel>
               <Select
                 onValueChange={field.onChange}
-                value={field.value ?? undefined}
-                defaultValue={field.value ?? ''}
+                value={field.value ?? ''}
+                // defaultValue={field.value ?? ''}
               >
                 <FormControl>
                   <SelectTrigger>
@@ -449,7 +446,11 @@ const EditProfileForm = () => {
         />
 
         <div className='col-span-2 flex justify-center'>
-          <Button type='submit' disabled={isPending || !form.formState.isValid}>
+          <Button
+            type='submit'
+            disabled={isPending || !form.formState.isValid}
+            className='bg-primary hover:bg-primary/90 text-white px-8 py-2 rounded-md transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed'
+          >
             Cập nhật
           </Button>
         </div>

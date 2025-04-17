@@ -33,7 +33,7 @@ const OfficeInfo = () => {
     },
   ];
   return (
-    <div>
+    <div className='max-md:ml-4 max-md:mr-4'>
       <div className='flex flex-col gap-4'>
         <h3 className='text-3xl font-bold'>Văn phòng của chúng tôi</h3>
         <p>

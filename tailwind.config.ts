@@ -13,6 +13,7 @@ export default {
         'main-banner': "url('/main-banner.png')",
         'about-us-banner': "url('/about-us-banner.png')",
         'policy-banner': "url('/policy-banner.png')",
+        'terms-banner': "url('/banner-1-BP-scaled.jpg')",
         'nature-banner': "url('/nature-img.png')",
         'contact-banner': "url('/contact-banner.png')",
         'login-background': "url('/login-background.jpg')",

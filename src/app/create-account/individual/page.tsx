@@ -5,10 +5,12 @@ const CreateIndividualAccount = () => {
   return (
     <div className='container mx-auto my-8'>
       <div className='flex flex-col gap-8'>
-        <h1 className='text-2xl font-bold'>
+        <h1 className='text-2xl font-bold text-primary max-md:text-center transition-colors duration-300'>
           Thông tin yêu cầu để mở tài khoản cá nhân
         </h1>
-        <IndividualForm />
+        <div className='bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300'>
+          <IndividualForm />
+        </div>
       </div>
     </div>
   );

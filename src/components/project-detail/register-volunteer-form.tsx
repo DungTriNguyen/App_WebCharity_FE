@@ -98,28 +98,35 @@ const RegisterVolunteerForm = ({ projectId }: { projectId: number }) => {
 
   return (
     <Card className=''>
-      <CardHeader>
-        <CardTitle>Thông tin tham gia tình nguyện</CardTitle>
+      <CardHeader className='p-4 md:p-6'>
+        <CardTitle className='text-lg md:text-xl lg:text-2xl'>
+          Thông tin tham gia tình nguyện
+        </CardTitle>
         <CardDescription></CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className='p-4 md:p-6'>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className='grid grid-cols-2 gap-4'
+            className='grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4'
           >
             <FormField
               control={form.control}
               name='name'
               render={({ field }) => (
-                <FormItem className='col-span-2'>
-                  <FormLabel>
+                <FormItem className='col-span-1 md:col-span-2'>
+                  <FormLabel className='text-sm md:text-base'>
                     Họ và tên <span className='text-red-500'>*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input type='text' placeholder='Họ và tên' {...field} />
+                    <Input
+                      type='text'
+                      placeholder='Họ và tên'
+                      className='text-sm md:text-base'
+                      {...field}
+                    />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className='text-xs md:text-sm' />
                 </FormItem>
               )}
             />
@@ -128,13 +135,18 @@ const RegisterVolunteerForm = ({ projectId }: { projectId: number }) => {
               name='email'
               render={({ field }) => (
                 <FormItem className='col-span-1'>
-                  <FormLabel>
+                  <FormLabel className='text-sm md:text-base'>
                     Email <span className='text-red-500'>*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input type='text' placeholder='Email' {...field} />
+                    <Input
+                      type='text'
+                      placeholder='Email'
+                      className='text-sm md:text-base'
+                      {...field}
+                    />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className='text-xs md:text-sm' />
                 </FormItem>
               )}
             />
@@ -143,19 +155,26 @@ const RegisterVolunteerForm = ({ projectId }: { projectId: number }) => {
               name='phone_number'
               render={({ field }) => (
                 <FormItem className='col-span-1'>
-                  <FormLabel>
+                  <FormLabel className='text-sm md:text-base'>
                     Số điện thoại <span className='text-red-500'>*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input type='number' placeholder='Điện thoại' {...field} />
+                    <Input
+                      type='number'
+                      placeholder='Điện thoại'
+                      className='text-sm md:text-base'
+                      {...field}
+                    />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className='text-xs md:text-sm' />
                 </FormItem>
               )}
             />
-            <div className='col-span-2'>
-              <p className='font-bold'>Thông tin của bạn</p>
-              <p className='italic'>
+            <div className='col-span-1 md:col-span-2'>
+              <p className='font-bold text-sm md:text-base'>
+                Thông tin của bạn
+              </p>
+              <p className='italic text-xs md:text-sm'>
                 Vui lòng điền thông tin sinh viên để được tham gia vào dự án
               </p>
             </div>
@@ -163,14 +182,19 @@ const RegisterVolunteerForm = ({ projectId }: { projectId: number }) => {
               control={form.control}
               name='student_code'
               render={({ field }) => (
-                <FormItem className='col-span-2'>
-                  <FormLabel>
+                <FormItem className='col-span-1 md:col-span-2'>
+                  <FormLabel className='text-sm md:text-base'>
                     MSSV <span className='text-red-500'>*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input type='text' placeholder='MSSV' {...field} />
+                    <Input
+                      type='text'
+                      placeholder='MSSV'
+                      className='text-sm md:text-base'
+                      {...field}
+                    />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className='text-xs md:text-sm' />
                 </FormItem>
               )}
             />
@@ -179,13 +203,18 @@ const RegisterVolunteerForm = ({ projectId }: { projectId: number }) => {
               name='class'
               render={({ field }) => (
                 <FormItem className='col-span-1'>
-                  <FormLabel>
+                  <FormLabel className='text-sm md:text-base'>
                     Lớp <span className='text-red-500'>*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input type='text' placeholder='Lớp' {...field} />
+                    <Input
+                      type='text'
+                      placeholder='Lớp'
+                      className='text-sm md:text-base'
+                      {...field}
+                    />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className='text-xs md:text-sm' />
                 </FormItem>
               )}
             />
@@ -195,7 +224,7 @@ const RegisterVolunteerForm = ({ projectId }: { projectId: number }) => {
               name='department_id'
               render={({ field }) => (
                 <FormItem className='col-span-1'>
-                  <FormLabel>
+                  <FormLabel className='text-sm md:text-base'>
                     Khoa <span className='text-red-500'>*</span>
                   </FormLabel>
                   <Select
@@ -204,13 +233,17 @@ const RegisterVolunteerForm = ({ projectId }: { projectId: number }) => {
                     value={field.value ?? ''}
                   >
                     <FormControl>
-                      <SelectTrigger>
+                      <SelectTrigger className='text-sm md:text-base'>
                         <SelectValue placeholder='Khoa' />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
                       {departments?.data.map((item: TDepartment) => (
-                        <SelectItem value={`${item.id}`} key={`${item.id}`}>
+                        <SelectItem
+                          value={`${item.id}`}
+                          key={`${item.id}`}
+                          className='text-sm md:text-base'
+                        >
                           {item.name}
                         </SelectItem>
                       ))}
@@ -222,7 +255,7 @@ const RegisterVolunteerForm = ({ projectId }: { projectId: number }) => {
 
             <Button
               type='submit'
-              className='col-span-2'
+              className='col-span-1 md:col-span-2 mt-2 md:mt-4 text-sm md:text-base'
               disabled={!form.formState.isValid || isPending}
             >
               {isPending ? 'Đang xử lý...' : 'Tham gia'}

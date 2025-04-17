@@ -39,14 +39,14 @@ const SummaryInfo = ({ summaryInfo }: { summaryInfo: TUser }) => {
             <p className='text-center text-2xl font-bold'>
               {projects_donations_count || 0}
             </p>
-            <div className='text-lg'>Số lượt ủng hộ</div>
+            <div className='text-base'>Số lượt ủng hộ</div>
           </div>
           <div className='col-span-1 min-h-[160px] bg-white shadow rounded-lg p-4 flex flex-col justify-between'>
             <div className='opacity-0'> a</div>
             <p className='text-center text-2xl font-bold'>
               {projects_volunteers_count || 0}
             </p>
-            <div className='text-lg'>Số lượt tham gia</div>
+            <div className='text-base'>Số lượt tham gia</div>
           </div>
         </Card>
       )}
@@ -63,16 +63,16 @@ const SummaryInfo = ({ summaryInfo }: { summaryInfo: TUser }) => {
           <div className='col-span-1 min-h-[160px] bg-white shadow rounded-lg p-4 flex flex-col justify-between '>
             <div className='opacity-0'> a</div>
             <p className='text-center text-2xl font-bold'>
-              {donations_with_paid_count}
+              {donations_with_paid_count || 0}
             </p>
-            <div className='text-lg'>Số lượt ủng hộ</div>
+            <div className='text-base'>Số lượt ủng hộ</div>
           </div>
           <div className='col-span-1 min-h-[160px] bg-white shadow rounded-lg p-4 flex flex-col justify-between'>
             <div className='opacity-0'> a</div>
             <p className='text-center text-2xl font-bold'>
               {volunteers_without_canceled_count || 0}
             </p>
-            <div className='text-lg'>Số lượt tham gia</div>
+            <div className='text-base'>Số lượt tham gia</div>
           </div>
         </Card>
       )}

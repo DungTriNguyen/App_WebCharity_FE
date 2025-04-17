@@ -63,6 +63,15 @@ type TDonatedData = {
   supporter: string;
   amount: string;
   updatedAt: string;
+  project_id: string;
+  project_name: string;
+  created_at: string;
+  status: number;
+  status_label: string;
+  payment_method_code: string;
+  project?: {
+    name: string;
+  };
 };
 
 type TContactFormData = {

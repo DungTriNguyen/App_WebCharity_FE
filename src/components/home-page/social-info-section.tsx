@@ -44,7 +44,7 @@ const SocialInfoSection = () => {
           <Link
             href={item.href}
             key={item.key}
-            className='flex flex-col items-center'
+            className='flex flex-col items-center max-md:w-1/2'
             target='_blank'
           >
             {item.icon}
