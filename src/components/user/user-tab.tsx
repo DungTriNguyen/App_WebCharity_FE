@@ -69,8 +69,6 @@ const UserTab = ({
   ];
 
   const renderUserRoleMenu = (roles: USER_ROLES) => {
-    console.log(agentUser[0].value);
-
     return (
       <div className='flex flex-col lg:flex-row gap-4 lg:gap-8 w-full'>
         <Tabs

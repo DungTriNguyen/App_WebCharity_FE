@@ -108,8 +108,6 @@ const DonateForm = ({ projectId }: { projectId: number }) => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-
     // Gọi API tạo donation
     donateMutate(
       {

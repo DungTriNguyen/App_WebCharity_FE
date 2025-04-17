@@ -15,7 +15,6 @@ import { formatCurrencyToVND } from '@/lib/utils';
 const ProjectStatus = ({ project }: { project: TCampaign }) => {
   const params = useParams();
   const router = useRouter();
-  console.log(params);
 
   return (
     <Card className='p-6 flex flex-col gap-4'>

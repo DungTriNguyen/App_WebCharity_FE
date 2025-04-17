@@ -23,7 +23,6 @@ const ProjectSwiper = ({ project }: { project: TCampaign }) => {
   const [photoIndex, setPhotoIndex] = useState(0);
 
   const onLoadSwiper = (swiper: SwiperType) => {
-    console.log(typeof swiper);
     setThumbsSwiper(swiper);
   };
   return (

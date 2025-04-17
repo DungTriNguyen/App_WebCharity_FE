@@ -136,8 +136,6 @@ const IndividualForm = () => {
     });
   };
 
-  console.log(form.formState.errors);
-
   return (
     <Form {...form}>
       <form

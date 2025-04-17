@@ -35,7 +35,6 @@ const useVolunteerQuery = ({
 };
 
 const useRegisterVolunteerMutation = () => {
-  const session = useSession();
   const apiAuth = useAxiosAuth();
   return useMutation({
     mutationKey: ['project_id'],
@@ -44,7 +43,6 @@ const useRegisterVolunteerMutation = () => {
         const res = await apiAuth.post('/volunteer', {
           ...payload,
         });
-        console.log(res.data, 'res.data');
         return res.data;
       } catch (e: any) {
         throw Error(e?.response?.data?.message);

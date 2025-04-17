@@ -21,7 +21,6 @@ const ProjectItem = ({ project }: { project: TCampaign }) => {
         .trim() + ' ₫'
     );
   }
-  console.log(project?.slug);
 
   return (
     <div className='w-full rounded-xl p-1 max-md:ml-2 max-md:mr-2 hover:cursor-pointer max-md:p-4 bg-white max-md:shadow-md hover:shadow-lg transition-shadow'>
