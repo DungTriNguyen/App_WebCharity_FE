@@ -5,14 +5,8 @@ import { formatCurrencyToVND } from '@/lib/utils';
 import Link from 'next/link';
 import { ChevronRightIcon } from 'lucide-react';
 import { format } from 'date-fns';
-// import { useRouter } from 'next/navigation';
-import { useGetListUserProfileQuery } from '@/hooks/use-profile';
 
 const AccountItem = ({ data }: { data: TUser }) => {
-  // const router = useRouter();
-  const { data: userData } = useGetListUserProfileQuery({
-    username: data?.username,
-  });
   return (
     <li className='flex flex-col gap-2 rounded-xl p-3 md:p-4 bg-white shadow-md hover:shadow-lg transition-shadow'>
       <div className='flex gap-2 items-center'>
@@ -45,7 +39,7 @@ const AccountItem = ({ data }: { data: TUser }) => {
         </p>
       </div>
       <Link
-        href={`/user/${userData?.data?.username}`}
+        href={`/accounts/${data?.username}`}
         className='font-bold text-primary flex gap-1 hover:underline items-center text-sm md:text-base mt-1'
       >
         Xem chi tiết{' '}

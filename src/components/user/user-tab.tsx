@@ -1,5 +1,5 @@
 import { USER_ROLES } from '@/app/enum';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import SummaryInfo from './summary-info';
 import OwnedDonateList from './owned-donate-list';
@@ -22,17 +22,17 @@ const UserTab = ({
     {
       label: 'giới thiệu',
       value: 'introduce',
-      component: <Introduce />,
+      component: <Introduce data={detail as TUser} />,
     },
     {
       label: 'Ủng hộ',
       value: 'donate',
-      component: <OwnedDonateList type='donate' />,
+      component: <OwnedDonateList type='donate' userId={detail.id} />,
     },
     {
       label: 'Tham gia',
       value: 'participate',
-      component: <OwnedParticipantList />, // need to be separate component
+      component: <OwnedParticipantList userId={detail.id} />, // need to be separate component
     },
   ];
 
@@ -44,27 +44,27 @@ const UserTab = ({
     {
       label: 'giới thiệu',
       value: 'introduce',
-      component: <Introduce />,
+      component: <Introduce data={detail as TUser} />,
     },
     {
       label: 'Chiến dịch',
       value: 'campaign',
-      component: <ManagedProjectList />,
+      component: <ManagedProjectList userId={detail.id} />,
     },
     {
       label: 'Người tham gia',
       value: 'participate',
-      component: <OwnedParticipantList />,
+      component: <OwnedParticipantList userId={detail.id} />,
     },
     {
       label: 'Người ủng hộ',
       value: 'supporter',
-      component: <OwnedDonateList type='donate' />,
+      component: <OwnedDonateList type='donate' userId={detail.id} />,
     },
     {
       label: 'Sao kê',
       value: 'report',
-      component: <OwnedDonateList type='receive' />,
+      component: <OwnedDonateList type='receive' userId={detail.id} />,
     },
   ];
 

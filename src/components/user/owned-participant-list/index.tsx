@@ -14,24 +14,27 @@ import {
 import { Input } from '@/components/ui/input';
 import VolunteerTable from '@/components/project-detail/volunteer-table';
 import { volunteerColumn } from '@/components/project-detail/volunteer-column';
-import { useSession } from 'next-auth/react';
 
-const OwndedParticipantList = ({ project }: { project?: TCampaign }) => {
+const OwndedParticipantList = ({
+  project,
+  userId,
+}: {
+  project?: TCampaign;
+  userId: number;
+}) => {
   const { register, watch } = useForm();
   const searchKeyword = watch('keyword');
   const debouncedSearch = useDebounce(searchKeyword, 300);
   const projectId = project?.id;
 
   const { currentPage, setCurrentPage, setItemsPerPage } = usePagination({});
-  const session = useSession();
-  console.log(session, 'session');
 
   const { data: volunteerData, isLoading } = useVolunteerQuery({
     limit: 10,
     page: 1,
     projectId: projectId || null,
     keyword: debouncedSearch ? debouncedSearch : null,
-    user_id: session.data?.user?.detail?.id as number,
+    user_id: userId as number,
   });
 
   return (

@@ -8,21 +8,21 @@ import { useDonationQuery } from '@/hooks/use-donation';
 import { useForm } from 'react-hook-form';
 import { useDebounce } from '@/hooks/use-debounce';
 import { usePagination } from '@/hooks/use-pagination';
-import { useSession } from 'next-auth/react';
 // const userId = 7;
 const OwnedDonateList = ({
   type = 'donate',
+  userId,
 }: {
   type: 'donate' | 'receive';
+  userId: number;
 }) => {
   const { register, watch } = useForm();
   const searchKeyword = watch('keyword');
   const debouncedSearch = useDebounce(searchKeyword, 300);
   const { currentPage, setCurrentPage, setItemsPerPage } = usePagination({});
-  const session = useSession();
 
   const { data: donations } = useDonationQuery({
-    user_id: session.data?.user?.detail?.id as number,
+    user_id: userId as number,
     limit: 10,
     page: currentPage || 1,
     keyword: debouncedSearch ? debouncedSearch : null,

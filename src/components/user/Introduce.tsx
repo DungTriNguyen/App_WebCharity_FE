@@ -1,10 +1,9 @@
-import { useGetUserProfileQuery } from '@/hooks/use-profile';
 import { Card } from '../ui/card';
 import { Description } from '@radix-ui/react-toast';
 
-const Introduce = () => {
-  const { data: userProfile } = useGetUserProfileQuery();
-  console.log(userProfile, 'userProfile');
+const Introduce = ({ data }: { data: TUser }) => {
+  // const { data: userProfile } = useGetUserProfileQuery();
+  // console.log(userProfile, 'userProfile');
   return (
     <div className='w-full'>
       <Card className='shadow-md hover:shadow-lg transition-shadow duration-300'>
@@ -15,7 +14,7 @@ const Introduce = () => {
           <div className='w-full max-w-2xl'>
             <Description className='text-gray-700 italic text-center leading-relaxed'>
               &ldquo;
-              {userProfile?.data?.description || 'Chưa có thông tin giới thiệu'}
+              {data?.description || 'Chưa có thông tin giới thiệu'}
               &rdquo;
             </Description>
           </div>
