@@ -9,7 +9,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 const CampaignSlider = () => {
   const { data: category } = useGetCategoryQuery();
-  // console.log('day la categories:', category);
 
   return (
     <div className='relative [&_.swiper-button-prev]:top-[35%] [&_.swiper-button-next]:top-[35%] [&_.swiper-button-prev]:text-[#0BAEFF] [&_.swiper-button-next]:text-[#0BAEFF] py-12 [&_.swiper-button-prev]:scale-50 [&_.swiper-button-next]:scale-50 [&_.swiper-button-prev]::after:text-sm [&_.swiper-button-next]::after:text-sm'>

@@ -64,9 +64,6 @@ const LoginPage = () => {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    // console.log(values);
     const { email, password } = values;
     loginAction({ email, password });
   };
@@ -86,11 +83,11 @@ const LoginPage = () => {
   }, [error, form]);
 
   return (
-    <div className='bg-login-background min-h-screen w-full bg-cover object-contain bg-no-repeat flex justify-center items-center'>
-      <Card className='w-[480px]'>
-        <CardHeader>
-          <CardTitle className='text-center font-bold text-2xl'>
-            <Link href='/'>
+    <div className='bg-login-background min-h-screen w-full bg-cover object-contain bg-no-repeat flex justify-center items-center p-4 sm:p-6'>
+      <Card className='w-full max-w-[480px]'>
+        <CardHeader className='space-y-4'>
+          <div className='flex items-center'>
+            <Link href='/' className='inline-block'>
               <svg
                 width='20'
                 height='20'
@@ -106,11 +103,13 @@ const LoginPage = () => {
                 ></path>
               </svg>
             </Link>
-            Đăng Nhập
-          </CardTitle>
+            <CardTitle className='text-center font-bold text-xl sm:text-2xl flex-1'>
+              Đăng Nhập
+            </CardTitle>
+          </div>
           <CardDescription></CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className='space-y-6'>
           <Form {...form}>
             <form
               className='flex flex-col gap-4'
@@ -149,13 +148,14 @@ const LoginPage = () => {
               <Button
                 type='submit'
                 disabled={!form.formState.isValid || isPending}
+                className='w-full'
               >
                 Đăng Nhập
               </Button>
             </form>
           </Form>
-          <div className='flex justify-between'>
-            <div className='flex items-center gap-1'>
+          <div className='flex flex-col sm:flex-row justify-between gap-4 sm:gap-0'>
+            <div className='flex items-center gap-1 text-sm sm:text-base'>
               Bạn chưa có tài khoản?{' '}
               <Button
                 type='button'
@@ -168,25 +168,27 @@ const LoginPage = () => {
             </div>
             <Button
               variant={'link'}
-              className='p-0'
+              className='p-0 text-sm sm:text-base'
               type='button'
               onClick={() => router.push('/forgot-password')}
             >
               Quên mật khẩu
             </Button>
           </div>
-          <p className='text-center mb-2'>Hoặc</p>
-          <div className='flex gap-4 justify-center '>
-            {socialInfo.map((item) => (
-              <Link
-                href={item.href}
-                key={item.key}
-                className='flex flex-col items-center h-12 w-12 '
-                target='_blank'
-              >
-                {item.icon}
-              </Link>
-            ))}
+          <div className='space-y-4'>
+            <p className='text-center text-sm sm:text-base'>Hoặc</p>
+            <div className='flex gap-4 justify-center'>
+              {socialInfo.map((item) => (
+                <Link
+                  href={item.href}
+                  key={item.key}
+                  className='flex flex-col items-center h-10 w-10 sm:h-12 sm:w-12'
+                  target='_blank'
+                >
+                  {item.icon}
+                </Link>
+              ))}
+            </div>
           </div>
         </CardContent>
       </Card>

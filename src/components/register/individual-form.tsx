@@ -141,7 +141,7 @@ const IndividualForm = () => {
   return (
     <Form {...form}>
       <form
-        className='grid grid-cols-2 gap-4'
+        className='grid grid-cols-1 md:grid-cols-2 gap-4 p-4 md:p-6'
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
@@ -149,13 +149,17 @@ const IndividualForm = () => {
           name='username'
           render={({ field }) => (
             <FormItem className='col-span-1'>
-              <FormLabel>
-                Tên đăng nhập <span style={{ color: 'red' }}>*</span>
+              <FormLabel className='text-sm md:text-base font-medium text-gray-700'>
+                Tên đăng nhập <span className='text-red-500'>*</span>
               </FormLabel>
               <FormControl>
-                <Input {...field} placeholder='Tên đăng nhập' />
+                <Input
+                  {...field}
+                  placeholder='Tên đăng nhập'
+                  className='transition-colors duration-300 focus:border-primary focus:ring-primary'
+                />
               </FormControl>
-              <FormMessage />
+              <FormMessage className='text-red-500 text-sm' />
             </FormItem>
           )}
         />
@@ -164,9 +168,9 @@ const IndividualForm = () => {
           control={form.control}
           name='birth'
           render={({ field }) => (
-            <FormItem className='col-span-1 space-y-5'>
-              <FormLabel className='block'>
-                Ngày sinh <span style={{ color: 'red' }}>*</span>
+            <FormItem className='col-span-1'>
+              <FormLabel className='block text-sm md:text-base font-medium text-gray-700'>
+                Ngày sinh <span className='text-red-500'>*</span>
               </FormLabel>
               <FormControl>
                 <Popover>
@@ -174,11 +178,11 @@ const IndividualForm = () => {
                     <Button
                       variant={'outline'}
                       className={cn(
-                        'w-[240px] justify-start text-left font-normal',
+                        'w-full md:w-[240px] justify-start text-left font-normal transition-colors duration-300 hover:bg-primary/5',
                         !field.value && 'text-muted-foreground'
                       )}
                     >
-                      <CalendarIcon />
+                      <CalendarIcon className='mr-2 h-4 w-4 text-primary' />
                       {field.value ? (
                         format(field.value, 'PPP')
                       ) : (
@@ -192,11 +196,12 @@ const IndividualForm = () => {
                       selected={field.value}
                       onSelect={field.onChange}
                       toDate={new Date()}
+                      className='rounded-md border shadow-md'
                     />
                   </PopoverContent>
                 </Popover>
               </FormControl>
-              <FormMessage />
+              <FormMessage className='text-red-500 text-sm' />
             </FormItem>
           )}
         />
@@ -309,14 +314,16 @@ const IndividualForm = () => {
           )}
         />
 
-        <div className='col-span-1'>
+        <div className='col-span-1 md:col-span-2'>
           <FormField
             control={form.control}
             name='related_images'
             render={({ field, formState }) => (
-              <FormItem className='col-span-2'>
-                <FormLabel className=''>Hình ảnh</FormLabel>
-                <FormControl className=''>
+              <FormItem>
+                <FormLabel className='text-sm md:text-base font-medium text-gray-700'>
+                  Hình ảnh
+                </FormLabel>
+                <FormControl>
                   <div className='w-full'>
                     <DropzoneForm
                       key={dropzoneKey}
@@ -326,8 +333,7 @@ const IndividualForm = () => {
                     />
                   </div>
                 </FormControl>
-                <div className='hidden md:block col-span-1' />
-                <FormMessage className='col-span-2'></FormMessage>
+                <FormMessage className='text-red-500 text-sm' />
               </FormItem>
             )}
           />
@@ -348,9 +354,13 @@ const IndividualForm = () => {
           )}
         />
 
-        <div className='col-span-2 flex justify-center'>
-          <Button type='submit' disabled={!form.formState.isValid || isPending}>
-            Gửi
+        <div className='col-span-1 md:col-span-2 flex justify-center'>
+          <Button
+            type='submit'
+            disabled={!form.formState.isValid || isPending}
+            className='bg-primary hover:bg-primary/90 text-white px-8 py-2 rounded-md transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed'
+          >
+            {isPending ? 'Đang gửi...' : 'Gửi'}
           </Button>
         </div>
       </form>

@@ -21,10 +21,10 @@ const useLoginMutation = () => {
       });
     },
     onSuccess: () => {
-      toast.success('Login successful!', { duration: 5000 });
+      toast.success('Đăng nhập thành công!', { duration: 5000 });
     },
     onError: (error) => {
-      toast.error(`Login failed: ${error.message}`, { duration: 5000 });
+      toast.error(`Đăng nhập thất bại: ${error.message}`, { duration: 5000 });
     },
   });
 };

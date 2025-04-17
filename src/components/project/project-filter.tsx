@@ -51,122 +51,131 @@ const ProjectFilter = () => {
   return (
     <Form {...form}>
       <form>
-        <div className='flex justify-start gap-4 mb-8'>
+        <div className='flex flex-col md:flex-row flex-wrap justify-start lg:justify-between gap-3 max-md:p-4 md:gap-4 mb-4 md:mb-8'>
           {/* Trạng thái */}
-          <FormField
-            control={form.control}
-            name='front_status'
-            render={({ field }) => (
-              <FormItem>
-                <Select
-                  onValueChange={field.onChange}
-                  value={field.value}
-                  defaultValue=''
-                >
-                  <FormControl>
-                    <SelectTrigger className='w-[180px]'>
-                      <SelectValue placeholder='Trạng thái' />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {[
-                      CAMPAIGN_STATUS.IN_PROGRESS,
-                      CAMPAIGN_STATUS.COMPLETED,
-                      CAMPAIGN_STATUS.PENDING,
-                      CAMPAIGN_STATUS.ENDED,
-                    ].map((item) => (
-                      <SelectItem value={item} key={item}>
-                        {item}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormItem>
-            )}
-          />
+          <div className='flex items-center gap-2'>
+            <FormField
+              control={form.control}
+              name='front_status'
+              render={({ field }) => (
+                <FormItem className='w-full md:w-auto'>
+                  <Select
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    defaultValue=''
+                  >
+                    <FormControl>
+                      <SelectTrigger className='w-full md:w-[180px]'>
+                        <SelectValue placeholder='Trạng thái' />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {[
+                        CAMPAIGN_STATUS.IN_PROGRESS,
+                        CAMPAIGN_STATUS.COMPLETED,
+                        CAMPAIGN_STATUS.PENDING,
+                        CAMPAIGN_STATUS.ENDED,
+                      ].map((item) => (
+                        <SelectItem value={item} key={item}>
+                          {item}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormItem>
+              )}
+            />
 
-          {/* Loại chương trình */}
-          <FormField
-            control={form.control}
-            name='category'
-            render={({ field }) => (
-              <FormItem>
-                <Select
-                  onValueChange={field.onChange}
-                  value={field.value}
-                  defaultValue=''
-                >
-                  <FormControl>
-                    <SelectTrigger className='w-[250px]'>
-                      <SelectValue placeholder='Loại chương trình' />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {categories?.data?.map((item: TSCategotyData) => (
-                      <SelectItem value={`${item.id}`} key={item.id}>
-                        {item.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormItem>
-            )}
-          />
+            {/* Loại chương trình */}
+            <FormField
+              control={form.control}
+              name='category'
+              render={({ field }) => (
+                <FormItem className='w-full md:w-auto'>
+                  <Select
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    defaultValue=''
+                  >
+                    <FormControl>
+                      <SelectTrigger className='w-full md:w-[250px]'>
+                        <SelectValue placeholder='Loại chương trình' />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {categories?.data?.map((item: TSCategotyData) => (
+                        <SelectItem value={`${item.id}`} key={item.id}>
+                          {item.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormItem>
+              )}
+            />
 
-          {/* Loại đóng góp */}
-          <FormField
-            control={form.control}
-            name='type'
-            render={({ field }) => (
-              <FormItem>
-                <Select
-                  onValueChange={field.onChange}
-                  value={field.value || ''}
-                >
-                  <FormControl>
-                    <SelectTrigger className='w-[250px]'>
-                      <SelectValue placeholder='Loại đóng góp' />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {[
-                      CAMPAIGN_TYPE.DONATE,
-                      CAMPAIGN_TYPE.VOLUNTEER,
-                      CAMPAIGN_TYPE.MULTIPLE,
-                    ].map((item) => (
-                      <SelectItem value={item} key={item}>
-                        {item}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormItem>
-            )}
-          />
+            {/* Loại đóng góp */}
+            <FormField
+              control={form.control}
+              name='type'
+              render={({ field }) => (
+                <FormItem className='w-full md:w-auto'>
+                  <Select
+                    onValueChange={field.onChange}
+                    value={field.value || ''}
+                  >
+                    <FormControl>
+                      <SelectTrigger className='w-full md:w-[250px]'>
+                        <SelectValue placeholder='Loại đóng góp' />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {[
+                        CAMPAIGN_TYPE.DONATE,
+                        CAMPAIGN_TYPE.VOLUNTEER,
+                        CAMPAIGN_TYPE.MULTIPLE,
+                      ].map((item) => (
+                        <SelectItem value={item} key={item}>
+                          {item}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormItem>
+              )}
+            />
+          </div>
 
-          <FormField
-            control={form.control}
-            name='keyword'
-            render={({ field }) => (
-              <FormItem className='w-full'>
-                <FormControl className='w-full'>
-                  <div className='relative ml-auto'>
-                    <Input
-                      type='search'
-                      placeholder='Tìm kiếm tên chương trình'
-                      className='w-[300px] ml-auto pr-10'
-                      {...field}
-                      onChange={field.onChange}
-                    />
-                    <SearchIcon className='absolute right-4 top-0 bottom-0 m-auto' />
-                  </div>
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          <Button type='button' variant={'destructive'} onClick={resetForm}>
-            <CloseIcon />
-          </Button>
+          <div className='flex items-center gap-2'>
+            <FormField
+              control={form.control}
+              name='keyword'
+              render={({ field }) => (
+                <FormItem className='w-full md:w-auto'>
+                  <FormControl>
+                    <div className='relative w-full md:w-[300px]'>
+                      <Input
+                        type='search'
+                        placeholder='Tìm kiếm tên chương trình'
+                        className='w-full pr-10'
+                        {...field}
+                        onChange={field.onChange}
+                      />
+                      <SearchIcon className='absolute right-4 top-0 bottom-0 m-auto' />
+                    </div>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <Button
+              type='button'
+              variant={'destructive'}
+              onClick={resetForm}
+              className='w-[50px] md:w-auto'
+            >
+              <CloseIcon />
+            </Button>
+          </div>
         </div>
       </form>
     </Form>

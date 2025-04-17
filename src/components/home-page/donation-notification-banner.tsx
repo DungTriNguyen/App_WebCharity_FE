@@ -4,14 +4,18 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import { useDonationQuery } from '@/hooks/use-donation';
 import Image from 'next/image';
+import { formatCurrencyToVND } from '@/lib/utils';
 
 const DonationNotificationBanner: React.FC = () => {
   const {
     data: donations,
     isLoading,
     error,
-  } = useDonationQuery({ page: 1, limit: 5 });
-  console.log('donationL:', donations);
+  } = useDonationQuery({
+    page: 1,
+    limit: 5,
+  });
+  console.log('donationList:', donations);
 
   const [notifications, setNotifications] = useState<TSDonationData[]>([]);
 
@@ -63,7 +67,7 @@ const DonationNotificationBanner: React.FC = () => {
   }
 
   return (
-    <div className='w-full'>
+    <div className='w-full '>
       <Swiper
         style={
           {
@@ -92,10 +96,10 @@ const DonationNotificationBanner: React.FC = () => {
         {notifications.map((item: TSDonationData) => (
           <SwiperSlide
             key={item.id}
-            className='rounded-lg overflow-hidden h-full'
+            className='rounded-lg overflow-hidden h-full flex items-center'
           >
-            <div className='flex gap-4 p-4'>
-              <div className='h-12 w-12 rounded-full flex-none'>
+            <div className='flex gap-4 p-2 pl-2 lg:pt-1 items-center'>
+              <div className='h-12 w-12 rounded-full'>
                 <Image
                   src={item?.user?.avatar_url || '/avatar.png'}
                   alt='avatar'
@@ -106,11 +110,14 @@ const DonationNotificationBanner: React.FC = () => {
               </div>
               <div>
                 <p className='line-clamp-1'>
-                  <span className='font-bold'>{item.account_name}</span>
+                  <span className='font-bold'>{item?.name}</span>
                   <span> vừa ủng hộ </span>
                   <span className='text-blue-500 font-bold'>
-                    {item.project.name}
+                    {item?.project?.name}
                   </span>
+                </p>
+                <p className='italic'>
+                  số tiền: {formatCurrencyToVND(Number(item?.amount)) || 0}
                 </p>
                 <p className='italic'>{getTimeDifference(item.created_at)}</p>
               </div>

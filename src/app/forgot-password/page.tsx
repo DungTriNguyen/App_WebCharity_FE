@@ -65,11 +65,11 @@ const ForgotPasswordPage = () => {
   }, [error, form]);
 
   return (
-    <div className='bg-login-background min-h-screen w-full bg-cover object-contain bg-no-repeat flex justify-center items-center'>
-      <Card className='w-[480px]'>
-        <CardHeader>
-          <CardTitle className='text-center font-bold text-2xl'>
-            <Link href='/login'>
+    <div className='bg-login-background min-h-screen w-full bg-cover object-contain bg-no-repeat flex justify-center items-center p-4 sm:p-6'>
+      <Card className='w-full max-w-[480px]'>
+        <CardHeader className='space-y-4'>
+          <div className='flex items-center'>
+            <Link href='/login' className='inline-block'>
               <svg
                 width='20'
                 height='20'
@@ -85,14 +85,16 @@ const ForgotPasswordPage = () => {
                 />
               </svg>
             </Link>
-            Quên mật khẩu
-          </CardTitle>
-          <CardDescription>
+            <CardTitle className='text-center font-bold text-xl sm:text-2xl flex-1'>
+              Quên mật khẩu
+            </CardTitle>
+          </div>
+          <CardDescription className='text-sm sm:text-base text-center'>
             Hãy nhập địa chỉ email của bạn. Chúng tôi sẽ gửi cho bạn mã xác thực
             để truy cập lại vào tài khoản
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className='space-y-6'>
           <Form {...form}>
             <form
               className='flex flex-col gap-4'
@@ -115,6 +117,7 @@ const ForgotPasswordPage = () => {
               <Button
                 type='submit'
                 disabled={!form.formState.isValid || isPending}
+                className='w-full'
               >
                 Tiếp tục
               </Button>

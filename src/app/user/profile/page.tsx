@@ -21,7 +21,7 @@ const ProfilePage = () => {
       {session.data ? (
         <UserTab
           role={userRole as USER_ROLES}
-          detail={session?.data?.user?.detail}
+          detail={session?.data?.user?.detail as TUser}
         />
       ) : null}
     </div>

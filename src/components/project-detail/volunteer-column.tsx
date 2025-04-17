@@ -55,7 +55,7 @@ export const volunteerColumn: ColumnDef<TSVolunteer>[] = [
         column={column}
         className='min-w-[200px] max-w-[300px] text-center'
       >
-        Thời gian ủng hộ
+        Thời gian đăng ký
       </DataTableColumnHeader>
     ),
     cell: ({ row }) => (

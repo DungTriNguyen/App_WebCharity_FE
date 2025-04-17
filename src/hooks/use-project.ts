@@ -7,6 +7,8 @@ const useGetProjectQuery = ({
   keyword,
   front_status,
   type,
+  page,
+  limit,
   category,
   user_id,
 }: {
@@ -15,6 +17,8 @@ const useGetProjectQuery = ({
   keyword?: string;
   front_status?: string;
   category?: string;
+  page?: number;
+  limit?: number;
   user_id?: number;
 }) => {
   const apiAuth = useAxiosAuth();
@@ -27,11 +31,13 @@ const useGetProjectQuery = ({
       front_status,
       category,
       user_id,
+      page,
+      limit,
     ],
     queryFn: async () => {
       try {
         const res = await apiAuth.get('/project', {
-          params: { role, keyword, user_id },
+          params: { role, keyword, user_id, page, limit },
         });
 
         const result = res.data?.data.filter((item: TCampaign) => {

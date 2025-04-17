@@ -13,6 +13,7 @@ import {
   FormMessage,
 } from '../ui/form';
 import { Input } from '../ui/input';
+import { useChangePasswordMutation } from '@/hooks/use-profile';
 
 const formSchema = z.object({
   old_password: z.string().min(1, { message: 'Thông tin không được trống' }),
@@ -23,6 +24,7 @@ const formSchema = z.object({
 });
 
 const UserChangePassword = () => {
+  const { mutate } = useChangePasswordMutation();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
@@ -39,7 +41,6 @@ const UserChangePassword = () => {
       new_password: values.new_password,
       new_password_confirmation: values.new_password_confirmation,
     };
-
     mutate(updateData);
   }
 
@@ -51,14 +52,14 @@ const UserChangePassword = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className='grid grid-cols-2 w-[600px] gap-6'
+        className='grid grid-cols-1 md:grid-cols-2 w-full max-w-xl gap-6 p-2 md:p-6 mx-auto'
       >
         <FormField
           control={form.control}
           name='old_password'
           render={({ field }) => (
             <FormItem className='col-span-2'>
-              <FormLabel>
+              <FormLabel className='text-sm md:text-base font-medium text-gray-700'>
                 Mật khẩu cũ <span className='text-red-500'>*</span>
               </FormLabel>
               <FormControl>
@@ -67,9 +68,10 @@ const UserChangePassword = () => {
                   placeholder='Mật khẩu cũ'
                   {...field}
                   value={field.value ?? ''}
+                  className='transition-colors duration-300 focus:border-primary focus:ring-primary'
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className='text-red-500 text-sm' />
             </FormItem>
           )}
         />
@@ -79,7 +81,7 @@ const UserChangePassword = () => {
           name='new_password'
           render={({ field }) => (
             <FormItem className='col-span-2'>
-              <FormLabel>
+              <FormLabel className='text-sm md:text-base font-medium text-gray-700'>
                 Mật khẩu mới <span className='text-red-500'>*</span>
               </FormLabel>
               <FormControl>
@@ -88,9 +90,10 @@ const UserChangePassword = () => {
                   placeholder='Mật khẩu mới'
                   {...field}
                   value={field.value ?? ''}
+                  className='transition-colors duration-300 focus:border-primary focus:ring-primary'
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className='text-red-500 text-sm' />
             </FormItem>
           )}
         />
@@ -100,24 +103,29 @@ const UserChangePassword = () => {
           name='new_password_confirmation'
           render={({ field }) => (
             <FormItem className='col-span-2'>
-              <FormLabel>
+              <FormLabel className='text-sm md:text-base font-medium text-gray-700'>
                 Nhập lại mật khẩu mới <span className='text-red-500'>*</span>
               </FormLabel>
               <FormControl>
                 <Input
-                  type='text'
+                  type='password'
                   placeholder='Nhập lại mật khẩu mới'
                   {...field}
                   value={field.value ?? ''}
+                  className='transition-colors duration-300 focus:border-primary focus:ring-primary'
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className='text-red-500 text-sm' />
             </FormItem>
           )}
         />
 
         <div className='col-span-2 flex justify-center'>
-          <Button type='submit' disabled={!form.formState.isValid}>
+          <Button
+            type='submit'
+            disabled={!form.formState.isValid}
+            className='bg-primary hover:bg-primary/90 text-white px-8 py-2 rounded-md transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed'
+          >
             Cập nhật
           </Button>
         </div>

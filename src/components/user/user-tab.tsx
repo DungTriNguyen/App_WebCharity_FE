@@ -72,20 +72,20 @@ const UserTab = ({
     console.log(agentUser[0].value);
 
     return (
-      <div className='flex gap-8 w-full'>
+      <div className='flex flex-col lg:flex-row gap-4 lg:gap-8 w-full'>
         <Tabs
           defaultValue={
             roles === USER_ROLES.USER ? menuUser[0].value : agentUser[0].value
           }
-          className='w-2/3 mt-6 '
+          className='w-full lg:w-2/3 mt-4 lg:mt-6'
         >
-          <TabsList className='flex items-center gap-2 justify-start bg-white'>
+          <TabsList className='flex flex-wrap items-center gap-2 justify-start bg-white overflow-x-auto'>
             {roles === USER_ROLES.USER
               ? menuUser.map((item) => (
                   <TabsTrigger
                     key={item.value}
                     value={item.value}
-                    className='bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-full'
+                    className='bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-full text-sm sm:text-base whitespace-nowrap'
                   >
                     {item.label}
                   </TabsTrigger>
@@ -94,7 +94,7 @@ const UserTab = ({
                   <TabsTrigger
                     key={item.value}
                     value={item.value}
-                    className='bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-full'
+                    className='bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-full text-sm sm:text-base whitespace-nowrap'
                   >
                     {item.label}
                   </TabsTrigger>
@@ -113,7 +113,7 @@ const UserTab = ({
                 </TabsContent>
               ))}
         </Tabs>
-        <div className='w-1/3 mt-8'>
+        <div className='w-full lg:w-1/3 mt-4 lg:mt-8'>
           <SummaryInfo summaryInfo={detail} />
         </div>
       </div>

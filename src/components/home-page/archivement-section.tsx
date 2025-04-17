@@ -1,5 +1,6 @@
 import React from 'react';
 import { useGetStatisticQuery } from '@/hooks/use-statistic';
+import { formatCurrencyToVND } from '@/lib/utils';
 
 const ArchivementSection = () => {
   const { data: statistics } = useGetStatisticQuery();
@@ -31,8 +32,10 @@ const ArchivementSection = () => {
       color: '#FF9D2D',
     },
     {
-      label: 'Số tiền (tỷ đồng)',
-      value: statistics?.data.donation_count || 0,
+      label: 'Số tiền (VND)',
+      value:
+        formatCurrencyToVND(Number(statistics?.data.total_donation_amount)) ||
+        0,
       color: '#7AB6FC',
     },
   ];
@@ -51,7 +54,7 @@ const ArchivementSection = () => {
               key={item.label}
               className='col-span-1 row-span-1 flex flex-col justify-center items-center'
             >
-              <div className='flex gap-2 text-xl items-center'>
+              <div className='flex max-md:flex-col gap-2 text-xl items-center'>
                 <div
                   className='h-4 w-4 rounded-full'
                   style={{ background: item.color }}

@@ -24,7 +24,7 @@ import {
 } from '../ui/form';
 
 const ContactForm = () => {
-  const { mutate, isSuccess, isPending, error } = usePostContactMutation();
+  const { mutate, isSuccess, isPending } = usePostContactMutation();
   const formSchema = z.object({
     name: z.string().min(1, {
       message: 'Thông tin không được trống',
@@ -70,11 +70,8 @@ const ContactForm = () => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     console.log(values);
     mutate(values);
-    // submit here
   }
 
   useEffect(() => {
@@ -84,7 +81,7 @@ const ContactForm = () => {
   }, [isSuccess, form]);
 
   return (
-    <div>
+    <div className='max-md:ml-4 max-md:mr-4'>
       <Card className=''>
         <CardHeader>
           <CardTitle className='text-3xl'>Liên hệ</CardTitle>

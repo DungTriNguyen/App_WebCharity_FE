@@ -4,7 +4,7 @@ import React from 'react';
 
 const DonateHistoryPage = () => {
   return (
-    <div>
+    <div className='px-2 md:px-4 max-w-7xl mx-auto space-y-6'>
       <SummaryHistoryUser />
       <HistoryDonationVolunteerTable />
     </div>

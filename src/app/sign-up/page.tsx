@@ -129,11 +129,11 @@ const SignUpPage = () => {
   }, [isSuccess, form]);
 
   return (
-    <div className='bg-login-background min-h-screen w-full bg-cover object-contain bg-no-repeat flex justify-center items-center'>
-      <Card className='w-[480px]'>
-        <CardHeader>
-          <CardTitle className='text-center font-bold text-2xl'>
-            <Link href='/login'>
+    <div className='bg-login-background min-h-screen w-full bg-cover object-contain bg-no-repeat flex justify-center items-center p-4 sm:p-6'>
+      <Card className='w-full max-w-[480px]'>
+        <CardHeader className='space-y-4'>
+          <div className='flex items-center'>
+            <Link href='/login' className='inline-block'>
               <svg
                 width='20'
                 height='20'
@@ -149,11 +149,13 @@ const SignUpPage = () => {
                 ></path>
               </svg>
             </Link>
-            Đăng Ký
-          </CardTitle>
+            <CardTitle className='text-center font-bold text-xl sm:text-2xl flex-1'>
+              Đăng Ký
+            </CardTitle>
+          </div>
           <CardDescription></CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className='space-y-6'>
           <Form {...form}>
             <form
               className='flex flex-col gap-4'
@@ -248,18 +250,18 @@ const SignUpPage = () => {
                         onCheckedChange={field.onChange}
                       />
                     </FormControl>
-                    <FormLabel className='!mt-0'>
+                    <FormLabel className='!mt-0 text-sm sm:text-base'>
                       Đồng ý với các điều khoản và điều kiện
                     </FormLabel>
                   </FormItem>
                 )}
               />
-              <Button type='submit' disabled={isPending}>
+              <Button type='submit' disabled={isPending} className='w-full'>
                 Đăng ký
               </Button>
             </form>
           </Form>
-          <div className='flex justify-start gap-1 items-center'>
+          <div className='flex justify-start gap-1 items-center text-sm sm:text-base'>
             Bạn đã có tài khoản?
             <Button
               type='button'
@@ -270,18 +272,20 @@ const SignUpPage = () => {
               Đăng nhập ngay
             </Button>
           </div>
-          <p className='text-center mb-2'>Hoặc</p>
-          <div className='flex gap-4 justify-center '>
-            {socialInfo.map((item) => (
-              <Link
-                href={item.href}
-                key={item.key}
-                className='flex flex-col items-center h-12 w-12 '
-                target='_blank'
-              >
-                {item.icon}
-              </Link>
-            ))}
+          <div className='space-y-4'>
+            <p className='text-center text-sm sm:text-base'>Hoặc</p>
+            <div className='flex gap-4 justify-center'>
+              {socialInfo.map((item) => (
+                <Link
+                  href={item.href}
+                  key={item.key}
+                  className='flex flex-col items-center h-10 w-10 sm:h-12 sm:w-12'
+                  target='_blank'
+                >
+                  {item.icon}
+                </Link>
+              ))}
+            </div>
           </div>
         </CardContent>
       </Card>

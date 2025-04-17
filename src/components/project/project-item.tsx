@@ -24,22 +24,22 @@ const ProjectItem = ({ project }: { project: TCampaign }) => {
   console.log(project?.slug);
 
   return (
-    <div className='min-w-[350px]'>
+    <div className='w-full rounded-xl p-1 max-md:ml-2 max-md:mr-2 hover:cursor-pointer max-md:p-4 bg-white max-md:shadow-md hover:shadow-lg transition-shadow'>
       <div
         className={cn(
-          'rounded-xl overflow-hidden h-[300px] bg-opacity-10 bg-cover mb-2 flex flex-col p-2 relative'
+          'rounded-xl overflow-hidden h-[200px] md:h-[250px] lg:h-[300px] bg-opacity-10 bg-cover mb-2 flex flex-col p-2 relative'
         )}
         style={{ backgroundImage: `url(${project?.background_image})` }}
         onClick={() => {
           router.push(`/projects/${project?.slug}`);
         }}
       >
-        <div className='absolute top-0 left-0 right-0 bottom-0 bg-white bg-opacity-20'></div>
-        <div className='bg-black text-accent bg-opacity-50 mt-auto rounded-full py-4 px-6 flex gap-2 items-center z-10'>
+        <div className='absolute top-0 left-0 right-0 bottom-0 bg-white bg-opacity-20 '></div>
+        <div className='bg-black text-accent bg-opacity-50 mt-auto rounded-full py-2 md:py-3 lg:py-4 px-3 md:px-4 lg:px-6 flex gap-2 items-center z-10'>
           <div className='w-full'>
             {project?.type === CAMPAIGN_TYPE.DONATE && (
-              <div className='flex flex-col gap-2 w-full'>
-                <div className='flex justify-between'>
+              <div className='flex flex-col gap-1 md:gap-2 w-full'>
+                <div className='flex justify-between text-xs md:text-sm lg:text-base'>
                   <span>
                     {formatCurrencyToVND(
                       Number(project?.donations_with_paid_sum_amount || 0)
@@ -59,8 +59,8 @@ const ProjectItem = ({ project }: { project: TCampaign }) => {
               </div>
             )}
             {project?.type === CAMPAIGN_TYPE.VOLUNTEER && (
-              <div className='flex flex-col gap-2 w-full'>
-                <div className='flex justify-between'>
+              <div className='flex flex-col gap-1 md:gap-2 w-full'>
+                <div className='flex justify-between text-xs md:text-sm lg:text-base'>
                   <span>
                     {project?.volunteers_without_canceled_count || 0} /
                     {project?.volunteer_quantity || 0} TNV
@@ -78,8 +78,8 @@ const ProjectItem = ({ project }: { project: TCampaign }) => {
             )}
             {project?.type === CAMPAIGN_TYPE.MULTIPLE && (
               <>
-                <div className='flex flex-col gap-2 w-full'>
-                  <div className='flex justify-between'>
+                <div className='flex flex-col gap-1 md:gap-2 w-full'>
+                  <div className='flex justify-between text-xs md:text-sm lg:text-base'>
                     <span>
                       {formatCurrencyToVND(
                         Number(project?.donations_with_paid_sum_amount || 0)
@@ -99,8 +99,8 @@ const ProjectItem = ({ project }: { project: TCampaign }) => {
                   </div>
                   <Progress value={project?.donation_percent || 0} />
                 </div>
-                <div className='flex flex-col gap-2 w-full'>
-                  <div className='flex justify-between'>
+                <div className='flex flex-col gap-1 md:gap-2 w-full'>
+                  <div className='flex justify-between text-xs md:text-sm lg:text-base'>
                     <span>
                       {project?.volunteers_without_canceled_count || 0}/
                       {project?.volunteer_quantity || 0} TNV
@@ -123,16 +123,21 @@ const ProjectItem = ({ project }: { project: TCampaign }) => {
             variant={'ghost'}
             className='bg-accent text-accent-foreground rounded-full ml-auto p-1'
           >
-            <HandCoinsIcon width={20} height={20} strokeWidth={1} />
+            <HandCoinsIcon
+              width={16}
+              height={16}
+              className='md:w-5 md:h-5'
+              strokeWidth={1}
+            />
           </Button>
         </div>
       </div>
-      <Label className='font-bold text-lg mt-2'>
+      <Label className='font-bold text-base md:text-lg mt-2 line-clamp-2'>
         <Link href={`/projects/${project?.slug}`}>{project?.name}</Link>
       </Label>
-      <div className='flex justify-between text-gray-400'>
+      <div className='flex justify-between text-gray-400 text-xs md:text-sm'>
         <span className='flex gap-1 items-center'>
-          <HandHeartIcon strokeWidth={1} />
+          <HandHeartIcon strokeWidth={1} className='w-4 h-4 md:w-5 md:h-5' />
           <div className=''>
             {project?.type === CAMPAIGN_TYPE.DONATE && (
               <p>{project?.donations_with_paid_count} lượt ủng hộ</p>
@@ -155,7 +160,7 @@ const ProjectItem = ({ project }: { project: TCampaign }) => {
           </div>
         </span>
         <span className='flex gap-1 items-center'>
-          <CalendarFoldIcon strokeWidth={1} />
+          <CalendarFoldIcon strokeWidth={1} className='w-4 h-4 md:w-5 md:h-5' />
           {project?.diff_date}
         </span>
       </div>

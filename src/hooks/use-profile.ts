@@ -20,18 +20,20 @@ const useGetUserProfileQuery = () => {
 
 const useGetListUserProfileQuery = ({
   type,
+  username,
   search,
 }: {
   type?: string;
+  username?: string;
   search?: string;
 }) => {
   const apiAuth = useAxiosAuth();
   return useQuery({
-    queryKey: ['user-profile-list', type, search],
+    queryKey: ['user-profile-list', type, search, username],
     queryFn: async () => {
       try {
         const res = await apiAuth.get('/user', {
-          params: { type, keyword: search },
+          params: { type, keyword: search, username },
         });
         return res.data;
       } catch (e: any) {
@@ -97,9 +99,36 @@ const useUpdateUserAvatarMutation = () => {
   });
 };
 
+const useChangePasswordMutation = () => {
+  const apiAuth = useAxiosAuth();
+  return useMutation({
+    mutationKey: ['user-password'],
+    mutationFn: async (payload: any) => {
+      try {
+        const res = await apiAuth.put('/user/password', payload);
+        return res.data;
+      } catch (e: any) {
+        throw Error(e);
+      }
+    },
+    onSuccess: (data) => {
+      toast('Thông báo', {
+        description: data.message,
+      });
+      queryClient.invalidateQueries();
+    },
+    onError: (error: any) => {
+      toast('Thông báo', {
+        description: error.response?.data?.message || 'Có lỗi xảy ra',
+      });
+    },
+  });
+};
+
 export {
   useGetUserProfileQuery,
   useUpdateUserProfileMutation,
   useGetListUserProfileQuery,
   useUpdateUserAvatarMutation,
+  useChangePasswordMutation,
 };

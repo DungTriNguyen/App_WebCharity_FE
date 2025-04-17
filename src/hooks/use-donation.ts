@@ -35,7 +35,7 @@ const useDonationQuery = ({
         throw Error(e?.response?.data?.message);
       }
     },
-    enabled: !!(user_id || projectId),
+    enabled: true,
   });
 };
 
