@@ -60,8 +60,6 @@ const EditProfileForm = () => {
 
   const { data: departments } = useDepartmentQuery();
 
-  // console.log(Object.values(USER_GENDER), profile?.data);
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
@@ -82,33 +80,11 @@ const EditProfileForm = () => {
     values: {
       ...profile?.data,
       department_id: profile?.data?.department?.id?.toString() || null,
+      birth_of_date: profile?.data?.birth_of_date
+        ? new Date(profile.data.birth_of_date)
+        : null,
     },
   });
-
-  console.log(form.getValues('gender'), 'form');
-  console.log(profile?.data?.gender, 'profile?.data');
-
-  // useEffect(() => {
-  //   if (profile?.data) {
-  //     form.reset({
-  //       gender: profile?.data.gender || '',
-  //       birth_of_date: profile.data.birth_of_date
-  //         ? new Date(profile.data.birth_of_date).toISOString().split('T')[0]
-  //         : '',
-  //       tiktok: profile.data.tiktok || '',
-  //       name: profile.data.name || '',
-  //       facebook: profile.data.facebook || '',
-  //       phone_number: profile.data.phone_number || '',
-  //       youtube: profile.data.youtube || '',
-  //       address: profile.data.address || '',
-  //       student_code: profile.data.student_code || '',
-  //       class: profile.data.class || '',
-  //       department_id: profile.data.department_id || '',
-  //     });
-  //     // console.log('gioi tinh:', profile.data.gender);
-  //     // console.log(form.getValues());
-  //   }
-  // }, [profile, form]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const updateData: TUserUpdate = {
@@ -128,8 +104,6 @@ const EditProfileForm = () => {
       description: values.description,
     };
 
-    // console.log('Submitting update data:', updateData);
-
     mutate(updateData);
   }
 
@@ -137,8 +111,6 @@ const EditProfileForm = () => {
   // if (isLoading) {
   //   return <div>Đang tải dữ liệu...</div>;
   // }
-
-  console.log(form.formState);
 
   return (
     <Form {...form}>
@@ -193,7 +165,7 @@ const EditProfileForm = () => {
               control={form.control}
               name='birth_of_date'
               render={({ field }) => (
-                <FormItem className='col-span-1 space-y-5'>
+                <FormItem className='col-span-1'>
                   <FormLabel className='block text-sm md:text-base font-medium text-gray-700'>
                     Ngày sinh <span className='text-red-500'>*</span>
                   </FormLabel>
@@ -219,9 +191,10 @@ const EditProfileForm = () => {
                         <Calendar
                           mode='single'
                           selected={
-                            typeof field.value === 'string'
-                              ? new Date(field.value)
-                              : field.value || new Date()
+                            field.value ? new Date(field.value) : undefined
+                          }
+                          defaultMonth={
+                            field.value ? new Date(field.value) : undefined
                           }
                           onSelect={field.onChange}
                           toDate={new Date('2009-04-10')}
@@ -453,7 +426,9 @@ const EditProfileForm = () => {
         <div className='col-span-2 flex justify-center'>
           <Button
             type='submit'
-            disabled={isPending}
+            disabled={
+              isPending || !form.formState.isValid || !form.formState.isDirty
+            }
             className='bg-primary hover:bg-primary/90 text-white px-8 py-2 rounded-md transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed'
           >
             Cập nhật
