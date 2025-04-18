@@ -49,7 +49,10 @@ const useUpdateUserProfileMutation = () => {
     mutationKey: ['user-profile'],
     mutationFn: async (payload: TUserUpdate) => {
       try {
-        const res = await apiAuth.put('/user/profile', payload);
+        const res = await apiAuth.put('/user/profile', {
+          ...payload,
+          department_id: payload.department_id ? +payload.department_id : null,
+        });
         return res.data;
       } catch (error) {
         console.error('Update profile error:', error);
