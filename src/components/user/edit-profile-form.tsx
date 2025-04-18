@@ -453,9 +453,7 @@ const EditProfileForm = () => {
         <div className='col-span-2 flex justify-center'>
           <Button
             type='submit'
-            disabled={
-              isPending || !form.formState.isValid || !form.formState.isDirty
-            }
+            disabled={isPending}
             className='bg-primary hover:bg-primary/90 text-white px-8 py-2 rounded-md transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed'
           >
             Cập nhật
