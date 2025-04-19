@@ -101,23 +101,25 @@ const DonationNotificationBanner: React.FC = () => {
             <div className='flex gap-4 p-2 pl-2 lg:pt-1 items-center'>
               <div className='h-12 w-12 rounded-full'>
                 <Image
-                  src={item?.user?.avatar_url || '/avatar.png'}
+                  src={item?.user?.avatar_url}
                   alt='avatar'
                   width={100}
                   height={100}
-                  className='rounded-full'
+                  className='rounded-full w-12 h-12'
                 />
               </div>
               <div>
                 <p className='line-clamp-1'>
                   <span className='font-bold'>{item?.name}</span>
                   <span> vừa ủng hộ </span>
-                  <span className='text-blue-500 font-bold'>
+                  <span className='text-[#1DA1F2] font-bold'>
                     {item?.project?.name}
                   </span>
                 </p>
-                <p className='italic'>
-                  số tiền: {formatCurrencyToVND(Number(item?.amount)) || 0}
+
+                <p className='italic text-[#1DA1F2]'>
+                  <span className='text-black'>số tiền: </span>
+                  {formatCurrencyToVND(Number(item?.amount)) || 0}
                 </p>
                 <p className='italic'>{getTimeDifference(item.created_at)}</p>
               </div>

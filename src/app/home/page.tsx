@@ -17,21 +17,6 @@ import { useDonationQuery } from '@/hooks/use-donation';
 import DonationNotificationBanner from '@/components/home-page/donation-notification-banner';
 
 const HomePage = () => {
-  const { data: dataDonate } = useDonationQuery({
-    limit: 1,
-    user_id: 1,
-  });
-  const { data } = useSession();
-
-  const recentDonation = {
-    user: {
-      name: data?.user?.name || 'Người dùng',
-      avatar: data?.user?.image || '/images/avatar.png',
-    },
-    time: '19:07 - 28/02/2025',
-    amount: 500000,
-  };
-
   return (
     <>
       <div className='bg-main-banner h-screen w-full relative'>

@@ -10,6 +10,7 @@ const useGetUserProfileQuery = () => {
     queryFn: async () => {
       try {
         const res = await apiAuth.get('/user/profile');
+        // console.log('user-profile:', res.data);
         return res.data;
       } catch (e: any) {
         throw Error(e);
@@ -20,20 +21,24 @@ const useGetUserProfileQuery = () => {
 
 const useGetListUserProfileQuery = ({
   type,
+  limit,
+  page,
   username,
   search,
 }: {
   type?: string;
+  limit?: number;
+  page?: number;
   username?: string;
   search?: string;
 }) => {
   const apiAuth = useAxiosAuth();
   return useQuery({
-    queryKey: ['user-profile-list', type, search, username],
+    queryKey: ['user-profile-list', type, search, username, limit, page],
     queryFn: async () => {
       try {
         const res = await apiAuth.get('/user', {
-          params: { type, keyword: search, username },
+          params: { type, keyword: search, username, limit, page },
         });
         return res.data;
       } catch (e: any) {

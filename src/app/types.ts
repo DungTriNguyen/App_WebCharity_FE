@@ -349,7 +349,7 @@ type TRegisterVolunteerForm = {
   phone_number: string;
   student_code: string;
   class: string;
-  department_id: string;
+  department_id: number;
   project_id: number;
 };
 
@@ -411,4 +411,11 @@ type TVNPayPaymentResponse = {
     success: boolean;
     payment_url: string;
   };
+};
+
+type TProjectResponse = {
+  data: TCampaign[];
+  total: number;
+  current_page: number;
+  per_page: number;
 };
