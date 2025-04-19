@@ -51,7 +51,7 @@ const ProjectProcessing = () => {
             loop={true}
             className='relative'
           >
-            {project?.map((item: TCampaign) => (
+            {project?.data?.map((item: TCampaign) => (
               <SwiperSlide key={item.id}>
                 <ProjectItem key={item.id} project={item} />
               </SwiperSlide>

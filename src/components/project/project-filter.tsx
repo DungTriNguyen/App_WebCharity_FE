@@ -1,6 +1,15 @@
 'use client';
+import { CAMPAIGN_STATUS, CAMPAIGN_TYPE } from '@/app/enum';
+import { useGetCategoryQuery } from '@/hooks/use-categories';
 import { SearchIcon } from 'lucide-react';
-import React, { useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
+import { useFormContext } from 'react-hook-form';
+import { CloseIcon } from 'yet-another-react-lightbox';
+import { z } from 'zod';
+import { formSchema } from '.';
+import { Button } from '../ui/button';
+import { Form, FormControl, FormField, FormItem } from '../ui/form';
 import { Input } from '../ui/input';
 import {
   Select,
@@ -9,19 +18,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select';
-import { useFormContext } from 'react-hook-form';
-import { Form, FormControl, FormField, FormItem } from '../ui/form';
-import { z } from 'zod';
-import { formSchema } from '.';
-import { CAMPAIGN_STATUS, CAMPAIGN_TYPE } from '@/app/enum';
-import { useGetCategoryQuery } from '@/hooks/use-categories';
-import { Button } from '../ui/button';
-import { CloseIcon } from 'yet-another-react-lightbox';
-import { useRouter, useSearchParams } from 'next/navigation';
 
 const ProjectFilter = () => {
   const form = useFormContext<z.infer<typeof formSchema>>();
   const searchParams = useSearchParams();
+
   const router = useRouter();
   const { data: categories } = useGetCategoryQuery();
 

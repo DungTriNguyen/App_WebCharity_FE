@@ -45,7 +45,7 @@ const ProjectSwiper = ({ project }: { project: TCampaign }) => {
           (item, index) => (
             <SwiperSlide
               key={index}
-              className='rounded-lg overflow-hidden max-h-[450px]'
+              className='rounded-lg overflow-hidden max-h-[450px] mr-10'
             >
               <div className='image-container' style={{ position: 'relative' }}>
                 <Image

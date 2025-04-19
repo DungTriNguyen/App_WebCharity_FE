@@ -1,5 +1,5 @@
 'use client';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { Tabs, TabsList, TabsTrigger } from '../ui/tabs';
 import { Input } from '../ui/input';
 import { SearchIcon } from 'lucide-react';
@@ -8,6 +8,7 @@ import AccountList from './account-list';
 
 const AccountFilter = () => {
   const [search, setSearch] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -32,6 +33,15 @@ const AccountFilter = () => {
     if (type) return type.value;
     return TAB_LIST[0].value;
   }, [searchParams, TAB_LIST]);
+
+  // Debounce search input
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [search]);
 
   const changeTabAction = (param: string) => {
     router.push(`/accounts?type=${param}`);
@@ -75,7 +85,7 @@ const AccountFilter = () => {
             </div>
           </div>
         </div>
-        <AccountList type={activeTab} search={search} />
+        <AccountList type={activeTab} search={debouncedSearch} />
       </div>
     </>
   );

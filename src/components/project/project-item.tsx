@@ -23,7 +23,7 @@ const ProjectItem = ({ project }: { project: TCampaign }) => {
   }
 
   return (
-    <div className='w-full rounded-xl p-1 max-md:ml-2 max-md:mr-2 hover:cursor-pointer max-md:p-4 bg-white max-md:shadow-md hover:shadow-lg transition-shadow'>
+    <div className='w-full rounded-xl p-1   hover:cursor-pointer max-md:p-4 bg-white max-md:shadow-md hover:shadow-lg transition-shadow'>
       <div
         className={cn(
           'rounded-xl overflow-hidden h-[200px] md:h-[250px] lg:h-[300px] bg-opacity-10 bg-cover mb-2 flex flex-col p-2 relative'

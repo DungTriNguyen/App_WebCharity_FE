@@ -12,9 +12,11 @@ import { usePagination } from '@/hooks/use-pagination';
 const OwnedDonateList = ({
   type = 'donate',
   userId,
+  projects_belong_to_user_id,
 }: {
   type: 'donate' | 'receive';
   userId: number;
+  projects_belong_to_user_id?: number;
 }) => {
   const { register, watch } = useForm();
   const searchKeyword = watch('keyword');
@@ -26,7 +28,7 @@ const OwnedDonateList = ({
     limit: 10,
     page: currentPage || 1,
     keyword: debouncedSearch ? debouncedSearch : null,
-    // user_id: userId,
+    projects_belong_to_user_id: projects_belong_to_user_id,
   });
   return (
     <Card className='p-4 flex flex-col gap-4'>

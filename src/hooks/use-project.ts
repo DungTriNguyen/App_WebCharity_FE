@@ -22,7 +22,7 @@ const useGetProjectQuery = ({
   user_id?: number;
 }) => {
   const apiAuth = useAxiosAuth();
-  return useQuery({
+  return useQuery<TProjectResponse>({
     queryKey: [
       'project_list',
       role,
@@ -51,12 +51,19 @@ const useGetProjectQuery = ({
           );
         });
 
-        return result;
-      } catch (e: any) {
-        throw Error(e?.response?.data?.message);
+        return {
+          data: result,
+          total: res.data?.total || 0,
+          current_page: res.data?.current_page || 1,
+          per_page: res.data?.per_page || limit,
+        };
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          throw new Error(error.message);
+        }
+        throw new Error('An unknown error occurred');
       }
     },
-    // enabled: !!token,
   });
 };
 
@@ -67,12 +74,15 @@ const useGetProjectByID = ({ slug }: { slug: string }) => {
     queryFn: async () => {
       try {
         const res = await apiAuth.get(`/project?project_slug=${slug}`);
+        console.log('res kkkkkkkkkkkkkkk:', res.data);
         return res.data;
-      } catch (e: any) {
-        throw Error(e?.response?.data?.message);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          throw new Error(error.message);
+        }
+        throw new Error('An unknown error occurred');
       }
     },
-    // enabled: !!token,
   });
 };
 

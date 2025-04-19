@@ -1,11 +1,11 @@
 import { USER_ROLES } from '@/app/enum';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
-import SummaryInfo from './summary-info';
-import OwnedDonateList from './owned-donate-list';
-import ManagedProjectList from './managed-project/managed-project-list';
 import Introduce from './Introduce';
+import ManagedProjectList from './managed-project/managed-project-list';
+import OwnedDonateList from './owned-donate-list';
 import OwnedParticipantList from './owned-participant-list';
+import SummaryInfo from './summary-info';
 
 const UserTab = ({
   role = USER_ROLES.USER,
