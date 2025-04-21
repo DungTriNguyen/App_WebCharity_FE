@@ -12,11 +12,13 @@ import { usePagination } from '@/hooks/use-pagination';
 const OwnedDonateList = ({
   type = 'donate',
   userId,
-  projects_belong_to_user_id,
+  // projects_belong_to_user_id,
+  keyParam = 'user_id',
 }: {
   type: 'donate' | 'receive';
   userId: number;
-  projects_belong_to_user_id?: number;
+  // projects_belong_to_user_id?: number;
+  keyParam?: 'user_id' | 'projects_belong_to_user_id';
 }) => {
   const { register, watch } = useForm();
   const searchKeyword = watch('keyword');
@@ -24,11 +26,12 @@ const OwnedDonateList = ({
   const { currentPage, setCurrentPage, setItemsPerPage } = usePagination({});
 
   const { data: donations } = useDonationQuery({
-    user_id: userId as number,
+    // user_id: userId || undefined,
     limit: 10,
     page: currentPage || 1,
     keyword: debouncedSearch ? debouncedSearch : null,
-    projects_belong_to_user_id: projects_belong_to_user_id,
+    // projects_belong_to_user_id: projects_belong_to_user_id,
+    [keyParam]: userId,
   });
   return (
     <Card className='p-4 flex flex-col gap-4'>

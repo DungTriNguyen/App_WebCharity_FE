@@ -54,12 +54,23 @@ const UserTab = ({
     {
       label: 'Người tham gia',
       value: 'participate',
-      component: <OwnedParticipantList userId={detail.id} />,
+      component: (
+        <OwnedParticipantList
+          userId={detail.id}
+          keyParam='projects_belong_to_user_id'
+        />
+      ),
     },
     {
       label: 'Người ủng hộ',
       value: 'supporter',
-      component: <OwnedDonateList type='donate' userId={detail.id} />,
+      component: (
+        <OwnedDonateList
+          type='donate'
+          keyParam='projects_belong_to_user_id'
+          userId={detail.id}
+        />
+      ),
     },
     {
       label: 'Sao kê',

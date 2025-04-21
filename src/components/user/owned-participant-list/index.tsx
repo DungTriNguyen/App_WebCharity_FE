@@ -18,9 +18,11 @@ import { volunteerColumn } from '@/components/project-detail/volunteer-column';
 const OwndedParticipantList = ({
   project,
   userId,
+  keyParam = 'user_id',
 }: {
   project?: TCampaign;
   userId: number;
+  keyParam?: 'user_id' | 'projects_belong_to_user_id';
 }) => {
   const { register, watch } = useForm();
   const searchKeyword = watch('keyword');
@@ -34,7 +36,7 @@ const OwndedParticipantList = ({
     page: 1,
     projectId: projectId || null,
     keyword: debouncedSearch ? debouncedSearch : null,
-    user_id: userId as number,
+    [keyParam]: userId,
   });
 
   return (
