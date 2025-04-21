@@ -75,7 +75,13 @@ const UserTab = ({
     {
       label: 'Sao kê',
       value: 'report',
-      component: <OwnedDonateList type='receive' userId={detail.id} />,
+      component: (
+        <OwnedDonateList
+          type='receive'
+          userId={detail.id}
+          keyParam='projects_belong_to_user_id'
+        />
+      ),
     },
   ];
 
