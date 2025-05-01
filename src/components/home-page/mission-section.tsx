@@ -1,5 +1,3 @@
-import React from 'react';
-import { Separator } from '../ui/separator';
 import Image from 'next/image';
 import missionImage from '../../../public/our-mission.png';
 

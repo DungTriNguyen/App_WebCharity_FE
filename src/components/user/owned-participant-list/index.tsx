@@ -46,8 +46,13 @@ const OwndedParticipantList = ({
         <CardDescription />
       </CardHeader>
       <CardContent className='flex flex-col gap-4'>
-        <Input placeholder='Tìm' type='search' {...register('keyword')} />
+        <Input
+          placeholder='Nhập thông tin tìm kiếm...'
+          type='search'
+          {...register('keyword')}
+        />
         <VolunteerTable
+          profile={true}
           columns={volunteerColumn}
           data={volunteerData?.data || []}
           loading={isLoading}

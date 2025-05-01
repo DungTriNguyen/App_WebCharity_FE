@@ -66,12 +66,20 @@ const RegisterVolunteerForm = ({ projectId }: { projectId: number }) => {
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
+      name: '',
+      email: '',
+      phone_number: '',
+      student_code: '',
+      class: '',
+      department_id: '',
+    },
+    values: {
       name: userProfile?.data?.name || '',
       email: userProfile?.data?.email || '',
       phone_number: userProfile?.data?.phone_number || '',
       student_code: userProfile?.data?.student_code || '',
       class: userProfile?.data?.class || '',
-      department_id: userProfile?.data?.department_id?.toString() || '',
+      department_id: userProfile?.data?.department?.id?.toString() || '',
     },
   });
 
@@ -84,6 +92,7 @@ const RegisterVolunteerForm = ({ projectId }: { projectId: number }) => {
     try {
       await mutate({
         ...values,
+        department_id: +values.department_id,
         project_id: +projectId,
         user_id: session.user.detail.id,
       });

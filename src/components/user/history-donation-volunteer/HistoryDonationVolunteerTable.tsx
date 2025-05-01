@@ -1,21 +1,25 @@
 'use client';
-import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useGetUserProfileQuery } from '@/hooks/use-profile';
 import OwnedDonateList from '../owned-donate-list';
+import OwndedParticipantList from '../owned-participant-list';
 
-const tabList = [
-  {
-    label: 'Ủng hộ',
-    value: 'donate',
-    component: <OwnedDonateList type='donate' />,
-  },
-  {
-    label: 'Tham gia',
-    value: 'participate',
-    component: <OwnedDonateList type='receive' />,
-  },
-];
 const HistoryDonationVolunteerTable = () => {
+  const { data: userProfile } = useGetUserProfileQuery();
+  const tabList = [
+    {
+      label: 'Ủng hộ',
+      value: 'donate',
+      component: (
+        <OwnedDonateList type='donate' userId={userProfile?.data?.id} />
+      ),
+    },
+    {
+      label: 'Tham gia',
+      value: 'participate',
+      component: <OwndedParticipantList userId={userProfile?.data?.id} />,
+    },
+  ];
   return (
     <div className='flex flex-col gap-4 w-full'>
       <Tabs className='w-full mt-2' defaultValue={tabList[0].value}>

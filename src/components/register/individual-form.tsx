@@ -1,9 +1,16 @@
 'use client';
 
+import DropzoneForm from '@/app/dropzone-form';
+import { usePostRegisterIndividualMutation } from '@/hooks/use-register';
+import { cn } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
-import React, { useState } from 'react';
+import { format } from 'date-fns';
+import { CalendarIcon } from 'lucide-react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { Button } from '../ui/button';
+import { Calendar } from '../ui/calendar';
 import {
   Form,
   FormControl,
@@ -13,14 +20,7 @@ import {
   FormMessage,
 } from '../ui/form';
 import { Input } from '../ui/input';
-import { Button } from '../ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import { cn } from '@/lib/utils';
-import { CalendarIcon } from 'lucide-react';
-import { format } from 'date-fns';
-import { Calendar } from '../ui/calendar';
-import { usePostRegisterIndividualMutation } from '@/hooks/use-register';
-import DropzoneForm from '@/app/dropzone-form';
 import { Textarea } from '../ui/textarea';
 
 const formSchema = z.object({
@@ -139,9 +139,16 @@ const IndividualForm = () => {
   return (
     <Form {...form}>
       <form
-        className='grid grid-cols-1 md:grid-cols-2 gap-4 p-4 md:p-6'
+        className='relative grid grid-cols-1 md:grid-cols-2 gap-4 p-4 md:p-6 '
         onSubmit={form.handleSubmit(onSubmit)}
       >
+        {/* <Image
+          src='/individual_bg.jpg'
+          alt='individual_bg'
+          width={1080}
+          height={450}
+          className='absolute inset-0 z-0 w-full h-full object-cover'
+        /> */}
         <FormField
           control={form.control}
           name='username'

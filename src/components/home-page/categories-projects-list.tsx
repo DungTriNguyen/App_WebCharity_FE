@@ -34,7 +34,7 @@ const CampaignSlider = () => {
           }}
           className='relative'
         >
-          {category?.data?.map((categories: any) => {
+          {category?.data?.map((categories: TSCategotyData) => {
             // Function to modify SVG with custom classes
             const customizeSvg = (svgString: string) => {
               if (!svgString) return '';

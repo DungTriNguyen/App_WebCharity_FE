@@ -23,6 +23,7 @@ import { Skeleton } from '../ui/skeleton';
 import { DataTablePagination } from '../table/data-table-pagination';
 
 interface IVolunteerList {
+  profile?: boolean;
   data: TSVolunteer[];
   columns: ColumnDef<TSVolunteer>[];
   loading: boolean;

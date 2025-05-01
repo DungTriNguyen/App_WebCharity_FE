@@ -86,6 +86,12 @@ type TApiResponse<T = any> = {
   message: string;
   data?: T[];
   errors?: Record<string, string[]>;
+  pagination?: {
+    total: number;
+    last_page: number;
+    current_page: number;
+    per_page: number;
+  };
 };
 
 type TStatisticData = {

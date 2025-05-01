@@ -1,8 +1,7 @@
 'use client';
 
-import { ColumnDef } from '@tanstack/react-table';
 import { DataTableColumnHeader } from '@/components/table/data-table-column-header';
-import { formatCurrencyToVND } from '@/lib/utils';
+import { ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
 
 export const volunteerColumn: ColumnDef<TSVolunteer>[] = [
@@ -32,21 +31,21 @@ export const volunteerColumn: ColumnDef<TSVolunteer>[] = [
     enableSorting: false,
     enableHiding: false,
   },
-  // {
-  //   accessorKey: 'amount',
-  //   header: ({ column }) => (
-  //     <DataTableColumnHeader column={column}>
-  //       Số tiền ủng hộ
-  //     </DataTableColumnHeader>
-  //   ),
-  //   cell: ({ row }) => (
-  //     <div className='min-w-[60px] max-w-[300px]'>
-  //       {formatCurrencyToVND(Number(row.getValue('amount')))}
-  //     </div>
-  //   ),
-  //   enableSorting: false,
-  //   enableHiding: false,
-  // },
+  {
+    accessorKey: 'project_name',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column}>
+        Chiến dịch tham gia
+      </DataTableColumnHeader>
+    ),
+    cell: ({ row }) => (
+      <div className='min-w-[60px] max-w-[300px]'>
+        {row.getValue('project_name')}
+      </div>
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
 
   {
     accessorKey: 'created_at',

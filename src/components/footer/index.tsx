@@ -3,7 +3,6 @@ import { CAMPAIGN_TYPE } from '@/app/enum';
 import Image from 'next/image';
 import Link from 'next/link';
 import logo from '../../../public/sgu-logo.png';
-import { label } from 'yet-another-react-lightbox';
 
 const PROGRAMS_ITEMS = [
   {
@@ -45,7 +44,7 @@ const CONTACT_ITEMS = [
     href: '/contact',
   },
   {
-    label: 'Đăng ký chương trình',
+    label: 'Đăng ký chiến dịch',
     href: '/create-account',
   },
 ];

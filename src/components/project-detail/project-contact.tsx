@@ -24,21 +24,23 @@ const ProjectContact = ({ project }: { project: TCampaign }) => {
   return (
     <Card className='p-6 flex flex-col gap-2'>
       <h4>Thông tin tổ chức / cá nhân vận động chiến dịch </h4>
-      <div className='flex gap-2 items-center'>
-        <Image
-          alt='avatar'
-          width={48}
-          height={48}
-          src={project?.user?.avatar_url}
-          className='rounded-full aspect-square'
-        />
-        <div>
-          <p>{project?.user?.name}</p>
-          <Badge className='rounded-full'>
-            {project?.is_organization ? 'Tổ chức' : 'Cá nhân'}
-          </Badge>
+      <Link href={`/accounts/${project?.user?.username}`}>
+        <div className='flex gap-2 items-center'>
+          <Image
+            alt='avatar'
+            width={48}
+            height={48}
+            src={project?.user?.avatar_url}
+            className='rounded-full aspect-square'
+          />
+          <div>
+            <p className='text-base text-[#1DA1F2]'>{project?.user?.name}</p>
+            <Badge className='rounded-full'>
+              {project?.is_organization ? 'Tổ chức' : 'Cá nhân'}
+            </Badge>
+          </div>
         </div>
-      </div>
+      </Link>
       <div className='flex gap-2 items-center'>
         <FacebookIcon width='36' height='36' />
         <Link href={'https://facebook.com'}>

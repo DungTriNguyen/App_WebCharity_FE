@@ -4,7 +4,7 @@ import { formatCurrencyToVND } from '@/lib/utils';
 
 const ArchivementSection = () => {
   const { data: statistics } = useGetStatisticQuery();
-  // console.log('day la statistic:', statistics);
+
   const archievements = [
     {
       label: 'Tổ chức',
@@ -39,32 +39,39 @@ const ArchivementSection = () => {
       color: '#7AB6FC',
     },
   ];
+
   return (
-    <div className=''>
-      <h3 className='text-3xl font-bold text-center p-4'>Thành quả đạt được</h3>
-      <p className='text-center'>
+    <div className='px-4 py-8'>
+      <h3 className='text-3xl font-bold text-center mb-2'>
+        Thành quả đạt được
+      </h3>
+      <p className='text-center mb-6'>
         Kể từ năm 2006, VinaCapital Foundation đã tự hào thay đổi cuộc sống của
         mọi người:
       </p>
-      <div className='grid grid-cols-4 h-[400px]'>
-        <div className='col-span-1 row-span-2 bg-bg-archievement bg-contain bg-no-repeat w-full h-full'></div>
-        {archievements.map((item) => {
-          return (
-            <div
-              key={item.label}
-              className='col-span-1 row-span-1 flex flex-col justify-center items-center'
-            >
-              <div className='flex max-md:flex-col gap-2 text-xl items-center'>
-                <div
-                  className='h-4 w-4 rounded-full'
-                  style={{ background: item.color }}
-                />
-                {item.label}
-              </div>
-              <div className='font-bold text-4xl ml-8'>{item.value}</div>
+
+      <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 auto-rows-auto gap-4 min-h-[400px]'>
+        {/* Ảnh nền: chỉ hiển thị trên màn hình lớn */}
+        <div className='hidden lg:block col-span-4 lg:col-span-1 lg:row-span-2 bg-bg-archievement bg-contain bg-no-repeat bg-center w-full h-full'></div>
+
+        {/* Các thành phần thống kê */}
+        {archievements.map((item) => (
+          <div
+            key={item.label}
+            className='col-span-1 flex flex-col justify-center items-center max-md:bg-white max-md:rounded-lg max-md:shadow p-4 text-center'
+          >
+            <div className='flex items-center gap-2 text-lg sm:text-xl'>
+              <span
+                className='h-4 w-4 rounded-full'
+                style={{ background: item.color }}
+              />
+              <span>{item.label}</span>
             </div>
-          );
-        })}
+            <div className='font-bold text-xl lg:text-3xl mt-2'>
+              {item.value}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

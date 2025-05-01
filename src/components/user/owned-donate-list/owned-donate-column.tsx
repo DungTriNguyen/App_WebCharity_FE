@@ -96,34 +96,44 @@ export const statisticColumn: ColumnDef<TDonatedData>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
-        className='min-w-[200px] max-w-[300px] text-left'
+        className='min-w-[100px] max-w-[100px] text-left'
       >
-        Thời gian ủng hộ
+        T/g ủng hộ
       </DataTableColumnHeader>
     ),
     cell: ({ row }) => (
-      <div className='min-w-[200px] max-w-[300px] text-left'>
+      <div className='min-w-[100px] max-w-[100px] text-left'>
         {format(row.getValue('created_at'), 'dd/MM/yyyy HH:mm:ss')}
       </div>
     ),
     enableSorting: false,
     enableHiding: false,
   },
-  // {
-  //   accessorKey: 'name',
-  //   header: ({ column }) => (
-  //     <DataTableColumnHeader column={column}>
-  //       Người ủng hộ
-  //     </DataTableColumnHeader>
-  //   ),
-  //   cell: ({ row, renderValue }) => (
-  //     <div className='min-w-[70px] max-w-[300px] w-full'>
-  //       {renderValue() as string}
-  //     </div>
-  //   ),
-  //   enableSorting: false,
-  //   enableHiding: false,
-  // },
+  {
+    accessorKey: 'name',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column}>
+        Người ủng hộ
+      </DataTableColumnHeader>
+    ),
+    cell: ({ renderValue }) => (
+      <div className='min-w-[70px] max-w-[300px] w-full'>
+        {renderValue() as string}
+      </div>
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: 'project_name',
+    header: 'Tên Chiến dịch',
+    cell: ({ row }) => {
+      const project = row.original.project;
+      return <div>{project?.name || 'Không có tên chiến dịch'}</div>;
+    },
+    enableSorting: false,
+    enableHiding: false,
+  },
   {
     accessorKey: 'payment_method_code',
     header: ({ column }) => (
@@ -132,7 +142,7 @@ export const statisticColumn: ColumnDef<TDonatedData>[] = [
       </DataTableColumnHeader>
     ),
     cell: ({ renderValue }) => (
-      <div className='min-w-[70px] max-w-[300px] w-full'>
+      <div className='min-w-[70px] max-w-[100px] w-full'>
         {renderValue() as string}
       </div>
     ),

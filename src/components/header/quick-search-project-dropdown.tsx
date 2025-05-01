@@ -55,11 +55,11 @@ const QuickSearchProjectDropdown = () => {
           Đang tìm kiếm...
         </div>
       );
-    } else if (searchResults?.length) {
+    } else if (searchResults?.data?.length) {
       return (
         <div className='mt-2'>
           <div className='max-h-[250px] md:max-h-[300px] overflow-y-auto'>
-            {searchResults?.slice(0, 5).map((project: TCampaign) => (
+            {searchResults?.data?.slice(0, 5).map((project: TCampaign) => (
               <DropdownMenuItem
                 key={project.id}
                 className='py-2 px-3 cursor-pointer hover:bg-primary/50'
@@ -91,13 +91,13 @@ const QuickSearchProjectDropdown = () => {
               </DropdownMenuItem>
             ))}
           </div>
-          {searchResults.length > 5 && (
+          {searchResults?.data?.length > 5 && (
             <Button
               variant='ghost'
               className='w-full mt-2 text-primary hover:bg-primary/10 text-sm md:text-base'
               onClick={() => handleSearch(debouncedSearch)}
             >
-              Xem thêm {searchResults.length - 5} kết quả
+              Xem thêm {searchResults?.data?.length - 5} kết quả
             </Button>
           )}
         </div>
